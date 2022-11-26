@@ -4,6 +4,9 @@
 # ML 
 ml/*
 
+# Pics
+assets/appstore/*
+
 # Android builds
 build-*
 
@@ -11,6 +14,8 @@ build-*
 pc-api*
 
 # Everything else
+backups/
+.vscode/
 node_modules/
 .expo/
 dist/
