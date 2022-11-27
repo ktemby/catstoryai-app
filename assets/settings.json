@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "title": "Show Demo Stories",
+    "key": "isDemoContentEnabled",
+    "isEnabled": true,
+    "isShown": false,
+    "callback": null
+  },
+  {
+    "id": 2,
+    "title": "Use full story for image",
+    "key": "useFullStoryForImage",
+    "isEnabled": false,
+    "isShown": false,
+    "callback": null
+  },
+  {
+    "id": 3,
+    "title": "Automatic Color Theme",
+    "key": "isAutoTheme",
+    "status": true,
+    "isShown": false,
+    "isEnabled": false,
+    "callback": null
+  },
+  {
+    "id": 4,
+    "title": "Dark theme only",
+    "key": "isAlwaysDark",
+    "status": true,
+    "isShown": true,
+    "isEnabled": true,
+    "callback": "setDarkThemeOverride((value === true) ? true : false)"
+  }
+]
