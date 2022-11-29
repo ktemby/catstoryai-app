@@ -4,6 +4,13 @@
     "lastName": "",
     "guid": "1",
     "coins": 30,
-    "startDate": "2023-02-02"
-  },
+    "startDate": "2023-02-01",
+    "friends": [
+      {
+        "guid": "2",
+        "firstName": "Kacy"
+      }
+    ],
+    "cats": "Copernicus"
+  }
 ]
