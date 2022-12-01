@@ -7,6 +7,9 @@ ml/*
 # Android builds
 build-*
 
+# Google service key
+pc-api*
+
 # Everything else
 node_modules/
 .expo/
