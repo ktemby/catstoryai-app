@@ -21,6 +21,7 @@
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
     "babel-preset-react-native": "^4.0.1",
+    "eas-cli": "^3.5.2",
     "expo": "~47.0.12",
     "expo-dev-client": "~2.0.1",
     "expo-file-system": "~15.1.1",
