@@ -1,0 +1,24 @@
+[
+    {
+      "name" :"Copernicus",
+      "color" : "brown",
+      "breed" : "Tabby",
+      "breedMix" : "",
+      "feature" : "ear tufts",
+      "personality" : "loving",
+      "superpower" : "cuddle and purr",
+      "image" : "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
+      "title": "The Renassiance Cat",
+    },
+    {
+      "name" :"Margot",
+      "color" : "white",
+      "breed" : "Lynx Point Siamese",
+      "breedMix" : "Tabby",
+      "feature" : "gorgeous blue eyes",
+      "personality" : "playful",
+      "superpower" : "hunt and make friends",
+      "image" : "https://raw.githubusercontent.com/ktemby/catstoryai-app/main/ml/models/MargotModel/Margot_Face.jpeg",
+      "title": "The Huntress",
+    }
+]

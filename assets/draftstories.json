@@ -2,7 +2,7 @@
     {
     "name": "Margot and Copernicus",
     "category": "Stories",
-    "id": 10,
+    "id": 13,
     "featuring": ["Margot", "Copernicus"],
     "isFeatured": "false",
     "isFavorite": "false",
@@ -13,7 +13,7 @@
     {
     "name": "Kitten Friends",
     "category": "Stories",
-    "id": 10,
+    "id": 14,
     "featuring": ["Margot", "Copernicus"],
     "isFeatured": "false",
     "isFavorite": "false",
@@ -24,7 +24,7 @@
     {
     "name": "",
     "category": "Stories",
-    "id": 12,
+    "id": 15,
     "featuring": ["Margot", "Copernicus"],
     "isFeatured": "false",
     "isFavorite": "false",
@@ -36,7 +36,7 @@
     {
     "name": "",
     "category": "Stories",
-    "id": 12,
+    "id": 16,
     "featuring": ["Copernicus"],
     "isFeatured": "false",
     "isFavorite": "false",
@@ -45,4 +45,29 @@
     "image input": "",
     "image":""
     },
+    {
+    "name": "",
+    "category": "Stories",
+    "id": 17,
+    "featuring": ["Copernicus"],
+    "isFeatured": "false",
+    "isFavorite": "false",
+    "story input": "Author a children's story around 400 words long. Use clear sentences, short paragraphs, and good formatting.\n\nInput: Tell me a story about Schrodinger, featuring a brown Tabby named Copernicus, who has a loving personality, fluffy ear tufts, and loves to cuddle and purr.",
+    "description": "Once upon a time, there was an adventurous and curious brown Tabby named Copernicus. He had lovely ear tufts, a warm and loving personality, and he especially loved to cuddle with his humans and purr contentedly. \n\nOne day, Copernicus heard about Schrodinger – the famous cat who lived in a box! Everyone said that when you shut the lid of Schrodinger’s box closed, it was impossible to know what would happen next. It could be anything from fireworks to rainbows or even tiny little mice running around inside! \n\nCopernicus thought this sounded like a fantastic adventure so he decided to go on an epic quest to find Schrodinger’s mysterious box. After days of searching far and wide across the land, Copernicus eventually found himself standing in front of the magical box with its shimmering golden door. \n\nHe took a deep breath before opening it…and out came two little mice! They were furry white creatures with pink noses twitching nervously as they looked up at him expectantly. “We were sent here by Schrodinger himself!” one of them squeaked excitedly. “He wants us to give you this message: 'Welcome brave explorer – thank you for finding my hidden box!'\\\". \n\nCopernicus couldn't believe his luck; not only had he found the legendary Schrodinger's Box but now he had made some new friends too! He thanked them gratefully before carefully closing the lid again so that no one else could find it - just like Schrodinger wanted - then happily made his way home with stories of his amazing journey spinning through his head all the way back home where he settled down for some well-deserved cuddles beside his human family.",
+    "image input": "",
+    "image":""
+    },
+    {
+    "name": "",
+    "category": "Stories",
+    "id": 18,
+    "featuring": ["Copernicus"],
+    "isFeatured": "false",
+    "isFavorite": "false",
+    "story input": "",
+    "description": "",
+    "image input": "",
+    "image":""
+    },
+
 ]
