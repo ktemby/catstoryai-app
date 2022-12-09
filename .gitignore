@@ -1,6 +1,12 @@
 # Ignore secrets
 .env*
 
+# ML 
+ml/*
+
+# Android builds
+build-*
+
 # Everything else
 node_modules/
 .expo/
