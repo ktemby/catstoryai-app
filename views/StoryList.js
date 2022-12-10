@@ -19,7 +19,7 @@ const StoriesScreen = ({navigation}) => {
 
   const getData = async () => {
       const update = await LoadLibrary();
-      setLibrary(update);
+      setLibrary(update.reverse());
       setRefreshing(false);
   };
 
