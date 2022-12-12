@@ -61,7 +61,7 @@ function CreateStory({navigation}) {
       <SafeAreaView style={[styles.safeAreaFull]}>
         <ScrollView>
 
-          <View style={[styles.container, {paddingTop: 20}]}>
+          <View style={[styles.container, {paddingTop: 0}]}>
             {storyInputComponent}
             {chatGPTInteraction}
             {createImagePurchaseButton}
