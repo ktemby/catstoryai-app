@@ -13,7 +13,7 @@ function BottomTab() {
       options={{
         tabBarLabel: 'Stories',
         tabBarIcon: ({ color }) => (
-          <MaterialCommunityIcons name="cat" color={color} size={26} />
+          <MaterialCommunityIcons name="bookshelf" color={color} size={26} />
         ),
       }}
     />
