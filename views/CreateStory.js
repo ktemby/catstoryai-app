@@ -3,7 +3,7 @@ import { Text, View, Image, Pressable, ScrollView, StyleSheet, Modal, TouchableO
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
-import {getImagesOAI} from '../models/OpenAI';
+import {getImagesOAI} from '../models/GetImageOpenAI';
 import LoadingSpinner from "../components/LoadingSpinner";
 import TextInputWithLabel from "../components/TextInputWithLabel";
 import Cat, {copernicusValues} from "../models/Cat";
