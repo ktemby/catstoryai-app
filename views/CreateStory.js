@@ -78,7 +78,11 @@ function CreateStory({navigation}) {
             { fetchedState === 'loading' ? LoadingSpinner() : "" }
           </View>
 
-          <View style={{marginTop: 40}}>
+          <View style={{flex: 1, alignItems: 'center'}}>
+            {titleInputComponent}
+          </View>
+
+          <View style={{marginTop: 20}}>
             {thisStory}
           </View>
 
