@@ -10,7 +10,6 @@ function StoryDetail({ route, navigation}) {
   const { item } = route.params;
 
   return (
-    <LinearGradient {...styles.gradientProps}>
       <SafeAreaView>
         <ScrollView>
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -20,7 +19,6 @@ function StoryDetail({ route, navigation}) {
           </View>
         </ScrollView>
       </SafeAreaView>
-    </LinearGradient>
   );
 }
 
