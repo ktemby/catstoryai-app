@@ -18,11 +18,6 @@ function AboutScreen({navigation}) {
               </Image>
             </Pressable>
             <Text style={{color: 'white', paddingTop: 10}}>Curated AI stories and Art</Text>
-            <Pressable onPress={() => navigation.navigate('Create')} >
-              <View style={{backgroundColor: '#424242AA', marginTop: 30, borderRadius: 5 }}>
-              <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create a Story!</Text>
-              </View>
-            </Pressable>
         </View>
       </LinearGradient>
   );
