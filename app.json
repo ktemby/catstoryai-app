@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "kitten-app",
-    "slug": "kitten-app",
+    "name": "catstoryai-app",
+    "slug": "cat-storyai-app",
+    "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +19,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.keltronix.catstoryai"
     },
     "android": {
       "adaptiveIcon": {
@@ -28,6 +30,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "85a50327-d7bc-45fc-ae8f-498561f1510f"
+      }
+    },
+    "owner": "ktemby"
   }
 }

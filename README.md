@@ -1,4 +1,4 @@
-# Cat Story AI App
+# Cat StoryAI App
 
 Expo code for multi-tab navigation app. Uses GPT and DALL-E2 to generate content, based on some descriptions of Margot and Copernicus.
 
