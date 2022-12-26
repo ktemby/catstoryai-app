@@ -47,9 +47,9 @@
     "imageInput": "oil painting a small brown tabby cat named Copernicus curled on a picnic basket . He had fluffy ear tufts and a cute little nose, and his eyes were a",
     },
     {
-    "name": "The wisest cat in all the galaxy",
+    "name": "The wisest cat in the galaxy",
     "category": "Stories",
-    "id": 7,
+    "id": 6,
     "isFeatured": true,
     "isFavorite": "false",
     "story input": "tell a story about a cat named Copernicus who is a small brown tabby with ear tufts and a loving personality",
@@ -68,5 +68,17 @@
     "image input": "synthwave the wisest cat in all the galaxy brown tabby exploring the vastness of space with strange and wonderful creatures meeting friendly aliens,",
     "image": "Copernicus and Starburst.png",
     "image input": "one brown tabby cat and one lynx point Siamese cat wearing medieval armor while riding a unicorn with a magic aura in a photorealistic style."
+    },
+    {
+    "name": "Copernicus and the Rainbow Serpent",
+    "category": "Stories",
+    "id": 8,
+    "isFeatured": true,
+    "isFavorite": "false",
+    "story input": "tell a story about a cat named Copernicus who is a small brown tabby with ear tufts and a loving personality who goes on an adventure to find the Rainbow Serpent in space",
+    "description": "Once upon a time, there was a small brown tabby cat named Copernicus. Copernicus was a curious and adventurous cat, with fluffy ear tufts and a loving personality. One day, Copernicus decided that he wanted to find the Rainbow Serpent, a mythical creature said to live in the depths of space.\n\nDetermined to make his dream a reality, Copernicus began preparing for his journey. He gathered all of the necessary supplies, including a space suit and a supply of cat treats to keep him fueled during his trip.\n\nFinally, the day of the launch arrived, and Copernicus climbed aboard a rocket ship with his trusty sidekick, a mouse named Galileo. The two friends blasted off into the great unknown, marveling at the wonders of the cosmos as they flew through the vast expanse of space.\n\nAs they traveled further and further into the unknown, Copernicus and Galileo encountered all sorts of strange and wonderful creatures. They met friendly aliens with three eyes and tentacles, and even flew through a field of colorful asteroids that shone like jewels in the darkness.\n\nDespite all of the exciting adventures they encountered along the way, Copernicus never lost sight of his goal. He was determined to find the Rainbow Serpent, and after many long weeks of searching, he finally caught a glimpse of the mythical creature in the distance.\n\nAs they approached, the Rainbow Serpent revealed itself to be a beautiful and majestic being, with shimmering scales and a long, flowing tail. Copernicus and Galileo were in awe as they gazed upon the creature, and they knew that they had truly found something special.\n\nIn the end, Copernicus and Galileo returned home to their beloved planet, their hearts full of wonder and their minds brimming with tales of their incredible journey. And though they had travelled far and wide, they knew that there was always more to discover, and that the universe held many more mysteries waiting to be uncovered.\n",
+    "image input": "synthwave the wisest cat in all the galaxy brown tabby exploring the vastness of space with strange and wonderful creatures meeting friendly aliens,",
+    "image": "Copernicus and the Rainbow Serpent.png",
+    "image input": "fantasy small brown tabby cat named Copernicus. He had fluffy ear tufts and bright green eyes that seemed to sparkle with mischief. He traveled far an",
     },
 ]
