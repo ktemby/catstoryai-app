@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStack from '../views/HomeStack';
-import SettingsScreen from '../views/Settings';
+import StoriesScreen from '../views/Stories';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -24,7 +24,7 @@ function BottomTab() {
           ),
          }}
       />
-      <Tab.Screen name="Votes" component={SettingsScreen}
+      <Tab.Screen name="Stories" component={StoriesScreen}
         options={{
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons name="cat" color={color} size={26} />
