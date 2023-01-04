@@ -27,6 +27,7 @@ function HomeScreen({navigation}) {
         		source = {require( imageString ) }>
           </Image>
         </Pressable>
+        <Text style={{color: 'white', paddingTop: 10}}>Curated AI stories and Art</Text>
         </LinearGradient>
       </View>
   );

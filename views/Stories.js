@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, FlatList, Image, ImageBackground, SafeAreaView } from 'react-native';
+import { Text, View, StyleSheet, FlatList, ScrollView, Image, ImageBackground, SafeAreaView } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import customData from '../storydata.json';
 
@@ -27,6 +27,7 @@ var renderItem = ({ item }) => (
 
 function StoriesScreen() {
   return (
+
     <LinearGradient
       colors={['#03DAC6', '#6200EE']}
       style={styles.linearGradient}
@@ -34,10 +35,10 @@ function StoriesScreen() {
       end={{ x: 2, y: 0.2 }}>
 
     <SafeAreaView >
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>A grid list of stories with art</Text>
 
-        <FlatList style={{paddingTop:40}}
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+
+        <FlatList style={{padding:0}}
           data={customData}
           renderItem={renderItem}
           numColumns={2}
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
       width: 150,
       height: 150,
       borderRadius: 20,
-      //margin: 10
+      margin: 10
     },
   linearGradient: {
     alignItems: 'center',
@@ -64,24 +65,29 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   square: {
-    //flexGrow: 0,
+    //flexGrow: 1,
     //flexShrink: 1,
     flexBasis: '40%',
     height: 150,
     width: 150,
-    //backgroundColor: '#212121',
     borderRadius: 20,
-
-    //borderColor: "transparent",
+    textAlign: "bottom",
+    alignItems: "bottom",
     margin: 10,
   },
   row: {
     flex: 1,
   },
   title: {
+    fontWeight: 'bold',
     //fontSize: 32,
     width: "80%",
-    color: "#FFF",
+    color: "#FFFFFF",
+    backgroundColor: '#424242AA',
+    position:'absolute',
+    bottom: 0,
+    //paddingTop: 90,
+    margin: 10,
   },
 });
 
