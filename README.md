@@ -1,11 +1,12 @@
-# Expo Kittens
+# Cat Story AI App
 
-Expo code for multi-tab navigation app.
+Expo code for multi-tab navigation app. Uses GPT and DALL-E2 to generate content, based on some descriptions of Margot and Copernicus.
 
-Used this to teach a quick tutorial for newbies using Expo.
+Used this to teach a quick tutorial for newbies using Expo, then extended the app to something more fun.
 
 ### Screenshots of the Demo App
 
+#### Early Dev:
 | Initial App  | Adding Content | Adding Nav Stack |  UI Fun |
 | ------------- | ------------- | ------------- |  ------------- |
 | <img src="./devnotes/screenshot.png" width="200">  | <img src="./devnotes/Animation 1.gif" width="200">  | <img src="./devnotes/Animation 2.gif" width="200"> | <img src="./devnotes/Animation 3.gif" width="200">
