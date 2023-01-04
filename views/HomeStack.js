@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, View, Text, Image, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '../views/Home';
+import AboutScreen from '../views/About';
 
 const imageString = '../assets/copernicus_and_margot.jpeg';
 
@@ -25,7 +25,7 @@ const Stack = createNativeStackNavigator();
 function HomeStack() {
   return (
       <Stack.Navigator>
-        <Stack.Screen name="Home Screen" component={HomeScreen}
+        <Stack.Screen name="Home Screen" component={AboutScreen}
           options={{
             headerShown:false
           }}

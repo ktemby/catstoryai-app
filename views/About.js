@@ -6,7 +6,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 const imageString = '../assets/copernicus_and_margot.jpeg';
 
-function HomeScreen({navigation}) {
+function AboutScreen({navigation}) {
   return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <LinearGradient
@@ -57,4 +57,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default HomeScreen;
+export default AboutScreen;
