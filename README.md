@@ -5,7 +5,7 @@ Expo code for multi-tab navigation app. Uses GPT and DALL-E2 to generate content
 Used this to teach a quick tutorial for newbies using Expo, then extended the app to something more fun.
 
 ### Screenshots of the Demo App
-<img src="./devnotes/Animation 2.gif" width="300">
+<img src="./devnotes/Animation 4.gif" width="300">
 
 #### Early Dev:
 | Initial App  | Adding Content | Adding Nav Stack |  UI Fun |
