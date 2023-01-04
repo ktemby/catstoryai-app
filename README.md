@@ -7,7 +7,7 @@ Used this to teach a quick tutorial for newbies using Expo, then extended the ap
 ### Screenshots of the Demo App
 | Preview  | Story List | Story Detail |  About |
 | ------------- | ------------- | ------------- |  ------------- 
-<img src="./devnotes/Animation 4.gif" width="200"> | <img src="./devnotes/Screenshot 2.png" width="200"> | <img src="./devnotes/Screenshot 3.png" width="200"> |<img src="./devnotes/Screenshot 4.png" width="200"> |
+<img src="./devnotes/Animation 4.gif" width="200"> | <img src="./devnotes/Screenshot 3.png" width="200"> | <img src="./devnotes/Screenshot 4.png" width="200"> |<img src="./devnotes/Screenshot 1.png" width="200"> |
 
 #### Early Dev:
 | Initial App  | Adding Content | Adding Nav Stack |  UI Fun |
