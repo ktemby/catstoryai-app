@@ -19,7 +19,7 @@ function StoriesScreen({navigation}) {
 
   return (
     <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView style={{width: '100%', flex: 1, alignItems: 'center', justifyContent: "center"}}>
+      <SafeAreaView style={{width: '100%', alignItems: 'center'}}>
         <View>
           <FlatList
             data={customData}
