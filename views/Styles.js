@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
     textAlign: "bottom",
-    //alignItems: "center",
   },
   title: {
     fontWeight: 'bold',
