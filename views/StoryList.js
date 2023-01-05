@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Pressable, StyleSheet, FlatList, ScrollView, Image, ImageBackground, SafeAreaView } from 'react-native';
+import { Text, View, Pressable, FlatList, ImageBackground, SafeAreaView } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import customData from '../storydata.json';
 import styles from './Styles'
@@ -9,7 +9,7 @@ const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/
 function StoriesScreen({navigation}) {
   var renderItem = ({ item }) => (
       <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
-        <View style={styles.square}>
+        <View style={styles.storyListSquare}>
           <ImageBackground source={{ uri: gitCDN.concat(item.image) }} resizeMode="cover" style={styles.image}>
             <Text style={styles.title}>{(item.name)}</Text>
           </ImageBackground>
@@ -19,9 +19,9 @@ function StoriesScreen({navigation}) {
 
   return (
     <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView >
+      <SafeAreaView style={{width: '100%', flex: 1, alignItems: 'center', justifyContent: "center"}}>
         <View>
-          <FlatList style={{padding:0}}
+          <FlatList
             data={customData}
             renderItem={renderItem}
             numColumns={2}

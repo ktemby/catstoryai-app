@@ -7,9 +7,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 function BottomTab() {
   return (
-    <Tab.Navigator
-      barStyle={{ backgroundColor: '#212121' }}
-    >
+    <Tab.Navigator barStyle={{ backgroundColor: '#212121' }} >
     <Tab.Screen name="Stories Stack" component={StoryStack}
       options={{
         tabBarLabel: 'Stories',

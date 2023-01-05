@@ -6,18 +6,33 @@ const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/
 const styles = StyleSheet.create({
   gradientProps: {
     colors: ['#03DAC6', '#6200EE'],
+    //future dark gradient ['#212121', '#3000BB'],
     style: {
-      alignItems: 'center',
-      justifyContent: 'center',
       height: "100%",
       width: "100%",
     },
     start: { x: 0, y: 0.4 },
     end: { x: 2, y: 0.2 },
   },
+  themeColorStyle: {
+    light: {
+      color: "black",
+    },
+    dark: {
+      backgroundColor: '#212121',
+      color: "white",
+    },
+    null: {
+      color: "black",
+    },
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   Heading: {
     fontSize: 30,
-    color: '#000',
     margin: 35,
   },
   HeadingAlt: {
@@ -27,8 +42,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontSize: 20,
-    color: '#000',
-    lineHeight: 30,
+    lineHeight: 35,
     margin: 35,
   },
   SubHeading: {
@@ -43,15 +57,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: '100%',
+    height: '100%',
   },
-  square: {
+  ImageStyle: {
+    width: 300,
+    height: 300,
+    borderRadius: 150,
+    margin: 15
+  },
+  storyListSquare: {
+    flex: 1,
     height: 200,
     width: 200,
     textAlign: "bottom",
-    alignItems: "bottom",
-    margin: 0,
+    //alignItems: "center",
   },
   title: {
     fontWeight: 'bold',
@@ -61,12 +81,6 @@ const styles = StyleSheet.create({
     position:'absolute',
     bottom: 0,
     margin: 10,
-  },
-  ImageStyle: {
-    width: 300,
-    height: 300,
-    borderRadius: 150,
-    margin: 15
   }
 });
 
