@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "catstoryai-app",
+    "name": "Cat StoryAI",
     "slug": "cat-storyai-app",
     "privacy": "unlisted",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon.jpeg",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
