@@ -16,11 +16,11 @@ function BottomTab() {
         ),
       }}
     />
-    <Tab.Screen name="Home Stack" component={HomeStack}
+    <Tab.Screen name="Account Stack" component={HomeStack}
         options={{
-          tabBarLabel: 'About',
+          tabBarLabel: 'Account',
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="information" color={color} size={26} />
+            <MaterialCommunityIcons name="account" color={color} size={26} />
           ),
          }}
       />
