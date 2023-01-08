@@ -4,6 +4,14 @@ import { StyleSheet } from 'react-native';
 const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
 
 const styles = StyleSheet.create({
+  loadingtext:{
+    fontSize: 28,
+    fontWeight: 'bold',
+  },
+  text:{
+    fontSize:24,
+    margin:10
+  },
   gradientProps: {
     colors: ['#03DAC6', '#6200EE'],
     //future dark gradient ['#212121', '#3000BB'],
@@ -71,7 +79,6 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
     textAlign: "bottom",
-    //alignItems: "center",
   },
   title: {
     fontWeight: 'bold',
