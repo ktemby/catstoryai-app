@@ -5,6 +5,8 @@ import styles from './Styles';
 import customData from '../storydata.json';
 import AppTextInput from '../components/TextInputWrapper';
 
+import { OPENAI_API_KEY } from '@env'
+
 const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
 
 const item = {
@@ -20,84 +22,44 @@ const item = {
 const requestImage = {
   method: 'POST',
   headers: {
-    "Authorization": "Bearer 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",
-    'Content-Type': 'text/plain',
+    "Authorization": "Bearer ".concat(OPENAI_API_KEY),
+    'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    "model": 'image-alpha-001',
     "prompt": item.imageInput,
-    "num_images": "1",
-    "size": "512",
+    "n": 1,
+    "size": "512x512",
     "response_format": "url",
-    "format": "png",
   })
 };
 
 const requestStory = {
   method: 'POST',
   headers: {
-    "Authorization": 'Bearer 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',
+    "Authorization": 'Bearer '.concat(OPENAI_API_KEY),
     'Content-Type': 'application/json',
   },
   body: JSON.stringify({
-    //"model": 'image-alpha-001',
     "prompt": item.imageInput,
     "n": 1,
-    //"num_images": "1",
     "size": "512x512",
     "response_format": "url",
-    //"format": "png",
   })
 }
-
-/*
-const response = await openai.createImage({
-  prompt: "a white siamese cat",
-  n: 1,
-  size: "1024x1024",
-});
-var image_url = response.data.data[0].url;
-*/
-
-
-
-/*
-async function query(data) {
-    const response = await fetch(
-        "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2",
-        {
-            headers: { Authorization: `Bearer ${API_TOKEN}` },
-            method: "POST",
-            body: JSON.stringify(data),
-        }
-    );
-    const result = await response.json();
-    return result;
-}
-query({inputs:{question:"What is my name?",context:"My name is Clara and I live in Berkeley."}}).then((response) => {
-    console.log(JSON.stringify(response));
-});
-// {"score":0.933128833770752,"start":11,"end":16,"answer":"Clara"}
-
-*/
 
 function CreateStory({navigation}) {
   const [fetchedState,setFetchedState]=useState(null);
   const [usersData,setUsersData]=useState({"created":1673128176,"data":[{"url":"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="}]});
+  const [userInputState,setUserInputState]=useState(item);
 
   useEffect(() => {
      setFetchedState('idle')
    },[])
 
-   //const response=await fetch('https://jsonplaceholder.typicode.com/users');
-   //const response=await fetch('https://api.openai.com/v1/images/variations', {requestImage} );
-   // 'Content-Type': 'text/plain',
-
-
    // Retrieve data from OpenAI
    const getData=async()=>{
       try{
-        const response=await fetch('https://api.openai.com/v1/images/generations', requestStory );
+        const response=await fetch('https://api.openai.com/v1/images/generations', requestImage );
         const data=await response.json();
         setUsersData(data);
         console.log(JSON.stringify(usersData));
@@ -116,15 +78,13 @@ function CreateStory({navigation}) {
   const [textInput, onChangeStoryInput] = React.useState(item.storyInput);
   const [imageInput, onChangeImageInput] = React.useState(item.imageInput);
 
-  //fetchedState ? <Text style={styles.loadingtext}>Loading Data...</Text> :
-  //usersData.map(_user=><Text style={styles.text} key={_user.id}>{_user.name}</Text>)
-
   return (
     <LinearGradient {...styles.gradientProps}>
       <SafeAreaView style={{ flex: 1, width: '100%'}}>
         <ScrollView>
           <View style={{ flex: 1, alignItems: 'left', margin: 20}}>
-          <View style={{border: 1, borderColor: '#AAA', marginBottom: 15, borderWidth: 1, width: '100%', padding: 5, backgroundColor: 'white'}}>
+
+          <View style={styles2.inputWrapper}>
             <Text style={{color: '#424242', marginBottom: 10}} >What will you name the Story?</Text>
             <TextInput
               style={styles2.input}
@@ -135,7 +95,7 @@ function CreateStory({navigation}) {
             />
           </View>
 
-            <View style={{border: 1, borderColor: '#AAA', marginBottom: 15, borderWidth: 1, width: '100%', padding: 5, backgroundColor: 'white'}}>
+            <View style={styles2.inputWrapper}>
               <Text style={{color: '#424242', marginBottom: 10}} >AI Story Input</Text>
               <AppTextInput
                 style={styles2.input}
@@ -199,7 +159,7 @@ function CreateStory({navigation}) {
           <View style={{ flex: 1, alignItems: 'left', margin: 20}}>
             <Pressable onPress={() => alert('Save Coming Soon!')} >
               <View style={{backgroundColor: '#424242AA', alignItems: "center", marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
-                <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Wonderful story, save for later!{'\t\t\t\t'}FREE</Text>
+                <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Wonderful, save it!{'\t\t\t\t'}FREE</Text>
               </View>
             </Pressable>
             </View>
@@ -220,6 +180,15 @@ const styles2 = StyleSheet.create({
     color: 'black',
     fontSize: 18,
   },
+  inputWrapper: {
+    border: 1,
+    borderColor: '#AAA',
+    marginBottom: 15,
+    borderWidth: 1,
+    width: '100%',
+    padding: 5,
+    backgroundColor: 'white'
+  }
 });
 
 /*
@@ -234,4 +203,25 @@ const styles2 = StyleSheet.create({
       autoComplete='false'
     />
   </View>
+*/
+
+
+/*
+async function query(data) {
+    const response = await fetch(
+        "https://api-inference.huggingface.co/models/deepset/roberta-base-squad2",
+        {
+            headers: { Authorization: `Bearer ${API_TOKEN}` },
+            method: "POST",
+            body: JSON.stringify(data),
+        }
+    );
+    const result = await response.json();
+    return result;
+}
+query({inputs:{question:"What is my name?",context:"My name is Clara and I live in Berkeley."}}).then((response) => {
+    console.log(JSON.stringify(response));
+});
+// {"score":0.933128833770752,"start":11,"end":16,"answer":"Clara"}
+
 */
