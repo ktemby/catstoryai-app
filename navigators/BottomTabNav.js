@@ -1,7 +1,7 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import HomeStack from '../views/HomeStack';
-import StoryStack from '../views/StoryStack';
+import HomeStack from '../navigators/HomeStack';
+import StoryStack from '../navigators/StoryStack';
 
 const Tab = createMaterialBottomTabNavigator();
 
