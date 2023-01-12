@@ -8,10 +8,21 @@ To create an actual iOS binary, use the iOS preview build (creates a local build
 
     eas build -p ios --profile preview
 
-#### iOS Submission to Testflight
+#### iOS Builds and Submission to Testflight
 Once the preview binary looks good, create the prod binary and send it to testflight (requires login to the org account, may implement CICD for this later as a git Workflow).
 
     eas build --platform ios
+    
+Note - annoyingly EAS Expo servers are usually overloaded and fail to build during the day - so we can build locally instead. Requires some basic installs 
+    brew install cocoapods
+    brew install fastlane
+    
+Now we can build local:
+
+    eas build --platform ios --local
+    
+#### Finally, submitting to Apple:    
+    
     eas submit -p ios   
 
 ### Feature dev and Git cheatsheet
