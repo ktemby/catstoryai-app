@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { OPENAI_API_KEY } from '@env'
 
+function removeFromString(words, str) {
+  return words.reduce((result, word) => result.replaceAll(word, ' '), str)
+};
+
+function resizeString(maxLength, str) {
+  return (str.length <= maxLength) ? str : (str.substring(0, maxLength));
+};
+
 function requestImageJson(imagePrompt, n_images) {
   return ( {
     method: 'POST',
@@ -17,21 +25,33 @@ function requestImageJson(imagePrompt, n_images) {
   })
 };
 
-const sampleData = { "created":1673128176, "data":[{"url":"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="}]};
-const url = 'https://api.openai.com/v1/images/generations'
+const sampleData = { "created":0, "data":[{"url":"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="}]};
+const failData = { "created":1, "data":[{"url":"https://via.placeholder.com/256x256.png?text=Be+Nice"}]};
+const url = 'https://api.openai.com/v1/images/generations';
+const maxPromptLength = 1000;
+const scrubWords = [" a ", " and ", " at ", " but ", " for ", " had ", " he ", " her ", " his ", " in ", " of ", " on ", " she ", " that ", " the ", " they ", " to ", " was ", " with ", " when "]
 
 export const getImagesOAI = async(imagePrompt, setFetchedState, setImageData) => {
+     var prompt = imagePrompt;
+     prompt = removeFromString(scrubWords, prompt);
+     prompt = resizeString(maxPromptLength, prompt);
+
      try{
-       const response=await fetch(url, requestImageJson(imagePrompt, 1) );
+       const response=await fetch(url, requestImageJson(prompt, 1) );
        const data=await response.json();
-       setImageData(data);
-       //setMyImageData(data);
-       console.log(imagePrompt)
-       console.log("data in the fetch")
-       console.log(data)
+       if (typeof(data.data) == 'undefined') { // Ensure we have data
+         setImageData(failData);
+         setFetchedState('blocked');
+         } else {
+           setImageData(data);
+           console.log("Data received for image prompt: ")
+           console.log(prompt)
+       };
+       console.log(data);
      }
      catch(error){
-       console.log(error)
+       console.log(error);
+       setImageData(failData);
      }
      finally{
        setFetchedState(null);
@@ -46,31 +66,3 @@ class OpenAI {
 
 const openai = new OpenAI();
 export default openai;
-
-//export const OpenAI = () => {
-//  const imageUrlApi = () => {
-//    return ('https://api.openai.com/v1/images/generations')
-//  };
-  //return (
-//};
-
-/*
-
-export function requestImageJson(storyPrompt) {
-  return (
-    {
-      method: 'POST',
-      headers: {
-        "Authorization": 'Bearer '.concat(OPENAI_API_KEY),
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "prompt": {storyPrompt},
-        "n": 1,
-        "size": "512x512",
-        "response_format": "url",
-      })
-    }
-  )
-};
-*/

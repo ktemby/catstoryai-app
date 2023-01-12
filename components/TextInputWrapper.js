@@ -9,6 +9,7 @@ const AppTextInput = (props) => {
       style={[props.style, isFocused && {backgroundColor: 'white'}]}
       onBlur={() => setIsFocused(false)}
       onFocus={() => setIsFocused(true)}
+      maxLength={100}
     />
   );
 };
