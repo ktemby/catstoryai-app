@@ -4,8 +4,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import customData from '../storydata.json';
 import styles from './Styles'
 
-const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
-
+//const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
+const gitCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 function StoriesScreen({navigation}) {
   var renderItem = ({ item }) => (
       <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
