@@ -46,3 +46,8 @@ Returning to a remote branch:
 
     git fetch
     git checkout -t <feature-branch-name>
+    
+    
+After merge, delete it
+
+    git branch -d <featre-branch-name>
