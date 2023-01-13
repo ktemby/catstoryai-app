@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Pressable, ScrollView, StyleSheet, SafeAreaView, TextInput} from 'react-native';
+import { Text, View, Image, Pressable, ScrollView, StyleSheet, SafeAreaView} from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
 import customData from '../storydata.json';
@@ -40,10 +40,9 @@ function CreateStory({navigation}) {
 
           <View style={styles2.inputWrapper}>
             <Text style={{color: '#424242', marginBottom: 10}} >What will you name the Story?</Text>
-            <TextInput style={styles2.input} autoComplete='false'
+            <AppTextInput style={styles2.input} autoComplete='false'
               onChangeText={onChangeName} value={textName}
               placeholder={(item.name)}
-
             />
           </View>
 
@@ -69,7 +68,7 @@ function CreateStory({navigation}) {
 
             <View style={{border: 1, borderColor: '#AAA', marginBottom: 15, borderWidth: 1, width: '100%', padding: 5, backgroundColor: 'white'}}>
               <Text style={{color: '#424242', marginBottom: 10}} >AI Picture Input</Text>
-              <TextInput
+              <AppTextInput
                 style={styles2.input}
                 onChangeText={onChangeImagePrompt}
                 value={imagePrompt}
