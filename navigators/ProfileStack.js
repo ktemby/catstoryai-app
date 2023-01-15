@@ -27,7 +27,7 @@ function ProfileStack() {
           options={{
             title: 'Story Creation',
             headerTransparent: true,
-            headerShadowVisible: false
+            headerShadowVisible: false,
           }}
         />
         <Stack.Screen name="CatCreation" component={CatCreation}

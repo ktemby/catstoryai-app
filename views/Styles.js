@@ -4,10 +4,15 @@ import { StyleSheet } from 'react-native';
 const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
 
 const styles = StyleSheet.create({
-  safeArea: {
+  safeAreaHeader: {
     flex: 1,
     width: '100%',
     paddingTop: 45
+  },
+  safeArea: {
+    flex: 1,
+    width: '100%',
+
   },
   loadingtext:{
     fontSize: 28,
