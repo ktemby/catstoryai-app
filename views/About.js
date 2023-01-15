@@ -28,14 +28,19 @@ function AboutScreen({navigation}) {
               <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>See My Cats</Text>
               </View>
             </Pressable>
-            <Pressable onPress={() => navigation.navigate('Create GPT')} >
-              <View style={{backgroundColor: '#424242AA', marginTop: 30, borderRadius: 5 }}>
-              <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Test Story Gen</Text>
-              </View>
-            </Pressable>
+
         </View>
       </LinearGradient>
   );
 }
 
 export default AboutScreen;
+
+// Next builds
+/*
+<Pressable onPress={() => navigation.navigate('Create GPT')} >
+  <View style={{backgroundColor: '#424242AA', marginTop: 30, borderRadius: 5 }}>
+  <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Test Story Gen</Text>
+  </View>
+</Pressable>
+*/

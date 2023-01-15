@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Pressable, ScrollView, StyleSheet, SafeAreaView} from 'react-native';
+import { Text, View, Image, Pressable, ScrollView, StyleSheet} from 'react-native';
+import { SafeAreaView} from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
 import customData from '../storydata.json';
@@ -19,8 +20,9 @@ const item = {
 
 function CreateStory({navigation}) {
 
+  const placeholderUrl = "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
   const [fetchedState,setFetchedState]=useState(null);
-  const [imageData,setImageData]=useState({"created":1673128176,"data":[{"url":"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="}]});
+  const [imageData,setImageData]=useState({"created":1673128176,"data":[{"url":placeholderUrl}]});
   const [userInputState,setUserInputState]=useState(item);
 
   useEffect(() => {
@@ -34,14 +36,16 @@ function CreateStory({navigation}) {
 
   return (
     <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView style={{ flex: 1, width: '100%'}}>
+      <SafeAreaView style={styles.safeArea}>
         <ScrollView>
-          <View style={{ flex: 1, alignItems: 'left', margin: 20}}>
+          <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
 
           <View style={styles2.inputWrapper}>
             <Text style={{color: '#424242', marginBottom: 10}} >What will you name the Story?</Text>
-            <AppTextInput style={styles2.input} autoComplete='false'
-              onChangeText={onChangeName} value={textName}
+            <AppTextInput
+              style={styles2.input}
+              onChangeText={onChangeName}
+              value={textName}
               placeholder={(item.name)}
             />
           </View>
@@ -54,7 +58,6 @@ function CreateStory({navigation}) {
                 value={textInput}
                 placeholder={(item.storyInput)}
                 onFocus
-                autoComplete='false'
                 multiline
               />
 
@@ -73,7 +76,6 @@ function CreateStory({navigation}) {
                 onChangeText={onChangeImagePrompt}
                 value={imagePrompt}
                 placeholder={(item.imageInput)}
-                autoComplete='false'
                 multiline
               />
             </View>
@@ -101,14 +103,14 @@ function CreateStory({navigation}) {
           </View>
 
           <View style={{ flex: 1, width: '100%', marginTop: 30, backgroundColor: 'white'}}>
-            <View style={{ flex: 1, alignItems: 'left', margin: 15}}>
+            <View style={{ flex: 1, alignItems: 'flex-start', margin: 15}}>
               <Text style={styles.Heading}>{(item.name)}</Text>
               <Image source={{ uri: imageData.data[0].url }} resizeMode={'cover'} style={styles.imageDetail}></Image>
               <Text style={styles.body}>{(item.description)}</Text>
             </View>
           </View>
 
-          <View style={{ flex: 1, alignItems: 'left', margin: 20}}>
+          <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
             <Pressable onPress={() => alert('Save Coming Soon!')} >
               <View style={{backgroundColor: '#424242AA', alignItems: "center", marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
                 <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Wonderful, save it!{'\t\t\t\t'}FREE</Text>

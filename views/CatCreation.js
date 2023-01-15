@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Pressable, ScrollView, SafeAreaView} from 'react-native';
+import { Text, View, Image, Pressable, ScrollView, useColorScheme} from 'react-native';
+import { SafeAreaView} from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
 import Cat from "../models/Cat";
@@ -48,10 +49,13 @@ let copernicus = new Cat();
 copernicus.state = copernicusValues;
 
 function CatCreation({navigation}) {
+  const colorScheme = useColorScheme();
+  const themeColorStyle = styles.themeColorStyle[colorScheme];
+
   return (
-      <SafeAreaView style={{ flex: 1, width: '100%'}}>
+      <SafeAreaView style={[styles.safeArea, themeColorStyle]}>
         <ScrollView>
-          <View style={{ flex: 1, alignItems: 'left', margin: 20}}>
+          <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
 
             {renderCatCard(copernicus)}
             {renderCatCard(margot)}

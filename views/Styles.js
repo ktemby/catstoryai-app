@@ -4,6 +4,11 @@ import { StyleSheet } from 'react-native';
 const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    width: '100%',
+    paddingTop: 45
+  },
   loadingtext:{
     fontSize: 28,
     fontWeight: 'bold',
@@ -37,7 +42,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   Heading: {
     fontSize: 30,

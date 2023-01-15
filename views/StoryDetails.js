@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Image, ScrollView, SafeAreaView, useColorScheme} from 'react-native';
+import { Text, View, Image, ScrollView, useColorScheme} from 'react-native';
+import { SafeAreaView} from 'react-native-safe-area-context';
 import customData from '../storydata.json';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
@@ -12,7 +13,7 @@ function StoryDetail({ route, navigation}) {
   const themeColorStyle = styles.themeColorStyle[colorScheme];
 
   return (
-      <SafeAreaView style={themeColorStyle}>
+      <SafeAreaView style={[styles.safeArea, themeColorStyle]}>
         <ScrollView>
           <View style={[styles.container, themeColorStyle]}>
             <Text style={[styles.Heading, themeColorStyle]}>{(item.name)}</Text>

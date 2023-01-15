@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { OPENAI_API_KEY } from '@env'
 
 function removeFromString(words, str) {
-  return words.reduce((result, word) => result.replaceAll(word, ' '), str)
-};
+  return words.reduce((result, word) => result.replace(`/${word}/g`, ' '), str)
+}; // Ugly string literal since replaceAll does not work on Android.
 
 function resizeString(maxLength, str) {
   return (str.length <= maxLength) ? str : (str.substring(0, maxLength));
