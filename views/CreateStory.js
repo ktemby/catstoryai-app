@@ -3,7 +3,7 @@ import { Text, View, Image, Pressable, ScrollView, StyleSheet} from 'react-nativ
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
-import customData from '../storydata.json';
+import customData from '../assets/storydata.json';
 import {getImagesOAI} from '../models/OpenAI';
 import AppTextInput from '../components/TextInputWrapper';
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -38,7 +38,7 @@ function CreateStory({navigation}) {
 
   return (
     <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView style={[styles.safeAreaHeader, {paddingBottom: -insets.bottom}]}>
+      <SafeAreaView style={[styles.safeAreaHeader]}>
         <ScrollView>
           <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
 

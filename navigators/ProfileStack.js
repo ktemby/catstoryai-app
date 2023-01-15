@@ -25,14 +25,14 @@ function ProfileStack() {
         />
         <Stack.Screen name="Create" component={CreateStory}
           options={{
-            title: 'Story Creation',
+            title: 'Story Creation (Demo)',
             headerTransparent: true,
             headerShadowVisible: false,
           }}
         />
         <Stack.Screen name="CatCreation" component={CatCreation}
           options={{
-            title: 'My Cats',
+            title: 'My Cats (Demo)',
             headerTransparent: true,
             headerShadowVisible: false
           }}

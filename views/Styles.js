@@ -7,12 +7,13 @@ const styles = StyleSheet.create({
   safeAreaHeader: {
     flex: 1,
     width: '100%',
-    paddingTop: 45
+    paddingTop: 45, //Needed for iOS when using react-native-safearea-context for SafeAreaView
+    paddingBottom: -50
   },
-  safeArea: {
+  safeAreaFull: {
     flex: 1,
     width: '100%',
-
+    paddingBottom: -50,
   },
   loadingtext:{
     fontSize: 28,
@@ -47,7 +48,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    //justifyContent: 'center',
   },
   Heading: {
     fontSize: 30,

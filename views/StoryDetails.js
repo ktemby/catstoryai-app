@@ -1,11 +1,11 @@
 import React from 'react';
 import { Text, View, Image, ScrollView, useColorScheme} from 'react-native';
 import { SafeAreaView} from 'react-native-safe-area-context';
-import customData from '../storydata.json';
+import customData from '../assets/storydata.json';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
 
-const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
+const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
 function StoryDetail({ route, navigation}) {
   const { item } = route.params;
@@ -13,11 +13,11 @@ function StoryDetail({ route, navigation}) {
   const themeColorStyle = styles.themeColorStyle[colorScheme];
 
   return (
-      <SafeAreaView style={[styles.safeArea, themeColorStyle]}>
+      <SafeAreaView style={[styles.safeAreaFull, themeColorStyle]}>
         <ScrollView>
           <View style={[styles.container, themeColorStyle]}>
             <Text style={[styles.Heading, themeColorStyle]}>{(item.name)}</Text>
-            <Image source={{ uri: gitCDN.concat(item.image) }} resizeMode={'cover'} style={styles.imageDetail}></Image>
+            <Image source={{ uri: myCDN.concat(item.image) }} resizeMode={'cover'} style={styles.imageDetail}></Image>
             <Text style={[styles.body, themeColorStyle]}>{(item.description)}</Text>
           </View>
         </ScrollView>

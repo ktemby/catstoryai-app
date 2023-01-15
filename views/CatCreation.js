@@ -7,12 +7,12 @@ import Cat from "../models/Cat";
 
 function renderCatCard(thisCat) {
   return(
-    <View style={{flex: 1, marginBottom: 40}}>
+    <View style={{flex: 1, marginBottom: 40, width: '100%'}}>
       <LinearGradient {...styles.gradientProps}>
-      <Text style = {[styles.Heading, {marginBottom: 5}]} >{thisCat.state.name}</Text>
-      <Text style = {[styles.SubHeading, {marginLeft: 35, color: 'black', marginBottom: 20}]} >{thisCat.state.title}</Text>
-      <Image source={{uri: thisCat.state.image}}  style={[styles.ImageStyle, {marginLeft: 20}]}></Image>
-      <Text style = {styles.body} >{thisCat.catText()}</Text>
+        <Text style = {[styles.Heading, {marginBottom: 5}]} >{thisCat.state.name}</Text>
+        <Text style = {[styles.SubHeading, {marginLeft: 35, color: 'black', marginBottom: 20}]} >{thisCat.state.title}</Text>
+        <Image source={{uri: thisCat.state.image}}  style={[styles.ImageStyle, {marginLeft: 20}]}></Image>
+        <Text style = {styles.body} >{thisCat.catText()}</Text>
       </LinearGradient>
     </View>
   )

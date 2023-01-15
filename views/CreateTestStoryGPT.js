@@ -58,7 +58,7 @@ function CreateTestStoryGPT({navigation}) {
 
   return (
     <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={styles.safeAreaFull}>
         <ScrollView>
           <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
             <Text>AI Story Input:</Text>
