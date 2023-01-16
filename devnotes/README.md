@@ -51,3 +51,21 @@ Returning to a remote branch:
 After merge, delete it
 
     git branch -d <featre-branch-name>
+    
+    
+
+
+# Android (nightmares)
+
+Need to download a JDK to be able to build locally. I used Amazon Coretto (OpenJDK) https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/macos-install.html Check with
+
+    java -version
+    
+If it's not showing the latest version, add it to the shell rc (e.g., ~/.zshrc), also need ANDROID_HOME
+
+    export JAVA_HOME=/Library/Java/JavaVirtualMachines/amazon-corretto-17.jdk/Contents/Home
+    export ANDROID_HOME=$HOME/Library/Android/sdk
+    
+Run the build locally
+
+    eas build -p android --local
