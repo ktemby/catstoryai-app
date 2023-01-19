@@ -1,20 +1,19 @@
 import React, {Component} from 'react';
 import {Text, View, Image} from 'react-native';
 import styles from '../views/Styles';
-//name, color, breed, breedMix, feature, personality, superpower, image
 
 class Cat extends React.Component {
   state = {
-      name :"Adoracat",
-      color : "brown",
-      breed : "Tabby",
-      breedMix : "",
-      feature : "soft fur",
-      personality : "playful",
-      superpower : "go zoomies",
-      title: "The New Cat on the Block",
-      image : "https://via.placeholder.com/256x256.png?text=Get+Portrait+First",
-    };
+    name :"Adoracat",
+    color : "brown",
+    breed : "Tabby",
+    breedMix : "",
+    feature : "soft fur",
+    personality : "playful",
+    superpower : "go zoomies",
+    title: "The New Cat on the Block",
+    image : "https://via.placeholder.com/256x256.png?text=Get+Portrait+First",
+  };
 
   catText() {
     return (
@@ -41,5 +40,15 @@ class Cat extends React.Component {
 
 export default Cat;
 
-
-//
+export let copernicusValues = {
+  name :"Copernicus",
+  color : "brown",
+  breed : "Tabby",
+  breedMix : "",
+  //breedMix : "Egyptian Mao",
+  feature : "fluffy ear tufts",
+  personality : "loving",
+  superpower : "cuddle and purr",
+  image : "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
+  title: "The Renassiance Cat",
+};
