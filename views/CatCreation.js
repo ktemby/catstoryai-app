@@ -3,7 +3,7 @@ import { Text, View, Image, Pressable, ScrollView, useColorScheme} from 'react-n
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
-import Cat from "../models/Cat";
+import Cat, {copernicusValues} from "../models/Cat";
 
 function renderCatCard(thisCat) {
   return(
@@ -18,17 +18,7 @@ function renderCatCard(thisCat) {
   )
 };
 
-let copernicusValues = {
-  name :"Copernicus",
-  color : "brown",
-  breed : "Tabby",
-  breedMix : "Egyptian Mao",
-  feature : "fluffy ear tufts",
-  personality : "loving",
-  superpower : "cuddle and purr",
-  image : "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
-  title: "The Renassiance Cat",
-};
+
 
 let margotValues = {
   name :"Margot",

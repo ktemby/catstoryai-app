@@ -67,7 +67,7 @@ function CreateStory({navigation}) {
 
             <Pressable onPress={() => alert('Create Coming Soon!')} >
               <View style={{backgroundColor: '#424242AA', marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
-                <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create Story!{'\t\t\t\t'}FREE</Text>
+                <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create Story!{'\t\t\t\t'}$0.09</Text>
               </View>
             </Pressable>
 
