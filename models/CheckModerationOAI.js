@@ -20,7 +20,11 @@ const blocked = -100;
 /*
  * These are tokens and weightings to guide OpenAI responses (i.e., block these words).
  */
+export let bias_words = {};
+
+/*
 export let bias_words = {
+  // Nasty themes
   "77": blocked,
   "7761": blocked,
   "19147": blocked,
@@ -36,8 +40,12 @@ export let bias_words = {
   "11908" : blocked,
   "12819": blocked,
   "1042" : blocked,
-};
 
+  // Bad storywriting
+  "532": blocked,
+  "851": blocked,
+};
+*/
 
 /*
 let moderationSample = {

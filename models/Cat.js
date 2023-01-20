@@ -20,9 +20,9 @@ class Cat extends React.Component {
       ["A ",this.state.color," ",this.state.breed," ",
       (this.state.breedMix.length > 1 ? this.state.breedMix.concat(" mix ") : ''),
       "named ",this.state.name,
-      ", with a ", this.state.personality," personality ",
+      ", who has a ", this.state.personality," personality ",
       "and ",this.state.feature,
-      " who loves to ", this.state.superpower, "."].join("")
+      ", and loves to ", this.state.superpower, "."].join("")
     )
   }
 

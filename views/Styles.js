@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   },
   Heading: {
     fontSize: 30,
+    //fontWeight: 700,
     margin: 35,
   },
   HeadingAlt: {
@@ -62,6 +63,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 35,
     margin: 35,
+    width: '80%'
   },
   SubHeading: {
     fontSize: 12,
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   imageDetail: {
     width: '100%',
     flex:1,
-    width: 400,
+    //width: 400,
     height: 400,
     marginBottom: 20,
   },
@@ -88,6 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 200,
     width: 200,
+    //width: '100%',
     textAlign: "bottom",
   },
   title: {
@@ -98,7 +101,16 @@ const styles = StyleSheet.create({
     position:'absolute',
     bottom: 0,
     margin: 10,
-  }
+  },
+  inputWrapper: {
+    border: 1,
+    borderColor: '#AAA',
+    marginBottom: 15,
+    borderWidth: 1,
+    width: '100%',
+    padding: 5,
+    backgroundColor: 'white'
+  },
 });
 
 export default styles;
