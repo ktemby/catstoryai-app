@@ -1,16 +1,15 @@
 import React from 'react';
-import { Text, View, Image, ScrollView, useColorScheme} from 'react-native';
+import { Text, View, Image, ScrollView} from 'react-native';
 import { SafeAreaView} from 'react-native-safe-area-context';
 import customData from '../assets/storydata.json';
 import { LinearGradient } from "expo-linear-gradient";
-import styles from './Styles';
+import styles, {getColorScheme} from './Styles';
 
 const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
 function StoryDetail({ route, navigation}) {
   const { item } = route.params;
-  const colorScheme = useColorScheme();
-  const themeColorStyle = styles.themeColorStyle[colorScheme];
+  const themeColorStyle = getColorScheme();
 
   return (
       <SafeAreaView style={[styles.safeAreaFull, themeColorStyle]}>

@@ -104,7 +104,7 @@ function CreateStory({navigation}) {
           </View>
 
           <View style={{ flex: 1, width: '100%', marginTop: 30, backgroundColor: 'white'}}>
-            <View style={{ flex: 1, alignItems: 'flex-start', margin: 15}}>
+            <View style={styles.container}>
               <Text style={styles.Heading}>{(item.name)}</Text>
               <Image source={{ uri: imageData.data[0].url }} resizeMode={'cover'} style={styles.imageDetail}></Image>
               <Text style={styles.body}>{(item.description)}</Text>

@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Image, Pressable, ScrollView, useColorScheme} from 'react-native';
+import { Text, View, Image, Pressable, ScrollView} from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
-import styles from './Styles';
+import styles, {getColorScheme} from './Styles';
 import Cat, {copernicusValues} from "../models/Cat";
 
+
 function renderCatCard(thisCat) {
+  const themeColorStyle = getColorScheme();
+
   return(
-    <View style={{flex: 1, marginBottom: 40, width: '100%'}}>
-      <LinearGradient {...styles.gradientProps}>
-        <Text style = {[styles.Heading, {marginBottom: 5}]} >{thisCat.state.name}</Text>
-        <Text style = {[styles.SubHeading, {marginLeft: 35, color: 'black', marginBottom: 20}]} >{thisCat.state.title}</Text>
-        <Image source={{uri: thisCat.state.image}}  style={[styles.ImageStyle, {marginLeft: 20}]}></Image>
-        <Text style = {styles.body} >{thisCat.catText()}</Text>
-      </LinearGradient>
+    <View style={{flex: 1, marginTop: 40, width: '80%', alignItems: 'center'}}>
+    <LinearGradient {...styles.gradientProps}>
+      <View style={[themeColorStyle, {flex: 1, margin: 1, alignItems: 'center'}]}>
+
+          <Text style = {[styles.Heading, themeColorStyle, {marginBottom: 5}]} >{thisCat.state.name}</Text>
+          <Text style = {[styles.SubHeading, themeColorStyle, { marginBottom: 20}]} >{thisCat.state.title}</Text>
+
+            <Image source={{uri: thisCat.state.image}}  style={[styles.ImageStyle, {borderRadius: '0%', width: '80%', flex: 1, margin: 10}]}></Image>
+
+          <Text style = {[styles.body, themeColorStyle, {textAlign: 'center'}]} >{thisCat.catText()}</Text>
+
+      </View>
+    </LinearGradient>
     </View>
   )
 };
-
-
 
 let margotValues = {
   name :"Margot",
@@ -39,14 +46,14 @@ let copernicus = new Cat();
 copernicus.state = copernicusValues;
 
 function CatCreation({navigation}) {
-  const colorScheme = useColorScheme();
-  const themeColorStyle = styles.themeColorStyle[colorScheme];
   const insets = useSafeAreaInsets();
+  const themeColorStyle = getColorScheme();
 
   return (
+
       <SafeAreaView style={[styles.safeAreaHeader, themeColorStyle, {paddingBottom: -insets.bottom}]}>
         <ScrollView>
-          <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
+          <View style={{ flex: 1, alignItems: 'center'}}>
 
             {renderCatCard(copernicus)}
             {renderCatCard(margot)}
@@ -54,6 +61,7 @@ function CatCreation({navigation}) {
           </View>
         </ScrollView>
       </SafeAreaView>
+
   );
 }
 

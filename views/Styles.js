@@ -1,7 +1,13 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useColorScheme } from 'react-native';
 
 const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
+
+export const getColorScheme = () => {
+  const colorScheme = useColorScheme();
+  const themeColorStyle = styles.themeColorStyle[colorScheme];
+  return themeColorStyle;
+}
 
 const styles = StyleSheet.create({
   safeAreaHeader: {
@@ -36,6 +42,7 @@ const styles = StyleSheet.create({
   themeColorStyle: {
     light: {
       color: "black",
+      backgroundColor: 'white',
     },
     dark: {
       backgroundColor: '#212121',
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
     borderRadius: 150,
-    margin: 15
+    margin: 15,
   },
   storyListSquare: {
     flex: 1,

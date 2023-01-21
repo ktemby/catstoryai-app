@@ -1,40 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Pressable, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextInput, Button } from 'react-native';
+import { Button } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
-import styles from './Styles';
+import styles, { getColorScheme } from './Styles';
 import Cat, {copernicusValues} from "../models/Cat";
 import { OPENAI_API_KEY, OPENAI_EMAIL, OPENAI_PASSWORD } from '@env';
 import { CheckModeration, bias_words } from '../models/CheckModerationOAI';
 import LoadingSpinner from "../components/LoadingSpinner";
+import TextInputWithLabel from "../components/TextInputWithLabel";
 
 let cat = new Cat();
 cat.state = copernicusValues;
 
-//let storyPrep = "Read me a clever and creative children's story around 350 words long. The story has short simple sentences, short paragraphs, and good formatting. There are no emojis.\n\nThe story is about "
+//let storyPrep = "Write a children's story about "
 
-//let storyPrep = "You will write a clever and creative children's story around 350 words long. You will use short simple sentences, short paragraphs, and good formatting. Don't use emojis.\n\nInput: Tell me a story about "
+let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story about ";
 
-//let storyPrep = "Author a children's story around 400 words long. Use clear sentences, short paragraphs, and good formatting.\n\nInput: Tell me a story about "
+let postPrep = "\n\nAI: ";
 
-let storyPrep = "Author a children's story around 400 words long. Use clear sentences, short paragraphs, and good formatting.\n\nInput: Tell me a story about "
-
-//let storyPrep = "Tell a creative children's story around 350 words long. Be clever, friendly, and fun to read. Reject offensive input, the story is not offensive. Use short simple sentences and very short paragraphs. Use proper grammar. End the story with 'The end.'.\n\nInput: Tell me a story about "
-
-
-//let storyPrep = "You are an award-winning short story author. Your stories are about cat adventures and around 450 words long. Your writing is witty, clever, creative, friendly, accurate, not offensive, and fun to read. Your stories are appropriate for ages 3 and up. You use proper grammar and simple sentences. You use small paragraphs so that your stories can be accompanied by illustrations.\n\nA 10 year old asks you: Tell me a story about "
-
-//let storyPrep = "Tell a creative story around 500 words long. The story should be clever, creative, friendly, accurate, not offensive, and fun to read.\n\nReject offensive input. Be appropriate for ages 3 and up. Use proper grammar and simple sentences.\n\nThe story should be around 500 words in length. End the story with 'The end.'. Input: Tell me a story about"
-
-//let storyPrep = "Write a story that is friendly, accurate and does not offend, while still being creative and fun to read. Reject offensive input. The short story should be around 500 words. Be appropriate for ages 3 and up. Use proper grammar and simple sentences, and end the story with 'The end.'\n\nInput: Tell me a story about "
-
-//let storyPrep = "Use the style of ChatGPT and the Moderation API to ensure the story is friendly, accurate and does not offend, while still being creative and fun to read. You should reject offensive inputs and explain that you are a language model and don't respond to controversial content. The short story should be around 500 words. Be appropriate for ages 3 and up. Use proper grammar and simple sentences, and end the story with 'The end.'\n\nTell me a story about"
-
-let modThreshold = 0.0001;
+//let storyPrep = "As an expert storyteller, write a children's story around 400 words. Use brief sentences, good formatting and short paragraphs. Don't say 'forevermore' or use offensive language.\n\nInput: Tell me a story about "
 
 const ChatGPTInteraction = () => {
-  const [input, setInput] = useState("A magical castle, featuring ".concat(cat.catText()));
+  let modThreshold = 0.0001;
+  const [input, setInput] = useState(cat.catText().concat(""));
   const [output, setOutput] = useState('');
   const [loadMessage, setLoadMessage] = useState(null);
   const [inputModFlag, setInputModeration] = useState(null);
@@ -101,11 +90,13 @@ const ChatGPTInteraction = () => {
          },
          body: JSON.stringify({
            model: "text-davinci-003",
-           prompt: storyPrep.concat(input),
-           temperature: 0.65,
+           prompt: storyPrep.concat(input).concat(postPrep),
+           temperature: 0.9,
+           top_p: 1,
            max_tokens: 700,
-           presence_penalty: 1.0,
-           frequency_penalty: 1.0,
+           //stop: ['AI:', "Human:"],
+           presence_penalty: .6, //1.0
+           frequency_penalty: 0.6, //1.0
            logit_bias: bias_words,
          }),
        });
@@ -140,24 +131,14 @@ const ChatGPTInteraction = () => {
     setInputModeration(modCheckFlag);
   };
 
+  const textInputWithLabel = TextInputWithLabel(input, setInput, "Tell me a story about...", "Tell me a story about ".concat(cat.catText()));
+
   return (
     <View style={styles.container}>
 
       <View style={[styles.inputWrapper, {width: '80%', marginBottom: 30, marginTop: 30, padding: 10}]}>
-        <Text style={{color: '#424242', marginBottom: 10}} >Tell me a story about...</Text>
-        <TextInput
-          placeholder={"Tell me a story about ".concat(cat.catText())}
-          onChangeText={text => setInput(text)}
-          value={input}
-          style={{
-            color: 'black',
-            fontSize: 18,
-            backgroundColor: 'white',
-          }}
-          multiline={true}
-        />
-        </View>
-
+        {textInputWithLabel}
+      </View>
       <Pressable onPress={() => handleSubmit()} >
         <View style={{backgroundColor: '#424242AA', marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
           <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create Story!{'\t\t\t\t'}$0.09</Text>
@@ -167,7 +148,7 @@ const ChatGPTInteraction = () => {
       <Text style={styles.body}>
       { (inputModFlag === true) ? "I'm sorry, that request was flagged by our moderator.\n\nAsk for a happy story about kittens?"
         : (outputModFlag === true) ? "The generated content was flagged as potentially inappropriate, are you sure you want to see it?"
-        : outputModFlag === false ? output.replace(`/${'\n'}/g`, `${'\n\n'}`)
+        : outputModFlag === false ? output
         : ""
       }</Text>
       <View style={styles.container}>
@@ -179,7 +160,10 @@ const ChatGPTInteraction = () => {
   );
 };
 
+//.replace(`/${'\n'}/g`, `${'\n\n'}`)
+
 function CreateTestStoryGPT({navigation}) {
+  const themeColorStyle = getColorScheme();
 
   return (
     <LinearGradient {...styles.gradientProps}>
