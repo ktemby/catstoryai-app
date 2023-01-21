@@ -12,7 +12,13 @@ import LoadingSpinner from "../components/LoadingSpinner";
 let cat = new Cat();
 cat.state = copernicusValues;
 
-let storyPrep = "Write a creative children's book around 350 words long.\n\nInput: Tell me a story about "
+//let storyPrep = "Read me a clever and creative children's story around 350 words long. The story has short simple sentences, short paragraphs, and good formatting. There are no emojis.\n\nThe story is about "
+
+//let storyPrep = "You will write a clever and creative children's story around 350 words long. You will use short simple sentences, short paragraphs, and good formatting. Don't use emojis.\n\nInput: Tell me a story about "
+
+//let storyPrep = "Author a children's story around 400 words long. Use clear sentences, short paragraphs, and good formatting.\n\nInput: Tell me a story about "
+
+let storyPrep = "Author a children's story around 400 words long. Use clear sentences, short paragraphs, and good formatting.\n\nInput: Tell me a story about "
 
 //let storyPrep = "Tell a creative children's story around 350 words long. Be clever, friendly, and fun to read. Reject offensive input, the story is not offensive. Use short simple sentences and very short paragraphs. Use proper grammar. End the story with 'The end.'.\n\nInput: Tell me a story about "
 
@@ -28,7 +34,7 @@ let storyPrep = "Write a creative children's book around 350 words long.\n\nInpu
 let modThreshold = 0.0001;
 
 const ChatGPTInteraction = () => {
-  const [input, setInput] = useState(cat.catText());
+  const [input, setInput] = useState("A magical castle, featuring ".concat(cat.catText()));
   const [output, setOutput] = useState('');
   const [loadMessage, setLoadMessage] = useState(null);
   const [inputModFlag, setInputModeration] = useState(null);
@@ -74,7 +80,7 @@ const ChatGPTInteraction = () => {
            'Authorization': 'Bearer '.concat(OPENAI_API_KEY),
          },
          body: JSON.stringify({
-           input: storyPrep.concat(inputToCheck),
+           input: inputToCheck,
          }),
        });
        const modData = await response.json();
@@ -96,7 +102,7 @@ const ChatGPTInteraction = () => {
          body: JSON.stringify({
            model: "text-davinci-003",
            prompt: storyPrep.concat(input),
-           temperature: 0.75,
+           temperature: 0.65,
            max_tokens: 700,
            presence_penalty: 1.0,
            frequency_penalty: 1.0,
@@ -108,6 +114,8 @@ const ChatGPTInteraction = () => {
        setOutput(data.choices[0].text);
      } catch (err) {
        console.log(err);
+       alert("AI is sleeping, try again later")
+       setOutputModeration(null)
      }
    };
 
@@ -159,7 +167,7 @@ const ChatGPTInteraction = () => {
       <Text style={styles.body}>
       { (inputModFlag === true) ? "I'm sorry, that request was flagged by our moderator.\n\nAsk for a happy story about kittens?"
         : (outputModFlag === true) ? "The generated content was flagged as potentially inappropriate, are you sure you want to see it?"
-        : outputModFlag === false ? output
+        : outputModFlag === false ? output.replace(`/${'\n'}/g`, `${'\n\n'}`)
         : ""
       }</Text>
       <View style={styles.container}>

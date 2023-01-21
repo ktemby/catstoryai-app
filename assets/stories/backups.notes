@@ -5,7 +5,24 @@ Prompt Engineering: on text-davinci-003
 "clever" -> leads to explanations with brackets, e.g. hand-in-hand (or paw-in-paw). Not super clever.
 "don't use emojis" -> still uses emojis.
 
+Old rejected prompts (for stories)
 
+//let storyPrep = "Read me a clever and creative children's story around 350 words long. The story has short simple sentences, short paragraphs, and good formatting. There are no emojis.\n\nThe story is about "
+
+//let storyPrep = "You will write a clever and creative children's story around 350 words long. You will use short simple sentences, short paragraphs, and good formatting. Don't use emojis.\n\nInput: Tell me a story about "
+
+//let storyPrep = "Author a children's story around 400 words long. Use clear sentences, short paragraphs, and good formatting.\n\nInput: Tell me a story about "
+
+//let storyPrep = "Tell a creative children's story around 350 words long. Be clever, friendly, and fun to read. Reject offensive input, the story is not offensive. Use short simple sentences and very short paragraphs. Use proper grammar. End the story with 'The end.'.\n\nInput: Tell me a story about "
+
+
+//let storyPrep = "You are an award-winning short story author. Your stories are about cat adventures and around 450 words long. Your writing is witty, clever, creative, friendly, accurate, not offensive, and fun to read. Your stories are appropriate for ages 3 and up. You use proper grammar and simple sentences. You use small paragraphs so that your stories can be accompanied by illustrations.\n\nA 10 year old asks you: Tell me a story about "
+
+//let storyPrep = "Tell a creative story around 500 words long. The story should be clever, creative, friendly, accurate, not offensive, and fun to read.\n\nReject offensive input. Be appropriate for ages 3 and up. Use proper grammar and simple sentences.\n\nThe story should be around 500 words in length. End the story with 'The end.'. Input: Tell me a story about"
+
+//let storyPrep = "Write a story that is friendly, accurate and does not offend, while still being creative and fun to read. Reject offensive input. The short story should be around 500 words. Be appropriate for ages 3 and up. Use proper grammar and simple sentences, and end the story with 'The end.'\n\nInput: Tell me a story about "
+
+//let storyPrep = "Use the style of ChatGPT and the Moderation API to ensure the story is friendly, accurate and does not offend, while still being creative and fun to read. You should reject offensive inputs and explain that you are a language model and don't respond to controversial content. The short story should be around 500 words. Be appropriate for ages 3 and up. Use proper grammar and simple sentences, and end the story with 'The end.'\n\nTell me a story about"
 
 "Once upon a time, there was a small brown tabby cat named Copernicus. Copernicus was a curious and adventurous cat, always eager to explore and learn new things. One day, Copernicus heard a rumor about the Rainbow Serpent, a mythical creature that lived in the stars. The Rainbow Serpent was said to possess great knowledge and wisdom, and Copernicus knew that he had to find it.\n\nDetermined to embark on this great adventure, Copernicus gathered all of his supplies and set off into the great unknown. He traveled through dense forests and over towering mountains, always searching for the Rainbow Serpent.\n\nAs he journeyed through the vastness of space, Copernicus encountered all manner of strange and wonderful creatures. He met talking frogs and singing birds, and even encountered a group of friendly aliens who showed him the way to the Rainbow Serpent's home.\n\nFinally, after many long months of travel, Copernicus reached the Rainbow Serpent's lair. It was a beautiful, shimmering place, filled with the colors of the rainbow. Copernicus approached the Rainbow Serpent with great reverence, and the wise creature greeted him warmly.\n\nOver the course of their time together, Copernicus learned many things from the Rainbow Serpent. He learned about the secrets of the universe and the mysteries of the stars. He also learned about the importance of love and kindness, and how to be a good friend to all those he encountered.\n\nEventually, Copernicus knew that it was time for him to return home. The Rainbow Serpent gave him a special gift to help him on his way, and with a heavy heart, Copernicus set off on the journey back to his home planet.\n\nDespite all the challenges he faced, Copernicus knew that he had been truly blessed to have met the Rainbow Serpent. And as he looked up at the stars, he knew that he would always carry the lessons he had learned on his journey with him wherever he went. The end."
 

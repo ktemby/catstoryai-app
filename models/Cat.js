@@ -17,11 +17,11 @@ class Cat extends React.Component {
 
   catText() {
     return (
-      ["A ",this.state.color," ",this.state.breed," ",
+      ["a ",this.state.color," ",this.state.breed," ",
       (this.state.breedMix.length > 1 ? this.state.breedMix.concat(" mix ") : ''),
       "named ",this.state.name,
-      ", who has a ", this.state.personality," personality ",
-      "and ",this.state.feature,
+      ", who has a ", this.state.personality," personality, ",
+      this.state.feature,
       ", and loves to ", this.state.superpower, "."].join("")
     )
   }

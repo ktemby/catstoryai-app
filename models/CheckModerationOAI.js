@@ -19,8 +19,23 @@ export const CheckModeration = (moderationSample, modThreshold) => {
 const blocked = -100;
 /*
  * These are tokens and weightings to guide OpenAI responses (i.e., block these words).
+
+ export let bias_words = {
+   "532": blocked, // ' -'
+   "851": blocked,
+   "35540": blocked, // ' ;)'
+   "14373": blocked, // ' :)'
+   "25": blocked,
+   "8": blocked,
+   "2396": blocked, // "So"
+   "438": blocked, // '--'
+   "1464": blocked, // 'always'
+ };
+
+
  */
 export let bias_words = {};
+
 
 /*
 export let bias_words = {
@@ -42,8 +57,12 @@ export let bias_words = {
   "1042" : blocked,
 
   // Bad storywriting
-  "532": blocked,
+  "532": blocked, // ' -'
   "851": blocked,
+  "35540": blocked, // ' ;)'
+  "14373": blocked, // ' :)'
+  "25": blocked,
+  "8": blocked,
 };
 */
 
