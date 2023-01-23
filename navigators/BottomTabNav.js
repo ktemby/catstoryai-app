@@ -2,6 +2,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import ProfileStack from '../navigators/ProfileStack';
 import StoryStack from '../navigators/StoryStack';
+import CreateStory from '../views/CreateStory';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -11,6 +12,14 @@ function BottomTab() {
     <Tab.Screen name="Stories Stack" component={StoryStack}
       options={{
         tabBarLabel: 'Stories',
+        tabBarIcon: ({ color }) => (
+          <MaterialCommunityIcons name="cat" color={color} size={26} />
+        ),
+      }}
+    />
+    <Tab.Screen name="Creation" component={CreateStory}
+      options={{
+        tabBarLabel: 'Create',
         tabBarIcon: ({ color }) => (
           <MaterialCommunityIcons name="cat" color={color} size={26} />
         ),

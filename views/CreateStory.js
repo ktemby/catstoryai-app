@@ -8,6 +8,7 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import TextInputWithLabel from "../components/TextInputWithLabel";
 import Cat, {copernicusValues} from "../models/Cat";
 import ChatGPTInteraction from "../models/ChatGPTInteraction"
+import StoryViewer from '../components/StoryViewer';
 
 let cat = new Cat();
 cat.state = copernicusValues;
@@ -22,15 +23,16 @@ const item = {
   "hiddenInput": ", cat, oil painting, highly detailed, global illumination, fantasy, "
 }
 
-const placeholderUrl = "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
+const placeholderUrl = "placeholder_icon.jpeg";
+const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
 let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 worlds long about ";
 
 function CreateStory({navigation}) {
   const insets = useSafeAreaInsets();
 
-  const [fetchedState,setFetchedState]=useState(null);
-  const [imageData,setImageData] = useState( { "created":1673128176, "data":[{"url":placeholderUrl}]} );
+  const [fetchedState, setFetchedState]=useState(null);
+  const [imageData, setImageData] = useState( { "created":1673128176, "data":[{"url":  myCDN.concat(placeholderUrl) }]} );
 
   useEffect(() => {
      setFetchedState('idle')
@@ -39,52 +41,48 @@ function CreateStory({navigation}) {
    const [title, setTitle] = React.useState(item.name);
    const [textContent, onChangeContent] = React.useState(item.description);
    const [storyInput, setStoryInput] = React.useState(cat.catText());
-   const [imagePrompt, setImagePrompt] = React.useState(item.imageInput);
-   const [output, setOutput] = useState('');
+   //const [imagePrompt, setImagePrompt] = React.useState(item.imageInput);
+   const [output, setOutput] = useState("You need to create the story first!");
 
    const titleInputComponent = TextInputWithLabel(title, setTitle, "What will you name the Story?", item.name);
 
    const storyInputComponent = TextInputWithLabel(storyInput, setStoryInput, "Tell me a story about...", "Tell me a story about ".concat(cat.catText()));
 
-   const imageInputComponent = TextInputWithLabel(imagePrompt, setImagePrompt, "AI Picture Input", item.imageInput);
+   //const imageInputComponent = TextInputWithLabel(imagePrompt, setImagePrompt, "AI Picture Input", item.imageInput);
 
    let showOutput = false;
 
    let chatGPTInteraction = new ChatGPTInteraction(storyPrep.concat(storyInput), output, setOutput, showOutput);
 
+   let thisStory = new StoryViewer(title, imageData.data[0].url, output);
+
   return (
     <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView style={[styles.safeAreaHeader]}>
+      <SafeAreaView style={[styles.safeAreaFull]}>
         <ScrollView>
-          <View style={{ flex: 1, alignItems: 'center'}}>
 
-          {storyInputComponent}
-          {chatGPTInteraction}
-
+          <View style={{flex: 1, alignItems: 'center'}}>
+            {storyInputComponent}
+            {chatGPTInteraction}
             <Pressable onPress={() => {
-                setFetchedState('loading'); //setTimeout( () => getImages(), 10000);
+                setFetchedState('loading');
                 getImagesOAI(item.hiddenInput.concat(storyInput), setFetchedState, setImageData);
                 }} >
               <View style={{backgroundColor: '#424242AA', alignItems: "center", marginTop: 0, marginBottom: 10, borderRadius: 5 }}>
               <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Give the Story a Picture{'\t\t'}$0.09</Text>
               </View>
             </Pressable>
-
           </View>
 
           <View style={styles.container}>
             { fetchedState === 'loading' ? LoadingSpinner() : "" }
           </View>
 
-          <View style={{ flex: 1, width: '100%', marginTop: 30, backgroundColor: 'white'}}>
-            <View style={styles.container}>
-              <Text style={styles.Heading}>{(item.name)}</Text>
-              <Image source={{ uri: imageData.data[0].url }} resizeMode={'cover'} style={styles.imageDetail}></Image>
-              <Text style={styles.body}>{output}</Text>
-            </View>
+          <View style={{marginTop: 40}}>
+            {thisStory}
           </View>
 
-          <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
+          <View style={[styles.container, {margin: 20}]}>
             <Pressable onPress={() => alert('Save Coming Soon!')} >
               <View style={{backgroundColor: '#424242AA', alignItems: "center", marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
                 <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Wonderful, save it!{'\t\t\t\t'}FREE</Text>
