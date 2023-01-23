@@ -3,10 +3,14 @@ import { Text, View, Image, Pressable, ScrollView, StyleSheet} from 'react-nativ
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles';
-import customData from '../assets/storydata.json';
 import {getImagesOAI} from '../models/OpenAI';
-import AppTextInput from '../components/TextInputWrapper';
 import LoadingSpinner from "../components/LoadingSpinner";
+import TextInputWithLabel from "../components/TextInputWithLabel";
+import Cat, {copernicusValues} from "../models/Cat";
+import ChatGPTInteraction from "../models/ChatGPTInteraction"
+
+let cat = new Cat();
+cat.state = copernicusValues;
 
 const item = {
   "name": "A Cat Adventure",
@@ -20,70 +24,46 @@ const item = {
 
 const placeholderUrl = "https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM=";
 
-function CreateStory({navigation}) {
+let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 worlds long about ";
 
+function CreateStory({navigation}) {
   const insets = useSafeAreaInsets();
+
   const [fetchedState,setFetchedState]=useState(null);
   const [imageData,setImageData] = useState( { "created":1673128176, "data":[{"url":placeholderUrl}]} );
-  const [userInputState,setUserInputState]=useState(item);
 
   useEffect(() => {
      setFetchedState('idle')
    },[])
 
-   const [textName, onChangeName] = React.useState(item.name);
+   const [title, setTitle] = React.useState(item.name);
    const [textContent, onChangeContent] = React.useState(item.description);
-   const [textInput, onChangeStoryInput] = React.useState(item.storyInput);
-   const [imagePrompt, onChangeImagePrompt] = React.useState(item.imageInput);
+   const [storyInput, setStoryInput] = React.useState(cat.catText());
+   const [imagePrompt, setImagePrompt] = React.useState(item.imageInput);
+   const [output, setOutput] = useState('');
+
+   const titleInputComponent = TextInputWithLabel(title, setTitle, "What will you name the Story?", item.name);
+
+   const storyInputComponent = TextInputWithLabel(storyInput, setStoryInput, "Tell me a story about...", "Tell me a story about ".concat(cat.catText()));
+
+   const imageInputComponent = TextInputWithLabel(imagePrompt, setImagePrompt, "AI Picture Input", item.imageInput);
+
+   let showOutput = false;
+
+   let chatGPTInteraction = new ChatGPTInteraction(storyPrep.concat(storyInput), output, setOutput, showOutput);
 
   return (
     <LinearGradient {...styles.gradientProps}>
       <SafeAreaView style={[styles.safeAreaHeader]}>
         <ScrollView>
-          <View style={{ flex: 1, alignItems: 'flex-start', margin: 20}}>
+          <View style={{ flex: 1, alignItems: 'center'}}>
 
-          <View style={styles2.inputWrapper}>
-            <Text style={{color: '#424242', marginBottom: 10}} >What will you name the Story?</Text>
-            <AppTextInput
-              style={styles2.input}
-              onChangeText={onChangeName}
-              value={textName}
-              placeholder={(item.name)}
-            />
-          </View>
-
-            <View style={styles2.inputWrapper}>
-              <Text style={{color: '#424242', marginBottom: 10}} >AI Story Input</Text>
-              <AppTextInput
-                style={styles2.input}
-                onChangeText={onChangeStoryInput}
-                value={textInput}
-                placeholder={(item.storyInput)}
-                onFocus
-                multiline
-              />
-            </View>
-
-            <Pressable onPress={() => alert('Create Coming Soon!')} >
-              <View style={{backgroundColor: '#424242AA', marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
-                <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create Story!{'\t\t\t\t'}$0.09</Text>
-              </View>
-            </Pressable>
-
-            <View style={{border: 1, borderColor: '#AAA', marginBottom: 15, borderWidth: 1, width: '100%', padding: 5, backgroundColor: 'white'}}>
-              <Text style={{color: '#424242', marginBottom: 10}} >AI Picture Input</Text>
-              <AppTextInput
-                style={styles2.input}
-                onChangeText={onChangeImagePrompt}
-                value={imagePrompt}
-                placeholder={(item.imageInput)}
-                multiline
-              />
-            </View>
+          {storyInputComponent}
+          {chatGPTInteraction}
 
             <Pressable onPress={() => {
                 setFetchedState('loading'); //setTimeout( () => getImages(), 10000);
-                getImagesOAI(item.hiddenInput.concat(imagePrompt), setFetchedState, setImageData);
+                getImagesOAI(item.hiddenInput.concat(storyInput), setFetchedState, setImageData);
                 }} >
               <View style={{backgroundColor: '#424242AA', alignItems: "center", marginTop: 0, marginBottom: 10, borderRadius: 5 }}>
               <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Give the Story a Picture{'\t\t'}$0.09</Text>
@@ -93,21 +73,14 @@ function CreateStory({navigation}) {
           </View>
 
           <View style={styles.container}>
-            { // if
-              (fetchedState === 'idle') ?
-                <Image source={{uri: imageData.data[0].url}} resizeMode={'cover'} style={styles.storyListSquare}></Image>
-              : // else if
-                (fetchedState === 'loading') ? ( LoadingSpinner() )
-              : // else
-                <Image source={{uri: imageData.data[0].url}} resizeMode={'cover'} style={styles.imageDetail}></Image>
-            }
+            { fetchedState === 'loading' ? LoadingSpinner() : "" }
           </View>
 
           <View style={{ flex: 1, width: '100%', marginTop: 30, backgroundColor: 'white'}}>
             <View style={styles.container}>
               <Text style={styles.Heading}>{(item.name)}</Text>
               <Image source={{ uri: imageData.data[0].url }} resizeMode={'cover'} style={styles.imageDetail}></Image>
-              <Text style={styles.body}>{(item.description)}</Text>
+              <Text style={styles.body}>{output}</Text>
             </View>
           </View>
 
@@ -126,22 +99,3 @@ function CreateStory({navigation}) {
 }
 
 export default CreateStory;
-
-const styles2 = StyleSheet.create({
-  input: {
-    borderColor: '#AAAAAFF',
-    borderWidth: 0,
-    width: '100%',
-    color: 'black',
-    fontSize: 18,
-  },
-  inputWrapper: {
-    border: 1,
-    borderColor: '#AAA',
-    marginBottom: 15,
-    borderWidth: 1,
-    width: '100%',
-    padding: 5,
-    backgroundColor: 'white'
-  }
-});

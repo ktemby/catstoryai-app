@@ -23,10 +23,7 @@ const StoryPrompt = () => {
 
   return (
     <View style={styles.container}>
-
-      <View style={[styles.inputWrapper, {width: '80%', marginBottom: 30, marginTop: 30, padding: 10}]}>
         {textInputWithLabel}
-        </View>
     </View>
   );
 };

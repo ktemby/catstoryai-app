@@ -24,9 +24,9 @@ function ProfileStack() {
             headerShadowVisible: false
           }}
         />
-        <Stack.Screen name="Create Story" component={CreateStory}
+        <Stack.Screen name="Create" component={CreateStory}
           options={{
-            title: 'Story Creation',
+            title: 'Create',
             headerTransparent: true,
             headerShadowVisible: false,
           }}
@@ -34,20 +34,6 @@ function ProfileStack() {
         <Stack.Screen name="CatCreation" component={CatCreation}
           options={{
             title: 'My Cats',
-            headerTransparent: true,
-            headerShadowVisible: false
-          }}
-        />
-        <Stack.Screen name="Create GPT" component={CreateTestStoryGPT}
-          options={{
-            title: 'Create GPT',
-            headerTransparent: true,
-            headerShadowVisible: false
-          }}
-        />
-        <Stack.Screen name="Create" component={Create}
-          options={{
-            title: 'Create',
             headerTransparent: true,
             headerShadowVisible: false
           }}

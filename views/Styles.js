@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 35,
     margin: 35,
-    width: '80%'
+    //width: '80%'
   },
   SubHeading: {
     fontSize: 12,

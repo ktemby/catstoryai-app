@@ -1,0 +1,162 @@
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, Pressable, ScrollView} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Button } from 'react-native';
+import { LinearGradient } from "expo-linear-gradient";
+import styles, { getColorScheme } from '../views/Styles';
+import Cat, {copernicusValues} from "../models/Cat";
+import { OPENAI_API_KEY, OPENAI_EMAIL, OPENAI_PASSWORD } from '@env';
+import { CheckModeration, bias_words } from '../models/CheckModerationOAI';
+import LoadingSpinner from "../components/LoadingSpinner";
+import TextInputWithLabel from "../components/TextInputWithLabel";
+
+const ChatGPTInteraction = (input, output, setOutput, showOutput) => {
+  let modThreshold = 0.0002;
+  let postPrep = "\n\nAI: ";
+
+  //const [output, setOutput] = useState('');
+  const [loadMessage, setLoadMessage] = useState(null);
+  const [inputModFlag, setInputModeration] = useState(null);
+  const [outputModFlag, setOutputModeration] = useState(null);
+
+  useEffect(() => {
+    if (inputModFlag === false) {
+      setLoadMessage("Dreaming your story...")
+      getStoryData(); // fetch the story once.
+      setInputModeration(null);
+      setOutputModeration('pending');
+    } else if (inputModFlag === true) {
+      console.log("Communicating blocked due to moderation")
+      setOutput("I'm sorry, that request was flagged by our moderator.");
+    } else {
+      "Neither"
+    }
+    console.log(`Content Moderation State {Input: ${inputModFlag}, Output:${outputModFlag}}`);
+    }, [inputModFlag]);
+
+    useEffect(() => {
+      if (outputModFlag !== 'pending') {
+        setLoadMessage(null)
+      }
+    }, [outputModFlag]);
+
+    useEffect(() => {
+      if (outputModFlag === 'pending') {
+        setLoadMessage("Reviewing the story...")
+        handleReview();
+      };
+     }, [output]);
+
+   const getModerationData = async (inputToCheck) => {
+     let ModerationAPI = 'https://api.openai.com/v1/moderations';
+
+     try {
+       const response = await fetch(ModerationAPI, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': 'Bearer '.concat(OPENAI_API_KEY),
+         },
+         body: JSON.stringify({
+           input: inputToCheck,
+         }),
+       });
+       const modData = await response.json();
+       return(modData);
+     } catch (err) {
+       console.log(err);
+     };
+   };
+
+   const getStoryData = async () => {
+     console.log(`Creating Story. Story input: ${input}`);
+     try {
+       const response = await fetch('https://api.openai.com/v1/completions', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+           'Authorization': 'Bearer '.concat(OPENAI_API_KEY),
+         },
+         body: JSON.stringify({
+           model: "text-davinci-003",
+           prompt: input.concat(postPrep),
+           temperature: 0.9,
+           top_p: 1,
+           max_tokens: 700,
+           stop: ["Human:"],
+           presence_penalty: .6, //1.0
+           frequency_penalty: 0.6, //1.0
+           logit_bias: bias_words,
+         }),
+       });
+       const data = await response.json();
+       console.log(data)
+       setOutput(data.choices[0].text);
+     } catch (err) {
+       console.log(err);
+       alert("AI is sleeping, try again later")
+       setOutputModeration(null)
+     }
+   };
+
+  const handleReview = async () => {
+    // Moderation check on story Data
+    console.log("Getting Story Output Moderation Score");
+    const outputModData = await getModerationData(output);
+    let outputModCheckFlag = await CheckModeration(outputModData, modThreshold)
+    setOutputModeration(outputModCheckFlag);
+  };
+
+  const handleSubmit = async () => {
+    setOutputModeration(null);
+    setOutput(null);
+
+    // Initial input check
+    console.log("Getting Input Moderation Score");
+    const modData = await getModerationData(input);
+    let modCheckFlag = await CheckModeration(modData, modThreshold);
+    setInputModeration(modCheckFlag);
+  };
+
+  const outputDisplay = () => {
+    let blockedMessage = "I'm sorry, that request was flagged by our moderator.\n\nAsk for a happy story about kittens?";
+    let flaggedMessage = "The generated content was flagged as potentially inappropriate, are you sure you want to see it?"
+    return (
+      <View>
+        <View>
+          { (inputModFlag === true) ? <Text style={styles.body}>{blockedMessage}</Text>
+            : (outputModFlag === true) ? <Text style={styles.body}>{flaggedMessage}</Text>
+            : outputModFlag === false ? showOutput && <Text style={styles.body}>{output}</Text>
+            : ""
+          }
+        </View>
+        <View style={styles.container}>
+          { (outputModFlag === 'pending') ? LoadingSpinner() : "" }
+          { !!loadMessage && <Text>{loadMessage}</Text> }
+        </View>
+        { outputModFlag === true && <Button title="Yes" onPress={() => setOutputModeration(false)} /> }
+      </View>
+    )
+  };
+
+  const requestStoryButton = () => {
+    return (
+      <View style={[styles.container, {width: "80%"}]}>
+        <Pressable onPress={() => handleSubmit()} >
+          <View style={{backgroundColor: '#424242AA', marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
+            <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create Story!{'\t\t\t\t'}$0.09</Text>
+          </View>
+        </Pressable>
+      </View>
+    )
+  };
+
+  return (
+    <View style={styles.container}>
+      {requestStoryButton()}
+      {outputDisplay()}
+    </View>
+  );
+};
+
+export default ChatGPTInteraction;
