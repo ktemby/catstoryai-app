@@ -33,6 +33,11 @@ function AboutScreen({navigation}) {
               <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Test Story Gen</Text>
               </View>
             </Pressable>
+            <Pressable onPress={() => navigation.navigate('Create')} >
+              <View style={{backgroundColor: '#424242AA', marginTop: 30, borderRadius: 5 }}>
+              <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create</Text>
+              </View>
+            </Pressable>
         </View>
       </LinearGradient>
   );

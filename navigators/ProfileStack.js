@@ -4,6 +4,7 @@ import AboutScreen from '../views/About';
 import ZoomScreen from '../views/ZoomScreen';
 import CreateStory from '../views/CreateStory';
 import CatCreation from '../views/CatCreation';
+import Create from '../views/Create';
 import CreateTestStoryGPT from '../views/CreateTestStoryGPT';
 
 const Stack = createNativeStackNavigator();
@@ -23,16 +24,16 @@ function ProfileStack() {
             headerShadowVisible: false
           }}
         />
-        <Stack.Screen name="Create" component={CreateStory}
+        <Stack.Screen name="Create Story" component={CreateStory}
           options={{
-            title: 'Story Creation (Demo)',
+            title: 'Story Creation',
             headerTransparent: true,
             headerShadowVisible: false,
           }}
         />
         <Stack.Screen name="CatCreation" component={CatCreation}
           options={{
-            title: 'My Cats (Demo)',
+            title: 'My Cats',
             headerTransparent: true,
             headerShadowVisible: false
           }}
@@ -40,6 +41,13 @@ function ProfileStack() {
         <Stack.Screen name="Create GPT" component={CreateTestStoryGPT}
           options={{
             title: 'Create GPT',
+            headerTransparent: true,
+            headerShadowVisible: false
+          }}
+        />
+        <Stack.Screen name="Create" component={Create}
+          options={{
+            title: 'Create',
             headerTransparent: true,
             headerShadowVisible: false
           }}
