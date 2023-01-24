@@ -53,6 +53,9 @@ function CreateStory({navigation}) {
        getImagesOAI(imagePrep.concat(storyInput), setFetchedState, setImageData);
      },"Give the Story a Picture","$0.09" );
 
+   let savePurchaseButton = new PurchaseButton(() => {setShowModal(true)
+   },"Wonderful, save it!","FREE" );
+
   return (
     <LinearGradient {...styles.gradientProps}>
       <SafeAreaView style={[styles.safeAreaFull]}>
@@ -73,12 +76,8 @@ function CreateStory({navigation}) {
           </View>
 
           { (!!output || !!imageData.data[0].url) &&
-            <View style={[styles.container, {margin: 20}]}>
-              <Pressable onPress={() => setShowModal(true)} >
-                <View style={{backgroundColor: '#424242AA', alignItems: "center", marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
-                  <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Wonderful, save it!{'\t\t\t'}FREE</Text>
-                </View>
-              </Pressable>
+            <View style={[styles.container, {marginTop: 10, marginBottom: 40, width: "100%"}]}>
+              {savePurchaseButton}
             </View>
           }
 
