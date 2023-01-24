@@ -26,7 +26,7 @@ function ProfileStack() {
           options={{
             title: 'My Cats',
             headerTransparent: true,
-            headerShadowVisible: false
+            headerShadowVisible: false,
           }}
         />
       </Stack.Navigator>

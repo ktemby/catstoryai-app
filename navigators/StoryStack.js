@@ -18,7 +18,7 @@ function StoryStack() {
             title: 'The story',
             headerTransparent: true,
             headerShadowVisible: false,
-            headerShown:false
+            headerShown:false,
           }}
         />
       </Stack.Navigator>

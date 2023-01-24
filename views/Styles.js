@@ -110,13 +110,24 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   inputWrapper: {
-    
-
-    marginBottom: 15,
-
     width: '100%',
-    padding: 5,
-    backgroundColor: 'white'
+    margin: 20,
+    marginBottom: 10,
+    padding: 20,
+    paddingTop: 40,
+    paddingBottom: 40,
+    alignItems: "center",
+  },
+  buttonTextStyle: {
+    fontWeight: 'bold',
+    color: 'white',
+    padding: 10
+  },
+  buttonContainerStyle: {
+    alignItems: "flex-start",
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#424242AA'
   },
 });
 
