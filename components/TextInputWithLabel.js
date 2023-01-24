@@ -1,21 +1,22 @@
 import {TextInput, View, Text} from 'react-native';
-import styles from '../views/Styles';
+import styles, {getColorScheme} from '../views/Styles';
 
 const TextInputWithLabel = (parentInput, setParentInput, label, placeholder) => {
+  const themeColorStyle = getColorScheme();
+
   return(
-    <View style={[styles.inputWrapper, {width: '100%', margin: 20, marginBottom: 10, padding: 20, paddingTop: 30, alignItems: "center"}]}>
-    <View style={[styles.inputWrapper, {width: '90%'}]}>
-      <Text style={{color: '#212121', marginBottom: 10}} >{label}</Text>
+    <View style={[styles.inputWrapper, themeColorStyle]}>
+    <View style={[themeColorStyle, {width: '90%'}]}>
+      <Text style={[{color: '#212121', fontWeight: 'bold', marginBottom: 10}, themeColorStyle]} >{label}</Text>
       <TextInput
         placeholder={placeholder}
         onChangeText={text => setParentInput(text)}
         value={parentInput}
-        style={{
-          color: 'black',
+        style={[{
           fontSize: 18,
-          backgroundColor: 'white',
-        }}
+        }, themeColorStyle]}
         multiline={true}
+        autoFocus = {true}
       />
     </View>
     </View>
