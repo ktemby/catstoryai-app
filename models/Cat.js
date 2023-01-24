@@ -17,7 +17,7 @@ class Cat extends React.Component {
 
   catText() {
     return (
-      ["a ",this.state.color," ",this.state.breed," ",
+      ["A ",this.state.color," ",this.state.breed," ",
       (this.state.breedMix.length > 1 ? this.state.breedMix.concat(" mix ") : ''),
       "named ",this.state.name,
       ", who has a ", this.state.personality," personality, ",

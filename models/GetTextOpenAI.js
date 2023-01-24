@@ -8,9 +8,9 @@ import Cat, {copernicusValues} from "../models/Cat";
 import { OPENAI_API_KEY, OPENAI_EMAIL, OPENAI_PASSWORD } from '@env';
 import { CheckModeration, bias_words } from '../models/CheckModerationOAI';
 import LoadingSpinner from "../components/LoadingSpinner";
-import TextInputWithLabel from "../components/TextInputWithLabel";
+import PurchaseButton from '../components/PurchaseButton';
 
-const ChatGPTInteraction = (input, output, setOutput, showOutput) => {
+const GetTextOpenAI = (input, output, setOutput, showOutput) => {
   let modThreshold = 0.0002;
   let postPrep = "\n\nAI: ";
 
@@ -132,31 +132,20 @@ const ChatGPTInteraction = (input, output, setOutput, showOutput) => {
         </View>
         <View style={styles.container}>
           { (outputModFlag === 'pending') ? LoadingSpinner() : "" }
-          { !!loadMessage && <Text>{loadMessage}</Text> }
         </View>
         { outputModFlag === true && <Button title="Yes" onPress={() => setOutputModeration(false)} /> }
       </View>
     )
   };
 
-  const requestStoryButton = () => {
-    return (
-      <View style={[styles.container, {width: "80%"}]}>
-        <Pressable onPress={() => handleSubmit()} >
-          <View style={{backgroundColor: '#424242AA', marginTop: 0, marginBottom: 20, borderRadius: 5 }}>
-            <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>Create Story!{'\t\t\t\t'}$0.09</Text>
-          </View>
-        </Pressable>
-      </View>
-    )
-  };
+  let createStoryPurchaseButton = new PurchaseButton(() => { handleSubmit()},"Create Story!","$0.09" );
 
   return (
-    <View style={styles.container}>
-      {requestStoryButton()}
+    <View style={[styles.container, {width: "100%"}]}>
+      {createStoryPurchaseButton}
       {outputDisplay()}
     </View>
   );
 };
 
-export default ChatGPTInteraction;
+export default GetTextOpenAI;

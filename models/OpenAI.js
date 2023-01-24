@@ -25,7 +25,6 @@ function requestImageJson(imagePrompt, n_images) {
   })
 };
 
-const sampleData = { "created":0, "data":[{"url":"https://media.istockphoto.com/id/1147544807/vector/thumbnail-image-vector-graphic.jpg?s=612x612&w=0&k=20&c=rnCKVbdxqkjlcs3xH87-9gocETqpspHFXu5dIGB4wuM="}]};
 const failData = { "created":1, "data":[{"url":"https://via.placeholder.com/256x256.png?text=Be+Nice"}]};
 const url = 'https://api.openai.com/v1/images/generations';
 const maxPromptLength = 1000;

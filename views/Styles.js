@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex:1,
     //width: 400,
     height: 400,
-    marginBottom: 20,
+    //marginBottom: 20,
   },
   image: {
     width: '100%',
@@ -110,10 +110,10 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   inputWrapper: {
-    border: 1,
-    borderColor: '#AAA',
+    
+
     marginBottom: 15,
-    borderWidth: 1,
+
     width: '100%',
     padding: 5,
     backgroundColor: 'white'
