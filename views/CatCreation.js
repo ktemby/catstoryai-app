@@ -10,14 +10,14 @@ function renderCatCard(thisCat) {
   const themeColorStyle = getColorScheme();
 
   return(
-    <View style={{flex: 1, marginTop: 40, width: '80%', alignItems: 'center'}}>
+    <View style={{flex: 1, marginTop: 20, marginBottom: 20, width: '80%', alignItems: 'center'}}>
     <LinearGradient {...styles.gradientProps}>
       <View style={[themeColorStyle, {flex: 1, margin: 1, alignItems: 'center'}]}>
 
           <Text style = {[styles.Heading, themeColorStyle, {marginBottom: 5}]} >{thisCat.state.name}</Text>
           <Text style = {[styles.SubHeading, themeColorStyle, { marginBottom: 20}]} >{thisCat.state.title}</Text>
 
-            <Image source={{uri: thisCat.state.image}}  style={[styles.ImageStyle, {borderRadius: '0%', width: '80%', flex: 1, margin: 10}]}></Image>
+            <Image source={{uri: thisCat.state.image}}  style={[styles.ImageStyle, {borderRadius: 10, width: '80%', flex: 1, margin: 10}]}></Image>
 
           <Text style = {[styles.body, themeColorStyle, {textAlign: 'center'}]} >{thisCat.catText()}</Text>
 

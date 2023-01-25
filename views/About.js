@@ -1,27 +1,31 @@
 import React from 'react';
-import { Text, View, Image, Pressable} from 'react-native';
+import { Text, View, Image, Pressable, ScrollView} from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles'
+import PurchaseButton from '../components/PurchaseButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const imageString = '../assets/copernicus_and_margot.jpeg';
 
 function AboutScreen({navigation}) {
 
+  let seeMyCatsButton = new PurchaseButton(() => { navigation.navigate('CatCreation')},"See My Cats","〉" );
+
   return (
       <LinearGradient {...styles.gradientProps}>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Text style = {styles.SubHeading}>The Adventures of</Text>
-            <Text style = {styles.HeadingAlt}>Copernicus and Margot</Text>
-            <Image style={styles.ImageStyle}
-          		source = {require( imageString ) }>
-            </Image>
-            <Text style={{color: 'white', paddingTop: 10}}>Curated AI stories and Art</Text>
-            <Pressable onPress={() => navigation.navigate('CatCreation')} >
-              <View style={{backgroundColor: '#424242AA', marginTop: 30, borderRadius: 5 }}>
-              <Text style={{color: 'white', fontWeight: 'bold', padding: 10}}>See My Cats</Text>
-              </View>
-            </Pressable>
-        </View>
+        <SafeAreaView style={styles.safeAreaFull}>
+          <ScrollView>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 40}}>
+                <Text style = {styles.SubHeading}>The Adventures of</Text>
+                <Text style = {styles.HeadingAlt}>Copernicus and Margot</Text>
+                <Image style={styles.ImageStyle}
+              		source = {require( imageString ) }>
+                </Image>
+                <Text style={{color: 'white', padding: 10}}>Curated AI stories and Art</Text>
+                {seeMyCatsButton}
+            </View>
+          </ScrollView>
+        </SafeAreaView>
       </LinearGradient>
   );
 }
