@@ -4,10 +4,14 @@ import AboutScreen from '../views/About';
 import CreateStory from '../views/CreateStory';
 import CatCreation from '../views/CatCreation';
 import Create from '../views/Create';
+import styles, {getColorScheme} from '../views/Styles';
+
 
 const Stack = createNativeStackNavigator();
 
 function ProfileStack() {
+  const themeColorStyle = getColorScheme();
+
   return (
       <Stack.Navigator>
         <Stack.Screen name="Account" component={AboutScreen}
@@ -19,14 +23,13 @@ function ProfileStack() {
           options={{
             title: 'Create',
             headerTransparent: true,
-            headerShadowVisible: false,
           }}
         />
         <Stack.Screen name="CatCreation" component={CatCreation}
           options={{
             title: 'My Cats',
             headerTransparent: true,
-            headerShadowVisible: false,
+            headerTintColor: themeColorStyle.color,
           }}
         />
       </Stack.Navigator>

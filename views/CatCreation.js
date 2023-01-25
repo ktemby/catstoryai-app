@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Pressable, ScrollView} from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
-import styles, {getColorScheme} from './Styles';
-import Cat, {copernicusValues} from "../models/Cat";
-
+import styles, {getColorScheme} from '../views/Styles';
+import Cat, {copernicusValues, margotValues} from "../models/Cat";
 
 function renderCatCard(thisCat) {
   const themeColorStyle = getColorScheme();
@@ -27,18 +26,6 @@ function renderCatCard(thisCat) {
   )
 };
 
-let margotValues = {
-  name :"Margot",
-  color : "white",
-  breed : "Lynx Point Siamese",
-  breedMix : "Tabby",
-  feature : "gorgeous blue eyes",
-  personality : "playful",
-  superpower : "hunt and make friends",
-  image : "https://raw.githubusercontent.com/ktemby/catstoryai-app/main/ml/models/MargotModel/Margot_Face.jpeg",
-  title: "The Huntress",
-}
-
 let margot = new Cat();
 margot.state = margotValues;
 
@@ -50,18 +37,14 @@ function CatCreation({navigation}) {
   const themeColorStyle = getColorScheme();
 
   return (
-
       <SafeAreaView style={[styles.safeAreaHeader, themeColorStyle, {paddingBottom: -insets.bottom}]}>
         <ScrollView>
           <View style={{ flex: 1, alignItems: 'center'}}>
-
             {renderCatCard(copernicus)}
             {renderCatCard(margot)}
-
           </View>
         </ScrollView>
       </SafeAreaView>
-
   );
 }
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet, useColorScheme} from 'react-native';
+import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 
 const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
 
@@ -7,7 +8,24 @@ export const getColorScheme = () => {
   const colorScheme = useColorScheme();
   const themeColorStyle = styles.themeColorStyle[colorScheme];
   return themeColorStyle;
-}
+};
+
+export const MyLightTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#212121',
+  },
+};
+
+export const MyDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'white',
+    headerTitleTint: 'white',
+  },
+};
 
 const styles = StyleSheet.create({
   safeAreaHeader: {
