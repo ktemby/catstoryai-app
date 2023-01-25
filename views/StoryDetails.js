@@ -9,7 +9,7 @@ function StoryDetail({ route, navigation}) {
   const themeColorStyle = getColorScheme();
   const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
-  let thisStory = new StoryViewer(item.name, myCDN.concat(item.image), item.description);
+  let thisStory = new StoryViewer(item.name, myCDN.concat(item.image).replace(/ /g, "%20"), item.description);
 
   return (
       <SafeAreaView style={[styles.safeAreaFull, themeColorStyle]}>

@@ -12,7 +12,7 @@ function StoriesScreen({navigation}) {
   var renderItem = ({ item }) => (
       <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
         <View style={styles.storyListSquare}>
-          <CachedImageBackground source={{ uri: myCDN.concat(item.image) }} resizeMode="cover" style={styles.image}>
+          <CachedImageBackground source={{ uri: myCDN.concat(item.image).replace(/ /g, "%20") }} resizeMode="cover" style={styles.image}>
             <Text style={styles.title}>{(item.name)}</Text>
           </CachedImageBackground>
         </View>
