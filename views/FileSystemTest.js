@@ -1,45 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { View, Pressable, ScrollView} from 'react-native';
+import { View, Image, Pressable, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import styles, { getColorScheme } from './Styles';
 import Cat, {copernicusValues} from "../models/Cat";
 import TextInputWithLabel from "../components/TextInputWithLabel";
+import * as FileSystem from 'expo-file-system';
+import CachedImage from "../components/CachedImage";
+import CachedImageBackground from "../components/CachedImageBackground";
 
-let cat = new Cat();
-cat.state = copernicusValues;
+let FileSystemTest = (navigation) => {
 
-//let storyPrep = "Write a children's story about "
+  //Goal: download a file remotely, then display it using its local uri
+  let filename = "mySaveTestFile.png";
+  let uri = "https://raw.githubusercontent.com/ktemby/catstoryai-app/main/assets/caticon512.png";
 
-let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story about ";
+  const fileUri: string = `${FileSystem.documentDirectory}${filename}`;
+  //const downloadedFile: FileSystem.FileSystemDownloadResult = await FileSystem.downloadAsync(uri, fileUri);
 
-let postPrep = "\n\nAI: ";
+  //console.log(fileUri);
+  //console.log(uri)
 
-//let storyPrep = "As an expert storyteller, write a children's story around 400 words. Use brief sentences, good formatting and short paragraphs. Don't say 'forevermore' or use offensive language.\n\nInput: Tell me a story about "
+  //if (downloadedFile.status != 200) {
+//    handleError();
+//  }
 
-const StoryPrompt = () => {
-  const [input, setInput] = useState(cat.catText().concat(""));
-  const textInputWithLabel = TextInputWithLabel(input, setInput, "Tell me a story about...", "Tell me a story about ".concat(cat.catText()));
+  //Goal2: save the file generated from OpenAI (remotely), then display it using its local imageUrl
 
-  return (
-    <View style={styles.container}>
-        {textInputWithLabel}
-    </View>
-  );
-};
-
-function Create({navigation}) {
-  const themeColorStyle = getColorScheme();
+  //Goal3: Add a data entry to the storyData.json file
 
   return (
     <LinearGradient {...styles.gradientProps}>
       <SafeAreaView style={styles.safeAreaHeader}>
         <ScrollView>
-          <StoryPrompt />
+          <View style={styles.container}>
+            <Text>remote image</Text>
+            <Image source={{ uri: uri }} resizeMode={'cover'} style={styles.storyListSquare}>
+            </Image>
+
+            <Text>cached image</Text>
+            <CachedImage source={{ uri: uri }} resizeMode={'cover'} style={styles.storyListSquare}/>
+
+            <Text>remote image background image</Text>
+            <ImageBackground source={{ uri: uri }} resizeMode={'cover'} style={styles.storyListSquare}>
+              <Text>Beans!</Text>
+            </ImageBackground>
+
+            <Text>cached background image</Text>
+            <CachedImageBackground source={{ uri: uri }} resizeMode={'cover'} style={styles.storyListSquare}>
+              <Text>Cool beans!</Text>
+            </CachedImageBackground>
+
+          </View>
         </ScrollView>
       </SafeAreaView>
       </LinearGradient>
   );
 }
 
-export default Create;
+export default FileSystemTest;
+
+/* Accessing local images
+const [image, setImage] = useState(null);
+
+ const pickImage = async () => {
+   // No permissions request is necessary for launching the image library
+   let result = await ImagePicker.launchImageLibraryAsync({
+     mediaTypes: ImagePicker.MediaTypeOptions.All,
+     allowsEditing: true,
+     aspect: [4, 3],
+     quality: 1,
+   });
+
+   console.log(result);
+
+   if (!result.cancelled) {
+     setImage(result.uri);
+   }
+ };
+*/
+
+
+/* Read from a local source
+<Text> local image</Text>
+<Image source={{ uri: fileUri }} resizeMode={'cover'} style={styles.storyListSquare}></Image>
+
+
+*/

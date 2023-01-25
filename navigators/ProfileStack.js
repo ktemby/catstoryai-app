@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AboutScreen from '../views/About';
 import CreateStory from '../views/CreateStory';
 import CatCreation from '../views/CatCreation';
-import Create from '../views/Create';
+import FileSystemTest from '../views/FileSystemTest';
 import styles, {getColorScheme} from '../views/Styles';
 
 
@@ -28,6 +28,13 @@ function ProfileStack() {
         <Stack.Screen name="CatCreation" component={CatCreation}
           options={{
             title: 'My Cats',
+            headerTransparent: true,
+            headerTintColor: themeColorStyle.color,
+          }}
+        />
+        <Stack.Screen name="FileSystemTest" component={FileSystemTest}
+          options={{
+            title: 'File System Testing',
             headerTransparent: true,
             headerTintColor: themeColorStyle.color,
           }}
