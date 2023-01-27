@@ -25,7 +25,7 @@ function AboutScreen({navigation}) {
                 </Image>
                 <Text style={{color: 'white', padding: 10}}>Curated AI stories and Art</Text>
                 {seeMyCatsButton}
-                {testFilesystemButton}
+                {!testFilesystemButton}
             </View>
           </ScrollView>
         </SafeAreaView>

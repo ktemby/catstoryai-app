@@ -124,8 +124,10 @@ function CreateStory({navigation}) {
 
           <View style={[styles.container, {paddingTop: 0}]}>
             {storyInputComponent}
-            {chatGPTInteraction}
-            {createImagePurchaseButton}
+            <View style={[styles.container, {marginTop: 10}]}>
+              {chatGPTInteraction}
+              {createImagePurchaseButton}
+            </View>
           </View>
 
           <View style={styles.container}>
