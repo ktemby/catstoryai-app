@@ -29,6 +29,7 @@
     "lottie-react-native": "5.1.4",
     "react": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-blurhash": "^1.1.10",
     "react-native-dotenv": "^3.4.7",
     "react-native-gesture-handler": "~2.8.0",
     "react-native-pager-view": "6.0.1",
