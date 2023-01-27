@@ -1,30 +1,58 @@
-import React from 'react';
-import { Text, View, Pressable, FlatList, ImageBackground} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { Text, View, Image, Pressable, FlatList, ImageBackground, ActivityIndicator, RefreshControl} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from "expo-linear-gradient";
 import customData from '../assets/storydata.json';
-import styles from './Styles'
+import styles from '../views/Styles'
+import CachedImageBackground from "../components/CachedImageBackground";
+import LoadLibrary from "../models/LibraryStorage"
 
 const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
-function StoriesScreen({navigation}) {
-  var renderItem = ({ item }) => (
+const StoriesScreen = ({navigation}) => {
+
+  let [library, setLibrary] = useState();
+  let [refreshing, setRefreshing] = useState(true);
+
+  useEffect(() => {
+
+      getData();
+    }, []);
+
+    const getData = async () => {
+        const update = await LoadLibrary();
+        setLibrary(update);
+        setRefreshing(false);
+      }
+
+  var renderItem = ({ item }) => {
+    let prepend = "";
+    !!item.cdn ? prepend = myCDN : "";
+    return (
       <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
         <View style={styles.storyListSquare}>
-          <ImageBackground source={{ uri: myCDN.concat(item.image) }} resizeMode="cover" style={styles.image}>
+          <CachedImageBackground
+            source={{ uri: prepend.concat(item.image).replace(/ /g, "%20")}}
+            resizeMode="cover"
+            style={styles.image}>
             <Text style={styles.title}>{(item.name)}</Text>
-          </ImageBackground>
+          </CachedImageBackground>
         </View>
       </Pressable>
   );
+  }
   return (
     <LinearGradient {...styles.gradientProps}>
     <SafeAreaView style={[styles.safeAreaFull, {alignItems: 'center'}]}>
         <View>
+         {refreshing ? <ActivityIndicator /> : null}
           <FlatList
-            data={customData}
+            data={library}
             renderItem={renderItem}
             numColumns={2}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={getData}  />
+            }
           />
         </View>
       </SafeAreaView>

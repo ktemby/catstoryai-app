@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, useColorScheme} from 'react-native';
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 
-const gitCDN = "https://github.com/ktemby/expo-test-app/raw/main/assets/stories/";
-
 export const getColorScheme = () => {
   const colorScheme = useColorScheme();
   const themeColorStyle = styles.themeColorStyle[colorScheme];
@@ -49,7 +47,6 @@ const styles = StyleSheet.create({
   },
   gradientProps: {
     colors: ['#03DAC6', '#6200EE'],
-    //future dark gradient ['#212121', '#3000BB'],
     style: {
       height: "100%",
       width: "100%",
@@ -115,7 +112,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 200,
     width: 200,
-    //width: '100%',
     textAlign: "bottom",
   },
   title: {
