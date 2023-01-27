@@ -25,11 +25,13 @@ const CachedImage = (props) => {
       // if the image path exists, we return and display it
       if (image.exists) {
         setUri(image.uri);
+        //console.log(`retrieved image from filesystem ${JSON.stringify(image)}`)
         return;
       }
 
       // otherwise we download the image, then return the local reference to it.
       const newImage = await FileSystem.downloadAsync(source.uri, path);
+      //console.log(`cached new image to filesystem ${JSON.stringify(newImage)}`)
       setUri(newImage.uri);
     } catch (err) {
       console.log(err);
