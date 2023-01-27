@@ -10,28 +10,10 @@ import CachedImage from "../components/CachedImage";
 import CachedImageBackground from "../components/CachedImageBackground";
 import initialLibrary from '../assets/storydata.json';
 import StoryViewer from '../components/StoryViewer';
-import LoadLibrary from '../models/LibraryStorage';
+import LoadLibrary, {resetLibrary, getLibraryPath, getLibraryMaxID} from '../models/LibraryStorage';
 
-let getMaxID = async (arrayData) => {
-  return (
-    arrayData.reduce((arr, oId) => {
-      return (arr = arr> oId.id ? arr : oId.id);
-      })
-  );
-};
-
-let resetLibrary = async (setLibrary) => {
-  // Create: (write the initial custom data to storage)
-  let libraryFilename = 'libraryData.json';
-  const libraryPath: string = `${FileSystem.documentDirectory}${libraryFilename}`;
-  let factoryLibrary = await FileSystem.writeAsStringAsync( libraryPath, JSON.stringify(initialLibrary));
-  const libraryCheck = await FileSystem.getInfoAsync(libraryPath);
-  console.log(libraryCheck);
-  console.log("reset library to initial");
-};
-
-function removeId(data, id) {
-  data.forEach((item, index) => {
+function removeId(library, id) {
+  library.forEach((item, index) => {
     if (item.id && item.id === id) {
       data.splice(index, 1);
       return true;
@@ -39,51 +21,43 @@ function removeId(data, id) {
   });
 }
 
+let checkLibraryData = (libraryData) => {
+  console.log(`Library entries: ${libraryData.length}`);
+  console.log(`Library maxId: ${getLibraryMaxID(libraryData)}`);
+}
+
+let saveStoryToLibrary = async (newStory) => {
+  let libraryPath = getLibraryPath();
+  let libraryData = await LoadLibrary();
+
+  let maxId = getLibraryMaxID(libraryData)
+  newStory.id = maxId+1;
+
+  libraryData.push(newStory);
+
+  // Save the changes to storage
+  await FileSystem.writeAsStringAsync( libraryPath, JSON.stringify(libraryData));
+  console.log(`Updated Library with ${newStory.name} id: ${newStory.id}`);
+}
+
 let readWriteTest = async () => {
   try {
-    let newstory = {
+    let newStory = {
       "name": "A Cat Adventure",
       "id": "",
       "description": "Here's a new story item we'll add to our library",
-      "image": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-ifp2DX8dA4TXI6LQwRqbuIHO/user-T4KQTXd9eDOjXgaF7j0c0fbE/img-NdTAswSVglQkFamekIRVO0cJ.png?st=2023-01-27T07%3A11%3A28Z&se=2023-01-27T09%3A11%3A28Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-01-26T23%3A32%3A35Z&ske=2023-01-27T23%3A32%3A35Z&sks=b&skv=2021-08-06&sig=Tq0zwNFBBvQfBBakVD/uQFdlOiSf2oeuWYpUlzKXfN4%3D",
+      "image": "https://oaidalleapiprodscus.blob.core.windows.net/private/org-ifp2DX8dA4TXI6LQwRqbuIHO/user-T4KQTXd9eDOjXgaF7j0c0fbE/img-8HP3nLNwceNEjcBZ3bpPPsbA.png?st=2023-01-27T08%3A29%3A56Z&se=2023-01-27T10%3A29%3A56Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-01-26T23%3A31%3A08Z&ske=2023-01-27T23%3A31%3A08Z&sks=b&skv=2021-08-06&sig=6Hjx3x7kXAqgLloh8sq9jths7ntsX2e8yI6myJgb7YI%3D",
       "storyInput": "Tell me a story about a cat named Copernicus who is a small brown tabby with ear tufts and a loving personality.",
       "imageInput": "A Cat Adventure with magical castles on a mountain",
       "hiddenInput": ", cat, oil painting, highly detailed, global illumination, fantasy, ",
       "cdn": false,
     };
 
-    // Read: read it back in as a string
-    let libraryFilename = 'libraryData.json';
-    const libraryPath: string = `${FileSystem.documentDirectory}${libraryFilename}`;
-
-    let libraryData = await LoadLibrary();
-    console.log("Finished awaiting load === Read: libraryData: ");
-    console.log(libraryData[2].name);
-    console.log(libraryData[2].isFeatured);
-
-    // Create part 2:
-    // Push new story onto the new listen
-    // read the highest id value currently in stack.
-    let maxId = libraryData.reduce((arr, oId) => {
-      return (arr = arr> oId.id ? arr : oId.id);
-      });
-    console.log(`maxId: ${maxId}`);
-
-    newstory.id = maxId+1;
-
-    libraryData.push(newstory);
-    console.log("library size now");
-    let newMax = libraryData.reduce((arr, oId) => {
-      return (arr = arr> oId.id ? arr : oId.id);
-      });
-    console.log(newMax);
-    console.log(libraryData.length);
+    // Create
+    await saveStoryToLibrary(newStory)
 
     // Update
-    libraryData[2].isFeatured = 'false';
-    await FileSystem.writeAsStringAsync( libraryPath, JSON.stringify(libraryData));
-    console.log("updated file")
-
+    // Todo: need to learn the 'merge' rather than push method.
     //libraryData = JSON.parse(await FileSystem.readAsStringAsync(libraryDataUri));
     //console.log("Read: catStoryData: ");
     //console.log(libraryData[2].isFeatured);
@@ -91,13 +65,14 @@ let readWriteTest = async () => {
 
     // Delete
     // Id of story catStoryData[2] is 3
-    console.log(JSON.stringify(libraryData[2].id));
-    console.log(JSON.stringify(libraryData[2].name));
+    //console.log(JSON.stringify(libraryData[2].id));
+    //console.log(JSON.stringify(libraryData[2].name));
 
     //console.log(catStoryData[2].name);
+    //let idToDelete = 3
     //removeId(libraryData, 3)
-    console.log(JSON.stringify(libraryData[2].id));
-    console.log(JSON.stringify(libraryData[2].name));
+    //console.log(JSON.stringify(libraryData[2].id));
+    //console.log(JSON.stringify(libraryData[2].name));
 
      } catch(error){
         console.log(error);

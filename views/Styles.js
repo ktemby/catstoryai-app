@@ -58,10 +58,12 @@ const styles = StyleSheet.create({
     light: {
       color: "black",
       backgroundColor: 'white',
+      highlight: "#616161",
     },
     dark: {
       backgroundColor: '#212121',
       color: "white",
+      highlight: "#616161",
     },
     null: {
       color: "black",
@@ -125,8 +127,8 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: '100%',
-    margin: 20,
-    marginBottom: 10,
+    //margin: 20,
+    //marginBottom: 10,
     padding: 20,
     paddingTop: 40,
     paddingBottom: 40,
