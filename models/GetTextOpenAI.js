@@ -138,7 +138,7 @@ const GetTextOpenAI = (input, output, setOutput, showOutput) => {
     )
   };
 
-  let createStoryPurchaseButton = new PurchaseButton(() => { handleSubmit()},"Create Story!\t\t","$0.09" );
+  let createStoryPurchaseButton = new PurchaseButton(() => { handleSubmit()},"Create Story!","9", "heart-circle" );
 
   return (
     <View style={[styles.container, {width: "100%"}]}>

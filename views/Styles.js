@@ -137,11 +137,10 @@ const styles = StyleSheet.create({
   buttonTextStyle: {
     fontWeight: 'bold',
     color: 'white',
-    padding: 10
   },
   buttonContainerStyle: {
     alignItems: "flex-start",
-    padding: 10,
+    padding: 20,
     borderRadius: 5,
     backgroundColor: '#424242AA'
   },

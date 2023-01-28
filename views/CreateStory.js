@@ -54,7 +54,7 @@ function CreateStory({navigation}) {
    let createImagePurchaseButton = new PurchaseButton(() => {
        setFetchedState('loading');
        getImagesOAI(imagePrep.concat(storyInput), setFetchedState, setImageData);
-     },"Give the Story a Picture","$0.09" );
+     },"Create Picture!","9","heart-circle" );
 
    let savePurchaseButton = new PurchaseButton(() => {
      setShowModal(true);
