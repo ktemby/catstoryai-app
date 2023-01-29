@@ -38,7 +38,7 @@ const CachedImage = (props) => {
     }
   };
 
-  return <Image style={style} source={{ uri: source.uri }} />;
+  return <Image style={style} source={{ uri: uri }} />;
 }
 
 export default CachedImage;
