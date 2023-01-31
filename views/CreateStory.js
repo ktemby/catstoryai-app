@@ -54,7 +54,7 @@ function CreateStory({navigation}) {
    let createImagePurchaseButton = new PurchaseButton(() => {
        setFetchedState('loading');
        getImagesOAI(imagePrep.concat(storyInput), setFetchedState, setImageData);
-     },"Create Picture!","9","heart-circle" );
+     },"Create Picture!","9","cat" );
 
    let savePurchaseButton = new PurchaseButton(() => {
      setShowModal(true);
@@ -136,6 +136,7 @@ function CreateStory({navigation}) {
 
           <View style={{marginTop: 20}}>
             {thisStory}
+
           </View>
 
           { (!!output || !!imageData.data[0].url) &&

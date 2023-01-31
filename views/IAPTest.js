@@ -13,6 +13,7 @@ import StoryViewer from '../components/StoryViewer';
 import LoadLibrary, {resetLibrary, getLibraryPath, getLibraryMaxID, saveStoryToLibrary} from '../models/LibraryStorage';
 import Purchases from 'react-native-purchases';
 import { Blurhash } from 'react-native-blurhash';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 function removeId(library, id) {
@@ -32,39 +33,98 @@ let readWriteTest = async () => {
     console.log("made it");
 };
 
+
+let initialPackage =
+ [
+   {
+     "identifier": "consumable",
+     "offeringIdentifier": "default",
+     "packageType": "CUSTOM",
+     "product": {
+       "currencyCode": "USD",
+       "description": "Heartwarming stories featuring your Cats",
+       "discounts": [Array],
+       "identifier": "com.keltronix.catstoryai.purchase.story",
+       "introPrice": null,
+       "price": 0.99,
+       "priceString": "$0.99",
+       "productCategory": "NON_SUBSCRIPTION",
+       "productType": "NON_CONSUMABLE",
+       "subscriptionPeriod": null,
+       "title": "Cat StoryAI App"
+   }
+ }
+]
+
+let getIAPData = async(setPackages) => {
+  const offerings = await Purchases.getOfferings();
+  const availablePackages = offerings.all.default.availablePackages;
+  console.log(availablePackages);
+  setPackages(await availablePackages);
+}
+
+const handlePurchase = async (myPackage) => {
+  try {
+    const purchase = await Purchases.purchasePackage(myPackage);;
+  } catch (e) {
+    console.log("Error:", e);
+  }
+};
+
 let IAPTest = (navigation) => {
+  let [packages, setPackages] = useState(initialPackage);
+  const themeColorStyle = getColorScheme();
 
   let imageData = { "created":1673128176, "data":[{"url":  null }]}
 
+  useEffect(() => {
+      getIAPData(setPackages);
+  }, []);
+
   return (
-    <LinearGradient {...styles.gradientProps}>
-      <SafeAreaView style={styles.safeAreaHeader}>
+
+      <SafeAreaView style={[styles.safeAreaHeader, themeColorStyle]}>
         <ScrollView>
           <View style={styles.container}>
 
-            <View style={[styles.container, {width: "100%"}]}>
-              <Blurhash
-                blurhash="LGFFaXYk^6#M@-5c,1J5@[or[Q6."
-                style={{flex: 1, width: "100%", height: 300, justifyContent: "center", alignItems: "center"}}>
-                  <Text style={styles.Heading}>Debug use Only!</Text>
-                  <Text style={[styles.text, {textAlign: "center"}]}>purchase testing</Text>
-              </Blurhash>
-            </View>
 
-            <View style={[styles.container, {width: "100%", backgroundColor: "#212121", padding: 50}]}>
-              <Button onPress={() => "yarp"}
-               title="Buy 100 credits">
-              </Button>
-            </View>
+          <View style={[styles.container, {width: "100%"}]}>
+            <Blurhash
+              blurhash="LGFFaXYk^6#M@-5c,1J5@[or[Q6."
+              style={{flex: 1, width: "100%", height: 300, justifyContent: "center", alignItems: "center"}}>
+
+                <Text style={[styles.Heading, themeColorStyle]}>Buy Coins!</Text>
+                <Text style={[styles.text, {textAlign: "center"}, themeColorStyle]}>for more stories</Text>
+            </Blurhash>
+          </View>
+
+          <View style={[styles.container, { margin: 30, width: "40%", borderRadius: 15, borderWidth: 1, borderColor: themeColorStyle.highlight } ]}>
+            <Pressable
+              style={{flex: 1, width: "100%", height: 250, justifyContent: "center", alignItems: "center"}}
+              onPress={() => handlePurchase(packages[0])}
+              >
+
+              <Text style={[styles.text, {textAlign: "center"}, themeColorStyle]}>{packages[0].product.description}</Text>
+              <View style={{borderRadius:70, borderColor: "#424242", borderWidth: 1, backgroundColor: "#212121"}}>
+              <MaterialCommunityIcons name="cat" color="#03DAC5" size={120} />
+              </View>
+              <Text style={[{color:"black", fontSize: 20, marginTop: 10},themeColorStyle]}>{packages[0].product.priceString}</Text>
+
+            </Pressable>
+          </View>
 
           </View>
         </ScrollView>
       </SafeAreaView>
-      </LinearGradient>
+
   );
 }
 
 export default IAPTest;
+
+
+
+
 
 /* Accessing local images
 const [image, setImage] = useState(null);
