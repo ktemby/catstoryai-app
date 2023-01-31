@@ -25,7 +25,7 @@ const placeholder = {
 const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
 let imagePrep = ", cat, oil painting, highly detailed, global illumination, fantasy, ";
-let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 worlds long about ";
+let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 words long about ";
 
 function CreateStory({navigation}) {
 
@@ -149,7 +149,7 @@ function CreateStory({navigation}) {
             setShowModal={setShowModal}
             >
               {titleInputComponent}
-              <View style={{flexDirection: "row", alignItems: "center", justifyContent: "stretch"}}>
+              <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
                 <CancelButton item={newStory} style={{padding: 0}} />
                 <SaveButton item={newStory} style={{padding: 0}}/>
 
