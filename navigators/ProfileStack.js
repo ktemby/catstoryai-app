@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AboutScreen from '../views/About';
 import CreateStory from '../views/CreateStory';
 import CatCreation from '../views/CatCreation';
-import FileSystemTest from '../views/FileSystemTest';
+import IAPTest from '../views/IAPTest';
 import styles, {getColorScheme} from '../views/Styles';
 
 
@@ -32,9 +32,9 @@ function ProfileStack() {
             headerTintColor: themeColorStyle.color,
           }}
         />
-        <Stack.Screen name="FileSystemTest" component={FileSystemTest}
+        <Stack.Screen name="TestPage" component={IAPTest}
           options={{
-            title: 'File System Testing',
+            title: 'IAP Testing',
             headerTransparent: true,
             headerTintColor: themeColorStyle.color,
           }}

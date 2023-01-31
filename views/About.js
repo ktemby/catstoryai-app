@@ -11,7 +11,7 @@ function AboutScreen({navigation}) {
 
   let seeMyCatsButton = new PurchaseButton(() => { navigation.navigate('CatCreation')},"See My Cats","〉" );
 
-  let testFilesystemButton = new PurchaseButton(() => { navigation.navigate('FileSystemTest')},"Test Filesystem","〉" );
+  let testButton = new PurchaseButton(() => { navigation.navigate('TestPage')},"Test Page","〉" );
 
   return (
       <LinearGradient {...styles.gradientProps}>
@@ -25,7 +25,7 @@ function AboutScreen({navigation}) {
                 </Image>
                 <Text style={{color: 'white', padding: 10}}>Curated AI stories and Art</Text>
                 {seeMyCatsButton}
-                {testFilesystemButton}
+                {testButton}
             </View>
           </ScrollView>
         </SafeAreaView>
