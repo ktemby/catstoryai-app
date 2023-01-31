@@ -10,25 +10,25 @@ import LoadLibrary from "../models/LibraryStorage"
 const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
 const StoriesScreen = ({navigation}) => {
-
   let [library, setLibrary] = useState();
   let [refreshing, setRefreshing] = useState(true);
 
   useEffect(() => {
-
       getData();
     }, []);
 
-    const getData = async () => {
-        const update = await LoadLibrary();
-        setLibrary(update);
-        setRefreshing(false);
-      }
+  const getData = async () => {
+      const update = await LoadLibrary();
+      setLibrary(update);
+      setRefreshing(false);
+  };
 
   var renderItem = ({ item }) => {
     let prepend = "";
     !!item.cdn ? prepend = myCDN : "";
-    return (
+    let showEntry = !!item.image && !!item.description; // set as always true for now.
+
+    if (true) { return (
       <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
         <View style={styles.storyListSquare}>
           <CachedImageBackground
@@ -39,7 +39,7 @@ const StoriesScreen = ({navigation}) => {
           </CachedImageBackground>
         </View>
       </Pressable>
-  );
+    ); } else {return (null);};
   }
   return (
     <LinearGradient {...styles.gradientProps}>
