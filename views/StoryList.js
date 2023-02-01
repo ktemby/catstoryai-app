@@ -26,9 +26,7 @@ const StoriesScreen = ({navigation}) => {
   var renderItem = ({ item }) => {
     let prepend = "";
     !!item.cdn ? prepend = myCDN : "";
-    let showEntry = !!item.image && !!item.description; // set as always true for now.
-
-    if (true) { return (
+    return (
       <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
         <View style={styles.storyListSquare}>
           <CachedImageBackground
@@ -39,8 +37,9 @@ const StoriesScreen = ({navigation}) => {
           </CachedImageBackground>
         </View>
       </Pressable>
-    ); } else {return (null);};
-  }
+    );
+  };
+
   return (
     <LinearGradient {...styles.gradientProps}>
     <SafeAreaView style={[styles.safeAreaFull, {alignItems: 'center'}]}>
@@ -61,3 +60,16 @@ const StoriesScreen = ({navigation}) => {
 }
 
 export default StoriesScreen;
+
+/* Blurhash as a container working on iOS not android
+import { Blurhash } from 'react-native-blurhash';
+<View style={[styles.container, {width: "100%"}]}>
+  <Blurhash
+    blurhash="LGFFaXYk^6#M@-5c,1J5@[or[Q6."
+    style={{flex: 1, width: "100%", height: 100, justifyContent: "center", alignItems: "center"}}>
+  </Blurhash>
+  <Text style={[styles.Heading, themeColorStyle]}>Buy Coins!</Text>
+  <Text style={[styles.text, {textAlign: "center"}, themeColorStyle]}>for more stories</Text>
+</View>
+
+*/
