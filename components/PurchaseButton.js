@@ -1,6 +1,7 @@
 import { View, Text, Pressable } from 'react-native';
 import styles from '../views/Styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Coin from '../components/Coin';
 
 let PurchaseButton = (callback, text, price, icon) => {
   return(
@@ -13,10 +14,12 @@ let PurchaseButton = (callback, text, price, icon) => {
               <Text style={styles.buttonTextStyle}>{text}</Text>
             </View>
             <View style={{width: "10%", justifyContent: "center", alignItems: "flex-end"}} >
-              {!!icon && <MaterialCommunityIcons name={icon} color="#03DAC5" size={20} />}
+              {!!icon &&
+                <Coin size={20} />
+              }
             </View>
             <View style={{width: "20%", justifyContent: "center", alignItems: "flex-start"}}>
-              <Text style={[styles.buttonTextStyle, {margin: 1}]}>{price}</Text>
+              <Text style={[styles.buttonTextStyle, {marginLeft: 3}]}>{price}</Text>
             </View>
           </View>
 

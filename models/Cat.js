@@ -46,7 +46,7 @@ export let copernicusValues = {
   breed : "Tabby",
   breedMix : "",
   //breedMix : "Egyptian Mao",
-  feature : "fluffy ear tufts",
+  feature : "ear tufts",
   personality : "loving",
   superpower : "cuddle and purr",
   image : "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
