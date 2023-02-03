@@ -34,7 +34,7 @@ function ProfileStack() {
         />
         <Stack.Screen name="TestPage" component={IAPTest}
           options={{
-            title: 'IAP Testing',
+            title: 'Store',
             headerTransparent: true,
             headerTintColor: themeColorStyle.color,
           }}

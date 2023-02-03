@@ -12,9 +12,8 @@ import initialLibrary from '../assets/storydata.json';
 import StoryViewer from '../components/StoryViewer';
 import LoadLibrary, {resetLibrary, getLibraryPath, getLibraryMaxID, saveStoryToLibrary} from '../models/LibraryStorage';
 import Purchases from 'react-native-purchases';
-import { Blurhash } from 'react-native-blurhash';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import Coin from '../components/Coin';
 
 function removeId(library, id) {
   library.forEach((item, index) => {
@@ -42,12 +41,12 @@ let initialPackage =
      "packageType": "CUSTOM",
      "product": {
        "currencyCode": "USD",
-       "description": "Heartwarming stories featuring your Cats",
+       "description": "placeholder",
        "discounts": [Array],
        "identifier": "com.keltronix.catstoryai.purchase.story",
        "introPrice": null,
-       "price": 0.99,
-       "priceString": "$0.99",
+       "price": 0.90,
+       "priceString": "$0.90",
        "productCategory": "NON_SUBSCRIPTION",
        "productType": "NON_CONSUMABLE",
        "subscriptionPeriod": null,
@@ -57,15 +56,22 @@ let initialPackage =
 ]
 
 let getIAPData = async(setPackages) => {
-  const offerings = await Purchases.getOfferings();
-  const availablePackages = offerings.all.default.availablePackages;
-  console.log(availablePackages);
-  setPackages(await availablePackages);
+  console.log("getting offerings");
+  try {
+    const offerings = await Purchases.getOfferings();
+    console.log(offerings);
+    const availablePackages = offerings.all.default.availablePackages;
+    console.log(availablePackages);
+    setPackages(await availablePackages);
+    console.log("got offerings");
+  }  catch (e) {
+    console.log("Error:", JSON.stringify(e));
+  }
 }
 
 const handlePurchase = async (myPackage) => {
   try {
-    const purchase = await Purchases.purchasePackage(myPackage);;
+    const purchase = await Purchases.purchasePackage(myPackage);
   } catch (e) {
     console.log("Error:", e);
   }
@@ -74,8 +80,6 @@ const handlePurchase = async (myPackage) => {
 let IAPTest = (navigation) => {
   let [packages, setPackages] = useState(initialPackage);
   const themeColorStyle = getColorScheme();
-
-  let imageData = { "created":1673128176, "data":[{"url":  null }]}
 
   useEffect(() => {
       getIAPData(setPackages);
@@ -88,29 +92,29 @@ let IAPTest = (navigation) => {
           <View style={styles.container}>
 
 
-          <View style={[styles.container, {width: "100%"}]}>
-            <Blurhash
-              blurhash="LGFFaXYk^6#M@-5c,1J5@[or[Q6."
-              style={{flex: 1, width: "100%", height: 300, justifyContent: "center", alignItems: "center"}}>
-
-                <Text style={[styles.Heading, themeColorStyle]}>Buy Coins!</Text>
-                <Text style={[styles.text, {textAlign: "center"}, themeColorStyle]}>for more stories</Text>
-            </Blurhash>
-          </View>
-
           <View style={[styles.container, { margin: 30, width: "40%", borderRadius: 15, borderWidth: 1, borderColor: themeColorStyle.highlight } ]}>
             <Pressable
               style={{flex: 1, width: "100%", height: 250, justifyContent: "center", alignItems: "center"}}
               onPress={() => handlePurchase(packages[0])}
               >
-
               <Text style={[styles.text, {textAlign: "center"}, themeColorStyle]}>{packages[0].product.description}</Text>
-              <View style={{borderRadius:70, borderColor: "#424242", borderWidth: 1, backgroundColor: "#212121"}}>
-              <MaterialCommunityIcons name="cat" color="#03DAC5" size={120} />
+              <View style={{margin: 20}}>
+                <Coin size={60} />
               </View>
+
               <Text style={[{color:"black", fontSize: 20, marginTop: 10},themeColorStyle]}>{packages[0].product.priceString}</Text>
 
             </Pressable>
+          </View>
+
+
+          <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{width: "10%", justifyContent: "center", alignItems: "flex-end"}} >
+              <Coin size={20} />
+            </View>
+            <View style={{width: "20%", justifyContent: "center", alignItems: "flex-start"}}>
+              <Text style={[styles.body, {marginLeft: 3}]}>100</Text>
+            </View>
           </View>
 
           </View>
@@ -121,10 +125,6 @@ let IAPTest = (navigation) => {
 }
 
 export default IAPTest;
-
-
-
-
 
 /* Accessing local images
 const [image, setImage] = useState(null);
