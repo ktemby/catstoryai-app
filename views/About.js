@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles'
 import PurchaseButton from '../components/PurchaseButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Balance from '../components/Balance';
 
 const imageString = '../assets/copernicus_and_margot.jpeg';
 
@@ -11,7 +12,7 @@ function AboutScreen({navigation}) {
 
   let seeMyCatsButton = new PurchaseButton(() => { navigation.navigate('CatCreation')},"See My Cats","〉" );
 
-  let testButton = new PurchaseButton(() => { navigation.navigate('TestPage')},"Test Page","〉" );
+  let testButton = new PurchaseButton(() => { navigation.navigate('Store')},"Store","〉" );
 
   return (
       <LinearGradient {...styles.gradientProps}>
@@ -29,6 +30,7 @@ function AboutScreen({navigation}) {
             </View>
           </ScrollView>
         </SafeAreaView>
+        <Balance />
       </LinearGradient>
   );
 }

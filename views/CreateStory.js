@@ -119,6 +119,7 @@ function CreateStory({navigation}) {
 
   return (
     <LinearGradient {...styles.gradientProps}>
+
       <SafeAreaView style={[styles.safeAreaFull]}>
         <ScrollView>
 
@@ -159,6 +160,7 @@ function CreateStory({navigation}) {
 
         </ScrollView>
       </SafeAreaView>
+
       </LinearGradient>
   );
 }

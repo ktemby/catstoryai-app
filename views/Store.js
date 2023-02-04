@@ -15,15 +15,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Coin from '../components/Coin';
 import Balance from '../components/Balance';
 
-function removeId(library, id) {
-  library.forEach((item, index) => {
-    if (item.id && item.id === id) {
-      data.splice(index, 1);
-      return true;
-    }
-  });
-}
-
 let readWriteTest = async () => {
   try {
      } catch(error){

@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AboutScreen from '../views/About';
 import CreateStory from '../views/CreateStory';
 import CatCreation from '../views/CatCreation';
-import IAPTest from '../views/IAPTest';
+import Store from '../views/Store';
 import styles, {getColorScheme} from '../views/Styles';
 
 
@@ -32,7 +32,7 @@ function ProfileStack() {
             headerTintColor: themeColorStyle.color,
           }}
         />
-        <Stack.Screen name="TestPage" component={IAPTest}
+        <Stack.Screen name="Store" component={Store}
           options={{
             title: 'Store',
             headerTransparent: true,
