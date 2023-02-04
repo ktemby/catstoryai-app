@@ -16,28 +16,40 @@ export let getLibraryMaxID = (library) => {
   );
 };
 
-export let saveStoryToLibrary = async (newStory) => {
-  let libraryPath = getLibraryPath();
-  let libraryData = await LoadLibrary();
+export let removeId = async (library, id) => {
+  library.forEach((item, index) => {
+    if (item.id && item.id === id) {
+      data.splice(index, 1);
+      return true;
+    }
+  });
+  await saveUpdatedLibrary(libraryData);
+}
 
+export let saveUpdatedLibrary = async (libraryData) => {
+  let libraryPath = getLibraryPath();
+  // Overwrite the old library with current changes to storage
+  await FileSystem.writeAsStringAsync( libraryPath, JSON.stringify(libraryData));
+}
+
+export let saveStoryToLibrary = async (newStory) => {
+  // Load current library
+  let libraryData = await LoadLibrary();
   let maxId = getLibraryMaxID(libraryData)
   newStory.id = maxId+1;
 
   libraryData.push(newStory);
-
-  // Save the changes to storage
-  await FileSystem.writeAsStringAsync( libraryPath, JSON.stringify(libraryData));
+  await saveUpdatedLibrary(libraryData);
   console.log(`Updated Library with ${newStory.name} id: ${newStory.id}`);
 }
 
 /*
  resetLibrary - Write the initial json data to storage
 */
-export let resetLibrary = async (setLibrary) => {
+export let resetLibrary = async () => {
   let libraryPath = getLibraryPath();
-  let factoryLibrary = await FileSystem.writeAsStringAsync( libraryPath, JSON.stringify(initialLibrary));
-  const libraryCheck = await FileSystem.getInfoAsync(libraryPath);
-  console.log("reset library to initial");
+  await saveUpdatedLibrary(initialLibrary);
+  console.log("Reset library to initial");
 };
 
 let LoadLibrary = async (setLibrary) => {
