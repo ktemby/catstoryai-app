@@ -19,7 +19,7 @@ function requestImageJson(imagePrompt, n_images) {
     body: JSON.stringify({
       "prompt": imagePrompt,
       "n": n_images,
-      "size": "512x512",
+      "size": "1024x1024",
       "response_format": "url",
     })
   })
@@ -32,28 +32,28 @@ const maxPromptLength = 1000;
 const scrubWords = [" a ", " and ", " at ", " but ", " for ", " had ", " he ", " her ", " his ", " in ", " of ", " on ", " she ", " that ", " the ", " they ", " to ", " was ", " with ", " when "]
 
 export const getImagesOAI = async(imagePrompt, setFetchedState, setImageData) => {
-     var prompt = imagePrompt;
-     prompt = removeFromString(scrubWords, prompt);
-     prompt = resizeString(maxPromptLength, prompt);
+   var prompt = imagePrompt;
+   prompt = removeFromString(scrubWords, prompt);
+   prompt = resizeString(maxPromptLength, prompt);
 
-     try{
-       const response=await fetch(url, requestImageJson(prompt, 1) );
-       const data=await response.json();
-       if (typeof(data.data) == 'undefined') { // Ensure we have data
-         setImageData(failData);
-         setFetchedState('blocked');
-         } else {
-           setImageData(data);
-           console.log(`Data received for image prompt: ${prompt}` )
-       };
-       console.log(data);
-     }
-     catch(error){
-       console.log(error);
+   try{
+     const response=await fetch(url, requestImageJson(prompt, 1) );
+     const data=await response.json();
+     if (typeof(data.data) == 'undefined') { // Ensure we have data
        setImageData(failData);
-     }
-     finally{
-       setFetchedState(null);
+       setFetchedState('blocked');
+       } else {
+         setImageData(data);
+         console.log(`Data received for image prompt: ${prompt}` )
+     };
+     console.log(data);
+   }
+   catch(error){
+     console.log(error);
+     setImageData(failData);
+   }
+   finally{
+     setFetchedState(null);
    }
 };
 

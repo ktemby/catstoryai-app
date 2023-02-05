@@ -4,7 +4,6 @@ import React, {useState} from 'react';
  * Checks whether the total score from categories exceeds a thresnhold.
  */
 export const CheckModeration = (moderationSample, modThreshold) => {
-  //const [modScore, setModScore] = useState(0);
   let modScore = 0;
 
   for (const each in moderationSample.results[0].category_scores) {
@@ -19,7 +18,9 @@ export const CheckModeration = (moderationSample, modThreshold) => {
 const blocked = -100;
 /*
  * These are tokens and weightings to guide OpenAI responses (i.e., block these words).
-
+*/
+export let bias_words = {};
+/*
  export let bias_words = {
    "532": blocked, // ' -'
    "851": blocked,
@@ -31,11 +32,7 @@ const blocked = -100;
    "438": blocked, // '--'
    "1464": blocked, // 'always'
  };
-
-
- */
-export let bias_words = {};
-
+*/
 
 /*
 export let bias_words = {
