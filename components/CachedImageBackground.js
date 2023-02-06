@@ -10,12 +10,12 @@ let CachedImageBackground = (props) => {
       <CachedImage source={props.source} resizeMode={props.resizeMode}
         style={[
           StyleSheet.absoluteFill,
-              {
-                width: flattenedStyle?.width,
-                height: flattenedStyle?.height,
-              },
-              props.style,
-            ]}>
+            {
+              width: flattenedStyle?.width,
+              height: flattenedStyle?.height,
+            },
+            props.style,
+          ]}>
       </CachedImage>
       {props.children}
     </View>
