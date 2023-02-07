@@ -1,14 +1,12 @@
-import React, {useEffect} from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import BottomTab from './navigators/BottomTabNav';
-import { Platform, useColorScheme } from 'react-native';
-import { MyDarkTheme, MyLightTheme} from "./views/Styles";
+import React, {useEffect, useContext} from 'react';
+import Root from './navigators/Root';
+import { Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { REVENUE_CAT_PUB_KEY_APPLE } from '@env';
 import { REVENUE_CAT_PUB_KEY_GOOGLE } from '@env';
+import {AppContextProvider} from './store/context';
 
 export default function App() {
-  const scheme = useColorScheme();
 
   useEffect(() => {
       (Platform.OS === "android")
@@ -17,8 +15,8 @@ export default function App() {
     }, []);
 
   return (
-    <NavigationContainer theme={scheme === 'dark' ? MyDarkTheme : MyLightTheme}>
-      <BottomTab />
-    </NavigationContainer>
+    <AppContextProvider>
+      <Root />
+    </AppContextProvider>
   );
 }
