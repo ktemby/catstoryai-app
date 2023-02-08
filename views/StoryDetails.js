@@ -1,23 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import styles, {getColorScheme} from '../views/Styles';
+import styles from '../views/Styles';
 import StoryViewer from '../components/StoryViewer';
+import {AppContext} from '../store/context';
 
 function StoryDetail({ route, navigation}) {
   const { item } = route.params;
-  const themeColorStyle = getColorScheme();
+  const {themeColorStyle} = useContext(AppContext);
 
   let prepend = "";
   const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
   !!item.cdn ? prepend = myCDN : "";
 
-  let thisStory = new StoryViewer(item.name, prepend.concat(item.image).replace(/ /g, "%20"), item.description);
-
   return (
       <SafeAreaView style={[styles.safeAreaFull, themeColorStyle]}>
         <ScrollView>
-          {thisStory}
+          <StoryViewer name={item.name} imageUrl={prepend.concat(item.image).replace(/ /g, "%20")}  story={item.description} />
         </ScrollView>
       </SafeAreaView>
   );
