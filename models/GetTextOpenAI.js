@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Image, Pressable, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from 'react-native';
-import { LinearGradient } from "expo-linear-gradient";
 import styles, { getColorScheme } from '../views/Styles';
 import Cat, {copernicusValues} from "../models/Cat";
 import { OPENAI_API_KEY, OPENAI_EMAIL, OPENAI_PASSWORD } from '@env';
@@ -125,15 +124,19 @@ const GetTextOpenAI = (input, output, setOutput, showOutput) => {
       <View>
         <View>
           { (inputModFlag === true) ? <Text style={styles.body}>{blockedMessage}</Text>
-            : (outputModFlag === true) ? <Text style={styles.body}>{flaggedMessage}</Text>
+            : (true) ? <Text style={[styles.body, {textAlign: "center"}]}>{flaggedMessage}</Text>
             : outputModFlag === false ? showOutput && <Text style={styles.body}>{output}</Text>
             : ""
           }
         </View>
         <View style={styles.container}>
           { (outputModFlag === 'pending') ? LoadingSpinner() : "" }
-        </View>
-        { outputModFlag === true && <Button title="Yes" onPress={() => setOutputModeration(false)} /> }
+
+        {true &&
+          <Pressable title="Yes" style={{borderWidth: 1, alignItems: "center", width: "50%", borderRadius: 10, padding: 10, marginBottom: 30, backgroundColor: "#FFFFFF33"}} onPress={() => setOutputModeration(false)} >
+            <Text style={styles.text}>Yes</Text>
+          </Pressable> }
+          </View>
       </View>
     )
   };
