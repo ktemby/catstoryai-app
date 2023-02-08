@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, Pressable, ScrollView} from 'react-native';
+import { Text, FlatList, View, Image, Pressable, ScrollView} from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import styles from './Styles'
 import PurchaseButton from '../components/PurchaseButton';
@@ -8,27 +8,69 @@ import Balance from '../components/Balance';
 
 const imageString = '../assets/copernicus_and_margot.jpeg';
 
+const accountList = [
+  {
+    title: 'My Cats',
+    navigation: "CatCreation",
+  },
+  {
+    title: 'Store',
+    navigation: "Store",
+  },
+  {
+    title: 'Settings',
+    navigation: "Settings",
+  },
+];
+
+let headerSection = () => {
+  return(
+    <View style={{ flex: 1, alignItems: 'center', paddingTop: 40}}>
+      <Text style = {styles.SubHeading}>The Adventures of</Text>
+      <Text style = {styles.HeadingAlt}>Copernicus and Margot</Text>
+      <Image style={styles.ImageStyle}
+        source = {require( imageString ) }>
+      </Image>
+      <Text style={{color: 'white', padding: 10}}>Curated AI stories and Art</Text>
+    </View>
+  )
+}
+
+let footerSection = () => {
+  return(
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: "#212121", paddingTop: 40}}>
+    </View>
+  )
+}
+
 function AboutScreen({navigation}) {
 
-  let seeMyCatsButton = new PurchaseButton(() => { navigation.navigate('CatCreation')},"See My Cats","〉" );
-
-  let testButton = new PurchaseButton(() => { navigation.navigate('Store')},"Store","〉" );
+  const renderListItem = ({item}) => (
+    <Pressable
+      onPress={() => {navigation.navigate(item.navigation)}}
+    >
+    <View style={{flex: 1, flexDirection: 'row', backgroundColor: "#212121", padding: 40, borderBottomWidth: 1}}>
+      <View style={{width: "90%", justifyContent: "center"}} >
+        <Text style={styles.buttonTextStyle}>{item.title}</Text>
+      </View>
+      <View style={{width: "10%", justifyContent: "flex-end", alignItems: "flex-start"}}>
+        <Text style={[styles.buttonTextStyle, {marginLeft: 3}]}>〉</Text>
+      </View>
+    </View>
+    </Pressable>
+  );
 
   return (
       <LinearGradient {...styles.gradientProps}>
         <SafeAreaView style={styles.safeAreaFull}>
-          <ScrollView>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 40}}>
-                <Text style = {styles.SubHeading}>The Adventures of</Text>
-                <Text style = {styles.HeadingAlt}>Copernicus and Margot</Text>
-                <Image style={styles.ImageStyle}
-              		source = {require( imageString ) }>
-                </Image>
-                <Text style={{color: 'white', padding: 10}}>Curated AI stories and Art</Text>
-                {seeMyCatsButton}
-                {testButton}
-            </View>
-          </ScrollView>
+
+            <FlatList
+              data={accountList}
+              renderItem={renderListItem}
+              ListHeaderComponent={headerSection}
+              ListFooterComponent={footerSection}
+              />
+
         </SafeAreaView>
         <Balance />
       </LinearGradient>
