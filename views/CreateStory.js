@@ -5,7 +5,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import styles, {getColorScheme} from '../views/Styles';
 import {getImagesOAI} from '../models/GetImageOpenAI';
 import LoadingSpinner from "../components/LoadingSpinner";
-import TextInputWithLabel from "../components/TextInputWithLabel";
+import TextInputWithLabel from "../components/TextInputWithLabel2";
 import Cat, {copernicusValues} from "../models/Cat";
 import GetTextOpenAI from "../models/GetTextOpenAI"
 import StoryViewer from '../components/StoryViewer';
@@ -24,10 +24,11 @@ const placeholder = {
 
 const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
-let imagePrep = ", cat, oil painting, highly detailed, global illumination, fantasy, ";
-let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 words long about ";
+let imagePrep = "Cat, oil painting, highly detailed, global illumination, fantasy, trending on artstation, ";
+let storyPrep = "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 words long featuring ";
 
 function CreateStory({navigation}) {
+  let imageNull = { "created":1673128176, "data":[{"url":  null }]};
 
   const themeColorStyle = getColorScheme();
   const [title, setTitle] = React.useState(null);
@@ -35,23 +36,18 @@ function CreateStory({navigation}) {
   const [storyInput, setStoryInput] = React.useState(cat.catText());
   const [output, setOutput] = useState(null);
   const [fetchedState, setFetchedState]=useState(null);
-  const [imageData, setImageData] = useState( { "created":1673128176, "data":[{"url":  null }]} );
+  const [imageData, setImageData] = useState( imageNull );
 
   useEffect(() => {
      setFetchedState('idle')
-   },[])
-
-   const titleInputComponent = TextInputWithLabel(title, setTitle, "What will you name the Story?", placeholder.name);
-
-   const storyInputComponent = TextInputWithLabel(storyInput, setStoryInput, "Tell me a story about...", "Tell me a story about ".concat(cat.catText()));
+   },[imageData])
 
    let showOutput = false;
 
    let chatGPTInteraction = new GetTextOpenAI(storyPrep.concat(storyInput), output, setOutput, showOutput);
 
-   let thisStory = new StoryViewer(title, imageData.data[0].url, output);
-
    let createImagePurchaseButton = new PurchaseButton(() => {
+       setImageData(imageNull);
        setFetchedState('loading');
        getImagesOAI(imagePrep.concat(storyInput), setFetchedState, setImageData);
      },"Create Picture!","9","cat" );
@@ -59,6 +55,13 @@ function CreateStory({navigation}) {
    let savePurchaseButton = new PurchaseButton(() => {
      setShowModal(true);
    },"Wonderful, save it!","FREE" );
+
+   let failButton = new PurchaseButton(() => {
+     setImageData(imageNull);
+     setOutput(null);
+     setTitle(null);
+     console.log("cleared it all")
+   },"Disapointing, clear it all","FREE" );
 
    let newStory = {
      "name": title,
@@ -120,11 +123,15 @@ function CreateStory({navigation}) {
   return (
     <LinearGradient {...styles.gradientProps}>
 
-      <SafeAreaView style={[styles.safeAreaFull]}>
         <ScrollView>
-
-          <View style={[styles.container, {paddingTop: 0}]}>
-            {storyInputComponent}
+          <View style={[styles.container,  {paddingBottom: 10, paddingTop: 20}]}>
+            <View style={[styles.container, {height: 40}]}></View>
+              <TextInputWithLabel
+                parentInput={storyInput}
+                setParentInput={setStoryInput}
+                label={"Tell me a story about..."}
+                placeholder={"Tell me a story about ".concat(cat.catText().concat("."))}
+              />
             <View style={[styles.container, {marginTop: 10}]}>
               {chatGPTInteraction}
               {createImagePurchaseButton}
@@ -135,14 +142,14 @@ function CreateStory({navigation}) {
             { fetchedState === 'loading' ? LoadingSpinner() : "" }
           </View>
 
-          <View style={{marginTop: 20}}>
-            {thisStory}
-
+          <View style={{marginTop: 0}}>
+            <StoryViewer name={title} imageUrl={imageData.data[0].url}  story={output} />
           </View>
 
           { (!!output || !!imageData.data[0].url) &&
             <View style={[styles.container, {marginTop: 10, marginBottom: 40, width: "100%"}]}>
               {savePurchaseButton}
+              {failButton}
             </View>
           }
 
@@ -150,7 +157,12 @@ function CreateStory({navigation}) {
             showModal={showModal}
             setShowModal={setShowModal}
             >
-              {titleInputComponent}
+              <TextInputWithLabel
+                parentInput={title}
+                setParentInput={setTitle}
+                label={"What will you name the Story?"}
+                placeholder={placeholder.name}
+              />
               <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
                 <CancelButton item={newStory} style={{padding: 0}} />
                 <SaveButton item={newStory} style={{padding: 0}}/>
@@ -159,7 +171,7 @@ function CreateStory({navigation}) {
           </ModalWrapper>
 
         </ScrollView>
-      </SafeAreaView>
+
 
       </LinearGradient>
   );
