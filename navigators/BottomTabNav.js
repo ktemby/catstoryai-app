@@ -1,6 +1,6 @@
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import ProfileStack from '../navigators/ProfileStack';
+import AccountStack from '../navigators/AccountStack';
 import StoryStack from '../navigators/StoryStack';
 import CreateStory from '../views/CreateStory';
 
@@ -25,7 +25,7 @@ function BottomTab() {
         ),
       }}
     />
-    <Tab.Screen name="Account Stack" component={ProfileStack}
+    <Tab.Screen name="Account Stack" component={AccountStack}
         options={{
           tabBarLabel: 'Account',
           tabBarIcon: ({ color }) => (
