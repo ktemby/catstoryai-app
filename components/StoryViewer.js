@@ -1,15 +1,20 @@
+import {useContext} from 'react';
 import { Text, View } from 'react-native';
-import styles, {getColorScheme} from '../views/Styles';
+import styles from '../views/Styles';
 import CachedImage from "../components/CachedImage";
+import {AppContext} from '../store/context';
 
-const StoryViewer = (name, imageUrl, story) => {
-  const themeColorStyle = getColorScheme();
+const StoryViewer = (props) => {
+  const {themeColorStyle} = useContext(AppContext);
 
   return (
     <View style={[styles.container, themeColorStyle]}>
-      {!!name && <Text style={[styles.Heading, themeColorStyle]}>{(name)}</Text>}
-      {!!imageUrl && <CachedImage source={{ uri: imageUrl }} resizeMode={'cover'} style={styles.imageDetail} />}
-      {!!story && <Text style={[styles.body, themeColorStyle]}>{(story)}</Text>}
+      {!!props.name &&
+        <Text style={[styles.Heading, themeColorStyle]}>{(props.name)}</Text>}
+      {!!props.imageUrl &&
+        <CachedImage source={{ uri: props.imageUrl }} resizeMode={'cover'} style={styles.imageDetail} />}
+      {!!props.story &&
+        <Text style={[styles.body, themeColorStyle]}>{(props.story)}</Text>}
     </View>
   );
 }
