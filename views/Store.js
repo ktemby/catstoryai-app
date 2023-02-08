@@ -74,7 +74,7 @@ const StoreList = (props) => {
           style={{flex: 1, width: "100%", paddingBottom: 25, paddingTop: 25, justifyContent: "center", alignItems: "center"}}
           onPress={() => handlePurchase(myPackage.item)}
           >
-          <Text style={[{fontSize: 22, textAlign: "center"}, themeColorStyle]}>{myPackage.item.product.description}</Text>
+          <Text style={[{fontSize: 18, fontWeight: "bold", textAlign: "center"}, themeColorStyle]}>{myPackage.item.product.description}</Text>
           <View style={{margin: 20}}>
             <Coin size={60} />
           </View>
