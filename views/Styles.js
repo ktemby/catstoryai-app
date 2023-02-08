@@ -2,18 +2,15 @@ import React from 'react';
 import { StyleSheet, useColorScheme} from 'react-native';
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 
-export const getColorScheme = () => {
-  const colorScheme = useColorScheme();
-  const themeColorStyle = styles.themeColorStyle[colorScheme];
-  return themeColorStyle;
-};
-
 export const MyLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
     primary: '#212121',
   },
+  color: "black",
+  backgroundColor: 'white',
+  highlight: "#616161",
 };
 
 export const MyDarkTheme = {
@@ -23,6 +20,16 @@ export const MyDarkTheme = {
     primary: 'white',
     headerTitleTint: 'white',
   },
+  backgroundColor: '#212121',
+  color: "white",
+  highlight: "#616161",
+};
+
+export const getColorScheme = () => {
+  const colorScheme = useColorScheme();
+  let themeColorStyle = colorScheme === 'dark' ? MyDarkTheme : MyLightTheme;
+  //const themeColorStyle = styles.themeColorStyle[colorScheme];
+  return themeColorStyle;
 };
 
 const styles = StyleSheet.create({
@@ -53,21 +60,6 @@ const styles = StyleSheet.create({
     },
     start: { x: 0, y: 0.4 },
     end: { x: 2, y: 0.2 },
-  },
-  themeColorStyle: {
-    light: {
-      color: "black",
-      backgroundColor: 'white',
-      highlight: "#616161",
-    },
-    dark: {
-      backgroundColor: '#212121',
-      color: "white",
-      highlight: "#616161",
-    },
-    null: {
-      color: "black",
-    },
   },
   container: {
     flex: 1,
