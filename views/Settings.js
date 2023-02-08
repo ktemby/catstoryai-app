@@ -8,7 +8,7 @@ import { AppContext } from '../store/context';
 import { MyDarkTheme, MyLightTheme} from "../views/Styles";
 
 let Settings = () => {
-  const {themeColorStyle, setThemeColorStyle} = useContext(AppContext);
+  const {themeColorStyle, setThemeColorStyle, setDarkThemeOverride} = useContext(AppContext);
 
   let [settingsObject, setSettingsObject] = useState();
   let [refreshing, setRefreshing] = useState(true);
@@ -39,12 +39,6 @@ let Settings = () => {
       setRefreshing(false);
   };
 
-  let alwaysDarkToggle = (value) => {
-    console.log(colorScheme)
-    setThemeColorStyle( (value === true) ? MyDarkTheme
-      : (colorScheme === 'dark') ? MyDarkTheme : MyLightTheme);
-  };
-
   const updateToggle = (id, value) => {
     setSettingsObject(
       settingsObject.map((item) => {
@@ -52,16 +46,13 @@ let Settings = () => {
           item.isEnabled = value;
           eval(item.callback);
         }
-      return item;
+        return item;
       })
     );
   };
 
   let headerSection = () => {
-    return(
-      <View style={{ flex: 1, height: 1, backgroundColor: "#000"}}>
-      </View>
-    )
+    return( <View style={{ flex: 1, height: 1, backgroundColor: "#000"}}></View> )
   }
 
   const renderSetting = ({item}) => {

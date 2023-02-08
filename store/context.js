@@ -1,4 +1,4 @@
-import {createContext,useState,useEffect} from 'react';
+import { createContext, useState, useEffect } from 'react';
 import { useColorScheme } from 'react-native';
 import { MyDarkTheme, MyLightTheme} from "../views/Styles";
 
@@ -6,20 +6,20 @@ const AppContext = createContext();
 
 const AppContextProvider = ({children}) => {
   const colorScheme = useColorScheme();
-  const [theme, setTheme] = useState(colorScheme);
-  const [themeColorStyle, setThemeColorStyle] = useState(
-    theme === 'dark' ? MyDarkTheme :
-    (theme === 'auto') ? (colorScheme === 'dark' ? MyDarkTheme : MyLightTheme) : MyLightTheme);
+  const [darkThemeOverride, setDarkThemeOverride] = useState(true);
+  // instead of true, would be idea to get this state directly from the settings storage object.
 
-  //state = {theme, setTheme, themeColorStyle, setThemeColorStyle};
+  const [themeColorStyle, setThemeColorStyle] = useState(darkThemeOverride === true ? MyDarkTheme : ((colorScheme === 'dark') ? MyDarkTheme : MyLightTheme));
+
+  let context = {darkThemeOverride, setDarkThemeOverride, themeColorStyle, setThemeColorStyle};
 
   useEffect(() => {
-    console.log(`colorscheme theme: ${theme}`)
-      setThemeColorStyle(theme === 'dark' ? MyDarkTheme : MyLightTheme);
-    }, [theme]);
+    //setTheme(theme === 'auto' ? colorScheme : 'dark');
+    setThemeColorStyle(darkThemeOverride === true ? MyDarkTheme : ((colorScheme === 'dark') ? MyDarkTheme : MyLightTheme));
+  }, [colorScheme, darkThemeOverride, themeColorStyle]);
 
     return (
-        <AppContext.Provider value={{theme, setTheme, themeColorStyle, setThemeColorStyle}}>
+        <AppContext.Provider value={context}>
             {children}
         </AppContext.Provider>
     )
@@ -29,3 +29,9 @@ export {
     AppContext,
     AppContextProvider
 }
+
+
+/*
+setThemeColorStyle( (value === true) ? MyDarkTheme
+  : (colorScheme === 'dark') ? MyDarkTheme : MyLightTheme);
+*/
