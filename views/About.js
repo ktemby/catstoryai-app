@@ -61,19 +61,17 @@ function AboutScreen({navigation}) {
   );
 
   return (
-      <LinearGradient {...styles.gradientProps}>
-        <SafeAreaView style={styles.safeAreaFull}>
-
-            <FlatList
-              data={accountList}
-              renderItem={renderListItem}
-              ListHeaderComponent={headerSection}
-              ListFooterComponent={footerSection}
-              />
-
-        </SafeAreaView>
-        <Balance />
-      </LinearGradient>
+    <LinearGradient {...styles.gradientProps}>
+      <SafeAreaView style={styles.safeAreaFull}>
+        <FlatList
+          data={accountList}
+          renderItem={renderListItem}
+          ListHeaderComponent={headerSection}
+          ListFooterComponent={footerSection}
+          />
+      </SafeAreaView>
+      <Balance />
+    </LinearGradient>
   );
 }
 
