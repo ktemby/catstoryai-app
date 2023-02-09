@@ -1,27 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { View, Pressable, Button, Image, Text, ScrollView, StyleSheet, ImageBackground, FlatList} from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { View, Pressable, Text, FlatList} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from "expo-linear-gradient";
-import styles, { getColorScheme } from './Styles';
+import styles from './Styles';
 import Cat, {copernicusValues} from "../models/Cat";
-import TextInputWithLabel from "../components/TextInputWithLabel";
-import * as FileSystem from 'expo-file-system';
-import CachedImage from "../components/CachedImage";
-import CachedImageBackground from "../components/CachedImageBackground";
-import initialLibrary from '../assets/storydata.json';
-import LoadLibrary, {resetLibrary, getLibraryPath, getLibraryMaxID, saveStoryToLibrary} from '../models/LibraryStorage';
 import Purchases from 'react-native-purchases';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Coin from '../components/Coin';
 import Balance from '../components/Balance';
-
-let readWriteTest = async () => {
-  try {
-     } catch(error){
-        console.log(error);
-    }
-    console.log("made it");
-};
+import HighlightButton, { PressableHighlight } from '../components/HighlightButton';
+import { AppContext } from '../store/context';
 
 let initialPackage =
  [
@@ -65,24 +52,28 @@ const handlePurchase = async (myPackage) => {
 };
 
 const StoreList = (props) => {
-  const themeColorStyle = getColorScheme();
+  const {themeColorStyle} = useContext(AppContext);
 
   var renderPackage = (myPackage) => {
     return (
-      <View style={[styles.container, { margin: 10, borderRadius: 15, borderWidth: 1, borderColor: themeColorStyle.highlight } ]}>
-        <Pressable
-          style={{flex: 1, width: "100%", paddingBottom: 25, paddingTop: 25, justifyContent: "center", alignItems: "center"}}
+      <View style={[styles.container, { margin: 10} ]}>
+        <PressableHighlight
           onPress={() => handlePurchase(myPackage.item)}
-          >
-          <Text style={[{fontSize: 18, fontWeight: "bold", textAlign: "center"}, themeColorStyle]}>{myPackage.item.product.description}</Text>
+          style={styles.storeItem.container}>
+
+          <Text style={[styles.storeItem.text, {color: themeColorStyle.color}]} >{myPackage.item.product.description}</Text>
+
           <View style={{margin: 20}}>
             <Coin size={60} />
           </View>
-          <Text style={[themeColorStyle, {fontSize: 18, marginTop: 10, backgroundColor:"#21212122", paddingLeft: 15, paddingRight: 15, borderRadius: 15}, ]}>{myPackage.item.product.priceString}</Text>
-        </Pressable>
+
+          <Text style={[themeColorStyle, styles.storeItem.price ]} >{myPackage.item.product.priceString}</Text>
+
+        </PressableHighlight>
       </View>
     );
   };
+
   return (
     <View style={{width: "100%"}}>
       <FlatList
@@ -97,10 +88,10 @@ const StoreList = (props) => {
 
 let Store = (navigation) => {
   let [packages, setPackages] = useState(initialPackage);
-  const themeColorStyle = getColorScheme();
+  const {themeColorStyle} = useContext(AppContext);
 
   useEffect(() => {
-      getIAPData(setPackages);
+    getIAPData(setPackages);
   }, []);
 
   return (
@@ -112,23 +103,3 @@ let Store = (navigation) => {
 }
 
 export default Store;
-
-/* Accessing local images
-const [image, setImage] = useState(null);
-
- const pickImage = async () => {
-   // No permissions request is necessary for launching the image library
-   let result = await ImagePicker.launchImageLibraryAsync({
-     mediaTypes: ImagePicker.MediaTypeOptions.All,
-     allowsEditing: true,
-     aspect: [4, 3],
-     quality: 1,
-   });
-
-   console.log(result);
-
-   if (!result.cancelled) {
-     setImage(result.uri);
-   }
- };
-*/

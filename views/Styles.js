@@ -33,6 +33,17 @@ export const getColorScheme = () => {
 };
 
 const styles = StyleSheet.create({
+  storeItem: {
+    container : {
+      borderRadius: 15, borderWidth: 1, borderColor: "#616161", paddingBottom: 25, paddingTop: 25, justifyContent: "center", alignItems: "center",
+    },
+    text : {
+      fontSize: 18, fontWeight: "bold", textAlign: "center",
+    },
+    price : {
+      fontSize: 18, marginTop: 10, backgroundColor:"#21212122", paddingLeft: 15, paddingRight: 15, borderRadius: 15
+    }, 
+  },
   safeAreaHeader: {
     flex: 1,
     width: '100%',
