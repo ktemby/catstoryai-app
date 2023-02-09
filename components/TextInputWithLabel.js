@@ -10,6 +10,7 @@ const TextInputWithLabel = (props) => {
       <Text style={[{color: '#212121', fontWeight: 'bold', marginBottom: 10}, themeColorStyle]}>{props.label}</Text>
       <TextInput
         placeholder={props.placeholder}
+        placeholderTextColor="#9E9E9E"
         onChangeText={text => props.setParentInput(text)}
         value={props.parentInput}
         style={[{
