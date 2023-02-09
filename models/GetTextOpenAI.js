@@ -8,6 +8,7 @@ import { OPENAI_API_KEY, OPENAI_EMAIL, OPENAI_PASSWORD } from '@env';
 import { CheckModeration, bias_words } from '../models/CheckModerationOAI';
 import LoadingSpinner from "../components/LoadingSpinner";
 import PurchaseButton from '../components/PurchaseButton';
+import HighlightButton from '../components/HighlightButton';
 
 const GetTextOpenAI = (input, output, setOutput, showOutput) => {
   let modThreshold = 0.0002;
@@ -121,31 +122,37 @@ const GetTextOpenAI = (input, output, setOutput, showOutput) => {
     let blockedMessage = "I'm sorry, that request was flagged by our moderator.\n\nAsk for a happy story about kittens?";
     let flaggedMessage = "The generated content was flagged as potentially inappropriate, are you sure you want to see it?"
     return (
-      <View>
+      <View style={styles.container}>
         <View>
           { (inputModFlag === true) ? <Text style={styles.body}>{blockedMessage}</Text>
-            : (true) ? <Text style={[styles.body, {textAlign: "center"}]}>{flaggedMessage}</Text>
+            : (outputModFlag === true) ? <Text style={[styles.body, {textAlign: "center"}]}>{flaggedMessage}</Text>
             : outputModFlag === false ? showOutput && <Text style={styles.body}>{output}</Text>
             : ""
           }
         </View>
         <View style={styles.container}>
           { (outputModFlag === 'pending') ? LoadingSpinner() : "" }
-
-        {true &&
-          <Pressable title="Yes" style={{borderWidth: 1, alignItems: "center", width: "50%", borderRadius: 10, padding: 10, marginBottom: 30, backgroundColor: "#FFFFFF33"}} onPress={() => setOutputModeration(false)} >
-            <Text style={styles.text}>Yes</Text>
-          </Pressable> }
+          { outputModFlag === true &&
+            <HighlightButton onPress={() => setOutputModeration(false)}  title='Yes' />}
           </View>
       </View>
     )
   };
 
-  let createStoryPurchaseButton = new PurchaseButton(() => { handleSubmit()},"Create Story!","9", "cat" );
+  let CreateStoryPurchaseButton = () => {
+    return (
+      <PurchaseButton
+        callback={() => { handleSubmit() } }
+        title="Create Story!"
+        price="9"
+        icon="cat"
+      />
+    );
+  };
 
   return (
     <View style={[styles.container, {width: "100%"}]}>
-      {createStoryPurchaseButton}
+      <CreateStoryPurchaseButton />
       {outputDisplay()}
     </View>
   );

@@ -16,9 +16,7 @@ export const CheckModeration = (moderationSample, modThreshold) => {
 };
 
 const blocked = -100;
-/*
- * These are tokens and weightings to guide OpenAI responses (i.e., block these words).
-*/
+/* These are tokens and weightings to guide OpenAI responses (i.e., block these words). */
 export let bias_words = {};
 /*
  export let bias_words = {

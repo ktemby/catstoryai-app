@@ -30,9 +30,8 @@ class Cat extends React.Component {
     return (
       <View>
       <Text style = {styles.Heading} >{this.state.name}</Text>
-      <Image source={{uri: this.state.image}}  style={[styles.ImageStyle, {marginLeft: 20}]}></Image>
-      <Text style = {this.props.style} >{this.catText()}</Text>
-
+        <Image source={{uri: this.state.image}}  style={[styles.ImageStyle, {marginLeft: 20}]}></Image>
+        <Text style = {this.props.style} >{this.catText()}</Text>
       </View>
     );
   }
@@ -46,7 +45,7 @@ export let copernicusValues = {
   breed : "Tabby",
   breedMix : "",
   //breedMix : "Egyptian Mao",
-  feature : "spots and stripes",
+  feature : "soft fur",
   personality : "loving",
   superpower : "cuddle and purr",
   image : "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
