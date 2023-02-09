@@ -6,7 +6,7 @@ const AppContext = createContext();
 
 const AppContextProvider = ({children}) => {
   const colorScheme = useColorScheme();
-  const [darkThemeOverride, setDarkThemeOverride] = useState(true);
+  const [darkThemeOverride, setDarkThemeOverride] = useState(false);
   // instead of true, would be idea to get this state directly from the settings storage object.
 
   const [themeColorStyle, setThemeColorStyle] = useState(darkThemeOverride === true ? MyDarkTheme : ((colorScheme === 'dark') ? MyDarkTheme : MyLightTheme));
