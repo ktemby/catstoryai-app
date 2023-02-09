@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import { Text, View } from 'react-native';
 import styles from '../views/Styles';
 import CachedImage from "../components/CachedImage";
-import {AppContext} from '../store/context';
+import { AppContext } from '../store/context';
 
 const StoryViewer = (props) => {
   const {themeColorStyle} = useContext(AppContext);
