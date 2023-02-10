@@ -55,6 +55,18 @@ const styles = StyleSheet.create({
       marginLeft: 3,
     },
   },
+  listItemContainer: {
+    flex: 1,
+    flexDirection: "row",
+    padding: 40,
+    borderBottomWidth: 1,
+  },
+  coin: {
+    borderRadius: 70,
+    borderColor: "#CC9900",
+    borderWidth: 1,
+    backgroundColor: "#d4af37",
+  },
   storeItem: {
     container: {
       borderRadius: 15,

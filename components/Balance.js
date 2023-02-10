@@ -18,7 +18,7 @@ let Balance = (props) => {
               { color: themeColorStyle.color, margin: 0 },
             ]}
           >
-            14500
+            {props.amount}
           </Text>
         </View>
       </View>
