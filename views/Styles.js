@@ -1,15 +1,15 @@
-import React from 'react';
-import { StyleSheet, useColorScheme} from 'react-native';
-import { DefaultTheme, DarkTheme } from '@react-navigation/native';
+import React from "react";
+import { StyleSheet, useColorScheme } from "react-native";
+import { DefaultTheme, DarkTheme } from "@react-navigation/native";
 
 export const MyLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: '#212121',
+    primary: "#212121",
   },
   color: "black",
-  backgroundColor: 'white',
+  backgroundColor: "white",
   highlight: "#616161",
 };
 
@@ -17,54 +17,89 @@ export const MyDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: 'white',
-    headerTitleTint: 'white',
+    primary: "white",
+    headerTitleTint: "white",
   },
-  backgroundColor: '#212121',
+  backgroundColor: "#212121",
   color: "white",
   highlight: "#616161",
 };
 
 export const getColorScheme = () => {
   const colorScheme = useColorScheme();
-  let themeColorStyle = colorScheme === 'dark' ? MyDarkTheme : MyLightTheme;
+  let themeColorStyle = colorScheme === "dark" ? MyDarkTheme : MyLightTheme;
   //const themeColorStyle = styles.themeColorStyle[colorScheme];
   return themeColorStyle;
 };
 
 const styles = StyleSheet.create({
+  balanceBar: {
+    container: {
+      width: "30%",
+      height: 34,
+      position: "absolute",
+      right: 0,
+      top: 59,
+      backgroundColor: "#21212122",
+      borderRadius: 15,
+    },
+    coinContainer: {
+      width: "20%",
+      justifyContent: "center",
+      alignItems: "flex-end",
+    },
+    amountContainer: {
+      width: "80%",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      marginLeft: 3,
+    },
+  },
   storeItem: {
-    container : {
-      borderRadius: 15, borderWidth: 1, borderColor: "#616161", paddingBottom: 25, paddingTop: 25, justifyContent: "center", alignItems: "center",
+    container: {
+      borderRadius: 15,
+      borderWidth: 1,
+      borderColor: "#616161",
+      paddingBottom: 25,
+      paddingTop: 25,
+      justifyContent: "center",
+      alignItems: "center",
     },
-    text : {
-      fontSize: 18, fontWeight: "bold", textAlign: "center",
+    text: {
+      fontSize: 18,
+      fontWeight: "bold",
+      textAlign: "center",
     },
-    price : {
-      fontSize: 18, marginTop: 10, backgroundColor:"#21212122", paddingLeft: 15, paddingRight: 15, borderRadius: 15
-    }, 
+    price: {
+      fontSize: 18,
+      marginTop: 10,
+      backgroundColor: "#21212122",
+      paddingLeft: 15,
+      paddingRight: 15,
+      borderRadius: 15,
+    },
   },
   safeAreaHeader: {
     flex: 1,
-    width: '100%',
+    width: "100%",
     paddingTop: 45, //Needed for iOS when using react-native-safearea-context for SafeAreaView
-    paddingBottom: -50
+    paddingBottom: -50,
   },
   safeAreaFull: {
     flex: 1,
-    width: '100%',
+    width: "100%",
     paddingBottom: -50,
   },
-  loadingtext:{
+  loadingtext: {
     fontSize: 28,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-  text:{
-    fontSize:24,
-    margin:10
+  text: {
+    fontSize: 24,
+    margin: 10,
   },
   gradientProps: {
-    colors: ['#03DAC6', '#6200EE'],
+    colors: ["#03DAC6", "#6200EE"],
     style: {
       height: "100%",
       width: "100%",
@@ -74,7 +109,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
   },
   Heading: {
     fontSize: 30,
@@ -83,8 +118,8 @@ const styles = StyleSheet.create({
   },
   HeadingAlt: {
     fontSize: 30,
-    color: '#FFF',
-    textAlign: 'center',
+    color: "#FFF",
+    textAlign: "center",
   },
   body: {
     fontSize: 20,
@@ -94,18 +129,18 @@ const styles = StyleSheet.create({
   },
   SubHeading: {
     fontSize: 12,
-    color: '#FFF',
+    color: "#FFF",
   },
   imageDetail: {
-    width: '100%',
-    flex:1,
+    width: "100%",
+    flex: 1,
     //width: 400,
     height: 400,
     //marginBottom: 20,
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
   ImageStyle: {
     width: 300,
@@ -120,16 +155,16 @@ const styles = StyleSheet.create({
     textAlign: "bottom",
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     width: "80%",
     color: "#FFFFFF",
-    backgroundColor: '#424242AA',
-    position:'absolute',
+    backgroundColor: "#424242AA",
+    position: "absolute",
     bottom: 0,
     margin: 10,
   },
   inputWrapper: {
-    width: '100%',
+    width: "100%",
     //margin: 20,
     //marginBottom: 10,
     padding: 20,
@@ -138,14 +173,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonTextStyle: {
-    fontWeight: 'bold',
-    color: 'white',
+    fontWeight: "bold",
+    color: "white",
   },
   buttonContainerStyle: {
     alignItems: "flex-start",
     padding: 20,
     borderRadius: 5,
-    backgroundColor: '#424242AA'
+    backgroundColor: "#424242AA",
   },
 });
 
