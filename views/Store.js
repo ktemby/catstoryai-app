@@ -46,6 +46,10 @@ const handlePurchase = async (myPackage) => {
     const purchase = await Purchases.purchasePackage(myPackage);
   } catch (e) {
     console.log("Error:", e);
+  } finally {
+    let myBalance = new BalanceModel();
+    amount = myPackage.item.product.description.match(/\d/g).join("");
+    myBalance.updateBalance(amount);
   }
 };
 

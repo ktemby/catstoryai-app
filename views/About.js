@@ -100,7 +100,7 @@ let AboutScreen = ({ navigation }) => {
           ListFooterComponent={footerSection}
         />
       </SafeAreaView>
-      <Balance amount={balanceModel.getBalance()} />
+      <Balance amount={balanceModel.getBalance()} style={{ top: "20%" }} />
     </LinearGradient>
   );
 };

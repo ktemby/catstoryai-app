@@ -1,4 +1,4 @@
-import React from "react";
+import { Platform } from "react-native";
 import { StyleSheet, useColorScheme } from "react-native";
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
 
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
       height: 34,
       position: "absolute",
       right: 0,
-      top: 59,
+      top: Platform.OS === "ios" ? "8%" : "1.60%",
       backgroundColor: "#21212122",
       borderRadius: 15,
     },
