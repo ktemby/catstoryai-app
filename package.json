@@ -47,7 +47,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
-    "metro-react-native-babel-preset": "^0.73.7"
+    "eslint": "^8.33.0",
+    "metro-react-native-babel-preset": "^0.73.7",
+    "prettier": "^2.8.4"
   },
   "private": true
 }
