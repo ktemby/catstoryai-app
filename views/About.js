@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Balance from "../components/Balance";
 import { PressableHighlight } from "../components/HighlightButton";
 import { AppContext } from "../store/context";
+import BalanceModel from "../models/BalanceModel";
 
 const imageString = "../assets/copernicus_and_margot.jpeg";
 
@@ -54,8 +55,10 @@ let footerSection = () => {
   );
 };
 
-function AboutScreen({ navigation }) {
+let AboutScreen = ({ navigation }) => {
   const { themeColorStyle } = useContext(AppContext);
+
+  let balanceModel = new BalanceModel();
 
   const renderListItem = ({ item }) => (
     <PressableHighlight
@@ -64,17 +67,25 @@ function AboutScreen({ navigation }) {
       }}
     >
       <View style={styles.listItemContainer}>
-        <View style={{ width: "90%" }}>
-          <Text style={styles.buttonTextStyle}>{item.title}</Text>
-        </View>
-        <View
-          style={{
-            width: "10%",
-            alignItems: "flex-start",
-          }}
+        <Text
+          style={[
+            styles.buttonTextStyle,
+            { width: "90%", color: themeColorStyle.color },
+          ]}
         >
-          <Text style={[styles.buttonTextStyle, { marginLeft: 3 }]}>〉</Text>
-        </View>
+          {item.title}
+        </Text>
+        <Text
+          style={[
+            styles.buttonTextStyle,
+            {
+              width: "10%",
+              color: themeColorStyle.color,
+            },
+          ]}
+        >
+          〉
+        </Text>
       </View>
     </PressableHighlight>
   );
@@ -89,9 +100,9 @@ function AboutScreen({ navigation }) {
           ListFooterComponent={footerSection}
         />
       </SafeAreaView>
-      <Balance amount={14500} />
+      <Balance amount={balanceModel.getBalance()} />
     </LinearGradient>
   );
-}
+};
 
 export default AboutScreen;
