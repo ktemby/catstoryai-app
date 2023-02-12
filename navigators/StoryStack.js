@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StoriesScreen from '../views/StoryList';
 import StoryDetail from '../views/StoryDetails';
@@ -15,9 +14,6 @@ function StoryStack() {
         />
         <Stack.Screen name="Story Detail" component={StoryDetail}
           options={{
-            title: 'The story',
-            headerTransparent: true,
-            headerShadowVisible: false,
             headerShown:false,
           }}
         />

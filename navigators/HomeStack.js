@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AboutScreen from '../views/About';
 import CreateStory from '../views/CreateStory';

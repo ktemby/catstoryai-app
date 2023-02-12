@@ -1,10 +1,9 @@
-import React, {useEffect, useContext} from 'react';
+import { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import BottomTab from '../navigators/BottomTabNav';
-import { MyDarkTheme, MyLightTheme} from "../views/Styles";
-import {AppContext} from '../store/context';
+import { AppContext } from '../store/context';
 
-export default function Root() {
+export default Root = () => {
   const {themeColorStyle} = useContext(AppContext);
 
   return (
