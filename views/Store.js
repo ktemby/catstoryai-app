@@ -41,26 +41,43 @@ let getIAPData = async (setPackages) => {
   }
 };
 
-const handlePurchase = async (myPackage) => {
+const handlePurchase = async (props) => {
+  console.log(props);
+  console.log(props.package);
   try {
-    const purchase = await Purchases.purchasePackage(myPackage);
+    console.log("attempting purchase");
+    const purchase = await Purchases.purchasePackage(props.package);
+
+    console.log(purchase);
+    console.log(JSON.stringify(purchase));
+    if (true) {
+      console.log(props.package);
+      alert(JSON.stringify(purchase));
+      //console.log(purchase.customerInfo);
+      // plan to get the latest purchase from customerIfno at this point, and extract the amount
+      // could also check to see if it matches the amout we expect in the product description info
+
+      let amount = props.package.product.description.match(/\d/g).join("");
+      console.log(amount * 1);
+      props.bModel.updateBalance(1 * amount);
+    }
   } catch (e) {
     console.log("Error:", e);
-  } finally {
-    let myBalance = new BalanceModel();
-    amount = myPackage.item.product.description.match(/\d/g).join("");
-    myBalance.updateBalance(amount);
   }
 };
 
 const StoreList = (props) => {
   const { themeColorStyle } = useContext(AppContext);
 
+  let mBalance = props.balanceModel;
+
   var renderPackage = (myPackage) => {
     return (
       <View style={[styles.container, { margin: 10 }]}>
         <PressableHighlight
-          onPress={() => handlePurchase(myPackage.item)}
+          onPress={() =>
+            handlePurchase({ package: myPackage.item, bModel: mBalance })
+          }
           style={styles.storeItem.container}
         >
           <Text
@@ -105,7 +122,7 @@ let Store = () => {
 
   return (
     <SafeAreaView style={[styles.safeAreaHeader, themeColorStyle]}>
-      <StoreList packages={packages} />
+      <StoreList packages={packages} balanceModel={myBalance} />
       <Balance amount={myBalance.getBalance()} />
     </SafeAreaView>
   );
