@@ -42,23 +42,17 @@ let getIAPData = async (setPackages) => {
 };
 
 const handlePurchase = async (props) => {
-  console.log(props);
-  console.log(props.package);
   try {
     console.log("attempting purchase");
     const purchase = await Purchases.purchasePackage(props.package);
 
-    console.log(purchase);
-    console.log(JSON.stringify(purchase));
     if (true) {
-      console.log(props.package);
-      alert(JSON.stringify(purchase));
-      //console.log(purchase.customerInfo);
-      // plan to get the latest purchase from customerIfno at this point, and extract the amount
+      // TODO get the latest purchase from customerIfno at this point, and extract the amount
       // could also check to see if it matches the amout we expect in the product description info
+      console.log(JSON.stringify(purchase));
+      console.log(props.package);
 
       let amount = props.package.product.description.match(/\d/g).join("");
-      console.log(amount * 1);
       props.bModel.updateBalance(1 * amount);
     }
   } catch (e) {
