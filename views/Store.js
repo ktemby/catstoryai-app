@@ -57,6 +57,7 @@ const handlePurchase = async (props) => {
     }
   } catch (e) {
     console.log("Error:", e);
+    alert(`We're sorry!\n\n ${e}`);
   }
 };
 
@@ -104,7 +105,7 @@ const StoreList = (props) => {
   );
 };
 
-let Store = () => {
+let Store = ({ navigation }) => {
   let [packages, setPackages] = useState(initialPackage);
   const { themeColorStyle } = useContext(AppContext);
 
