@@ -35,7 +35,7 @@ export const getColorScheme = () => {
 const styles = StyleSheet.create({
   balanceBar: {
     container: {
-      width: "30%",
+      width: "20%",
       height: 34,
       position: "absolute",
       right: 0,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
       borderRadius: 15,
     },
     coinContainer: {
-      width: "20%",
+      width: "30%",
       justifyContent: "center",
       alignItems: "flex-end",
     },
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   listItemContainer: {
     flex: 1,
     flexDirection: "row",
-    padding: 40,
+    padding: 35,
     borderBottomWidth: 1,
   },
   coin: {
@@ -124,12 +124,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   Heading: {
-    fontSize: 30,
+    fontSize: 26,
     //fontWeight: 700,
     margin: 35,
   },
   HeadingAlt: {
-    fontSize: 30,
+    fontSize: 26,
     color: "#FFF",
     textAlign: "center",
   },
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     //width: '80%'
   },
   SubHeading: {
-    fontSize: 12,
+    fontSize: 14,
     color: "#FFF",
   },
   imageDetail: {
@@ -155,8 +155,8 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   ImageStyle: {
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     borderRadius: 150,
     margin: 15,
   },
