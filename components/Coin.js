@@ -15,7 +15,11 @@ const Coin = (props) => {
         start={{ x: 0, y: 0.4 }}
         end={{ x: 2, y: 0.2 }}
       >
-        <MaterialCommunityIcons name="cat" color="#FFA" size={props.size} />
+        <MaterialCommunityIcons
+          name={props.icon === undefined ? "cat" : props.icon}
+          color="#FFA"
+          size={props.size}
+        />
       </LinearGradient>
     </View>
   );
