@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 
 /*
  * Checks whether the total score from categories exceeds a thresnhold.
@@ -9,14 +9,16 @@ export const CheckModeration = (moderationSample, modThreshold) => {
   for (const each in moderationSample.results[0].category_scores) {
     modScore = modScore + moderationSample.results[0].category_scores[each];
     console.log(modScore);
-  };
+  }
   console.log(`Modscore: ${modScore}`);
-  console.log(`Is modscore greater than threshold? ${modScore > modThreshold}`)
-  return ((modScore > modThreshold) ? true : false);
+  console.log(`Is modscore greater than threshold? ${modScore > modThreshold}`);
+  return modScore > modThreshold ? true : false;
 };
 
 const blocked = -100;
-/* These are tokens and weightings to guide OpenAI responses (i.e., block these words). */
+/* These are tokens and weightings to guide OpenAI responses (i.e., block these words).
+ * Note: most comments agree logit bias has a negative impact on readability.
+ */
 export let bias_words = {};
 /*
  export let bias_words = {
@@ -30,36 +32,33 @@ export let bias_words = {};
    "438": blocked, // '--'
    "1464": blocked, // 'always'
  };
-*/
 
-/*
 export let bias_words = {
   // Nasty themes
-  "77": blocked,
-  "7761": blocked,
-  "19147": blocked,
-  "12267": blocked,
-  "13484": blocked,
-  "5235": blocked,
-  "16207": blocked,
-  "18338" : blocked,
-  "8044" : blocked,
-  "79" : blocked,
-  "1211" : blocked,
-  "37035" : blocked,
-  "11908" : blocked,
-  "12819": blocked,
-  "1042" : blocked,
+  77: blocked,
+  7761: blocked,
+  19147: blocked,
+  12267: blocked,
+  13484: blocked,
+  5235: blocked,
+  16207: blocked,
+  18338: blocked,
+  8044: blocked,
+  79: blocked,
+  1211: blocked,
+  37035: blocked,
+  11908: blocked,
+  12819: blocked,
+  1042: blocked,
 
   // Bad storywriting
-  "532": blocked, // ' -'
-  "851": blocked,
-  "35540": blocked, // ' ;)'
-  "14373": blocked, // ' :)'
-  "25": blocked,
-  "8": blocked,
+  532: blocked, // ' -'
+  851: blocked,
+  35540: blocked, // ' ;)'
+  14373: blocked, // ' :)'
+  25: blocked,
+  8: blocked,
 };
-*/
 
 /*
 let moderationSample = {
