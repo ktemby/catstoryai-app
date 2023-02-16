@@ -5,7 +5,7 @@ import LoadJson, { updateUserData } from "./PhoneStorage";
 export function BalanceModel() {
   let [userDataObject, setUserDataObject] = useState(initialUserData);
   let [refreshing, setRefreshing] = useState(true);
-
+  let minBalance = 9;
   this.jsonName = "dataUsers.json";
 
   useEffect(() => {
@@ -49,6 +49,10 @@ export function BalanceModel() {
 
   this.getBalance = () => {
     return userDataObject[0]["coins"];
+  };
+
+  this.isBalanceLow = () => {
+    return this.getBalance() < minBalance ? true : false;
   };
 }
 
