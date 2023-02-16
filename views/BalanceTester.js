@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import { View, Text, FlatList, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import styles from "./Styles";
+import styles from "../views/Styles";
 import { AppContext } from "../store/context";
 import { PressableHighlight } from "../components/HighlightButton";
 import Balance from "../components/Balance";
 import BalanceModel from "../models/BalanceModel";
+import BalanceChecker from "../components/BalanceChecker";
 
 let headerSection = () => {
   return <View style={{ flex: 1, height: 1, backgroundColor: "#000" }}></View>;
 };
 
-let BalanceTester = () => {
+let BalanceTester = ({ navigation }) => {
   let balanceModel = new BalanceModel();
 
   const { themeColorStyle } = useContext(AppContext);
@@ -55,6 +56,10 @@ let BalanceTester = () => {
         }
         ListHeaderComponent={headerSection}
       />
+
+      <View style={[styles.container, { marginTop: -150 }]}>
+        <BalanceChecker balanceModel={balanceModel} navigation={navigation} />
+      </View>
 
       <View style={[styles.container, { flexDirection: "row", margin: 10 }]}>
         <PressableHighlight

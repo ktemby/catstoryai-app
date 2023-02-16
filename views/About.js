@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Text, FlatList, View, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "./Styles";
