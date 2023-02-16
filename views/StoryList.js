@@ -1,39 +1,47 @@
-import React, {useState, useEffect} from 'react';
-import { Text, View, Image, Pressable, FlatList, ImageBackground, ActivityIndicator, RefreshControl} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  Pressable,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
-import customData from '../assets/storydata.json';
-import styles from '../views/Styles'
+import CreateButton from "../components/CreateButton";
+import styles from "../views/Styles";
 import CachedImageBackground from "../components/CachedImageBackground";
-import LoadLibrary from "../models/LibraryStorage"
+import LoadLibrary from "../models/LibraryStorage";
 
 const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
 
-const StoriesScreen = ({navigation}) => {
+const StoriesScreen = ({ navigation }) => {
   let [library, setLibrary] = useState();
   let [refreshing, setRefreshing] = useState(true);
 
   useEffect(() => {
-      getData();
-    }, []);
+    getData();
+  }, []);
 
   const getData = async () => {
-      const update = await LoadLibrary();
-      setLibrary(update.reverse());
-      setRefreshing(false);
+    const update = await LoadLibrary();
+    setLibrary(update.reverse());
+    setRefreshing(false);
   };
 
   var renderItem = ({ item }) => {
     let prepend = "";
-    !!item.cdn ? prepend = myCDN : "";
+    !!item.cdn ? (prepend = myCDN) : "";
     return (
-      <Pressable onPress={() => navigation.navigate('Story Detail', {item} )}>
+      <Pressable onPress={() => navigation.navigate("Story Detail", { item })}>
         <View style={styles.storyListSquare}>
           <CachedImageBackground
-            source={{ uri: prepend.concat(item.image).replace(/ /g, "%20")}}
+            source={{ uri: prepend.concat(item.image).replace(/ /g, "%20") }}
             resizeMode="cover"
-            style={styles.image}>
-            <Text style={styles.title}>{(item.name)}</Text>
+            style={styles.image}
+          >
+            <Text style={styles.title}>{item.name}</Text>
           </CachedImageBackground>
         </View>
       </Pressable>
@@ -42,19 +50,22 @@ const StoriesScreen = ({navigation}) => {
 
   return (
     <LinearGradient {...styles.gradientProps}>
-    <SafeAreaView style={[styles.safeAreaFull, {alignItems: 'center'}]}>
+      <SafeAreaView style={[styles.safeAreaFull, { alignItems: "center" }]}>
         <View>
-         {refreshing ? <ActivityIndicator /> : null}
+          {refreshing ? <ActivityIndicator /> : null}
           <FlatList
             data={library}
             renderItem={renderItem}
             numColumns={2}
-            refreshControl={ <RefreshControl refreshing={refreshing} onRefresh={getData}  />}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={getData} />
+            }
           />
         </View>
+        {!(<CreateButton navigation={navigation} />)}
       </SafeAreaView>
     </LinearGradient>
   );
-}
+};
 
 export default StoriesScreen;
