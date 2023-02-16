@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { MyDarkTheme, MyLightTheme } from "../views/Styles";
+import BalanceModel from "../models/BalanceModel";
 
 const AppContext = createContext();
 
@@ -17,13 +18,6 @@ const AppContextProvider = ({ children }) => {
       : MyLightTheme
   );
 
-  let context = {
-    darkThemeOverride,
-    setDarkThemeOverride,
-    themeColorStyle,
-    setThemeColorStyle,
-  };
-
   useEffect(() => {
     setThemeColorStyle(
       darkThemeOverride === true
@@ -33,6 +27,23 @@ const AppContextProvider = ({ children }) => {
         : MyLightTheme
     );
   }, [colorScheme, darkThemeOverride, themeColorStyle]);
+
+  let balanceModel = new BalanceModel();
+  const [balance, setBalance] = useState(balanceModel.getBalance());
+
+  let context = {
+    darkThemeOverride,
+    setDarkThemeOverride,
+    themeColorStyle,
+    setThemeColorStyle,
+    balance,
+    setBalance,
+    balanceModel,
+  };
+
+  useEffect(() => {
+    setBalance(balanceModel.getBalance());
+  }, [balanceModel]);
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };
