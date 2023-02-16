@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, ScrollView } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../views/Styles";
@@ -12,8 +12,8 @@ import ModalWrapper from "../components/ModalWrapper";
 import PurchaseButton from "../components/PurchaseButton";
 import { saveStoryToLibrary } from "../models/LibraryStorage";
 import HighlightButton from "../components/HighlightButton";
-import BalanceModel from "../models/BalanceModel";
 import BalanceChecker from "../components/BalanceChecker";
+import { AppContext } from "../store/context";
 
 let cat = new Cat();
 cat.state = copernicusValues;
@@ -33,7 +33,7 @@ let imageNull = { created: 1673128176, data: [{ url: null }] };
 // The assistant is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures, and very friendly.
 
 function CreateStory({ navigation }) {
-  let balanceModel = new BalanceModel();
+  const { balanceModel } = useContext(AppContext);
   const [title, setTitle] = React.useState(null);
   const [showSaveModal, setShowSaveModal] = React.useState(false);
   const [storyInput, setStoryInput] = React.useState(cat.catText());
@@ -46,7 +46,6 @@ function CreateStory({ navigation }) {
 
   useEffect(() => {
     setShowLowBalance(balanceModel.isBalanceLow());
-    console.log(balanceModel.getBalance());
   }, [imageData, fetchedState, balanceModel]);
 
   let showOutput = false;
@@ -118,7 +117,6 @@ function CreateStory({ navigation }) {
         }}
         style={{
           width: "50%",
-          padding: 0,
           borderTopWidth: 1,
           borderLeftWidth: 1,
           borderColor: "#616161",
@@ -136,7 +134,6 @@ function CreateStory({ navigation }) {
           width: "50%",
           borderTopWidth: 1,
           borderColor: "#616161",
-          padding: 0,
         }}
       />
     );
