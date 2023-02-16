@@ -12,8 +12,8 @@ import ModalWrapper from "../components/ModalWrapper";
 import PurchaseButton from "../components/PurchaseButton";
 import { saveStoryToLibrary } from "../models/LibraryStorage";
 import HighlightButton from "../components/HighlightButton";
-import Balance from "../components/Balance";
 import BalanceModel from "../models/BalanceModel";
+import BalanceChecker from "../components/BalanceChecker";
 
 let cat = new Cat();
 cat.state = copernicusValues;
@@ -23,47 +23,54 @@ const placeholder = {
   url: "placeholder_icon.jpeg",
 };
 
-const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
-
 let imagePrep =
   "Cat, oil painting, highly detailed, global illumination, fantasy, trending on artstation, ";
 let storyPrep =
-  "The following is a conversation with an AI assistant. The assistant is helpful, creative, clever, and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a story around 500 words long featuring ";
+  //  "The following is a conversation with a sophisticated large language model AI assistant. The AI is helpful, creative, clever and tells great stories.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
+  "The following is a conversation with a sophisticated large language model AI. The AI is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
 let imageNull = { created: 1673128176, data: [{ url: null }] };
 
-function CreateStory() {
+// The assistant is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures, and very friendly.
+
+function CreateStory({ navigation }) {
+  let balanceModel = new BalanceModel();
   const [title, setTitle] = React.useState(null);
-  const [showModal, setShowModal] = React.useState(false);
+  const [showSaveModal, setShowSaveModal] = React.useState(false);
   const [storyInput, setStoryInput] = React.useState(cat.catText());
   const [output, setOutput] = useState(null);
   const [fetchedState, setFetchedState] = useState(null);
   const [imageData, setImageData] = useState(imageNull);
+  const [showLowBalance, setShowLowBalance] = React.useState(
+    balanceModel.isBalanceLow()
+  );
 
   useEffect(() => {
-    setFetchedState("idle");
-  }, [imageData]);
+    setShowLowBalance(balanceModel.isBalanceLow());
+    console.log(balanceModel.getBalance());
+  }, [imageData, fetchedState, balanceModel]);
 
   let showOutput = false;
-  let myBalance = new BalanceModel();
 
-  let chatGPTInteraction = new GetTextOpenAI(
-    storyPrep.concat(storyInput),
-    output,
-    setOutput,
-    showOutput
-  );
+  let chatGPTInteraction = new GetTextOpenAI({
+    input: storyPrep.concat(storyInput),
+    output: output,
+    setOutput: setOutput,
+    showOutput: showOutput,
+    balanceModel: balanceModel,
+  });
 
   let CreateImagePurchaseButton = () => {
     return (
       <PurchaseButton
         callback={() => {
-          setImageData(imageNull);
           setFetchedState("loading");
-          getImagesOAI(
-            imagePrep.concat(storyInput),
-            setFetchedState,
-            setImageData
-          );
+          setImageData(imageNull);
+          getImagesOAI({
+            imagePrompt: imagePrep.concat(storyInput),
+            setFetchedState: setFetchedState,
+            setImageData: setImageData,
+            balanceModel: balanceModel,
+          });
         }}
         title="Create Picture!"
         price={9}
@@ -74,29 +81,27 @@ function CreateStory() {
 
   let KeepContentButton = () => {
     return (
-      <PurchaseButton
-        callback={() => {
-          setShowModal(true);
+      <HighlightButton
+        onPress={() => {
+          setShowSaveModal(true);
         }}
-        title="Wonderful, save it!"
-        price="FREE"
-        icon={null}
+        title="Save!"
+        style={{ padding: 40 }}
       />
     );
   };
 
   let FailContentButton = () => {
     return (
-      <PurchaseButton
-        callback={() => {
+      <HighlightButton
+        onPress={() => {
           setImageData(imageNull);
           setOutput(null);
           setTitle(null);
           console.log("cleared it all");
         }}
-        title="Disapointing, clear it all"
-        price="FREE"
-        icon={null}
+        title="Delete forever"
+        style={{ padding: 30, borderLeftWidth: 1, borderColor: "#333" }}
       />
     );
   };
@@ -107,7 +112,7 @@ function CreateStory() {
         title="Save"
         onPress={() => {
           saveToLibrary(newStory);
-          setShowModal(false);
+          setShowSaveModal(false);
           let alertString = !!newStory.name ? ` "${newStory.name}"` : "";
           alert(`Saved${alertString}!`);
         }}
@@ -126,7 +131,7 @@ function CreateStory() {
     return (
       <HighlightButton
         title="Cancel"
-        onPress={() => setShowModal(false)}
+        onPress={() => setShowSaveModal(false)}
         style={{
           width: "50%",
           borderTopWidth: 1,
@@ -166,10 +171,20 @@ function CreateStory() {
               cat.catText().concat(".")
             )}
           />
-          <View style={[styles.container, { marginTop: 10 }]}>
-            {chatGPTInteraction}
-            <CreateImagePurchaseButton />
-          </View>
+
+          {showLowBalance ? (
+            <View style={[styles.container, { width: "100%" }]}>
+              <BalanceChecker
+                balanceModel={balanceModel}
+                navigation={navigation}
+              />
+            </View>
+          ) : (
+            <View style={[styles.container, { marginTop: 10 }]}>
+              {chatGPTInteraction}
+              <CreateImagePurchaseButton />
+            </View>
+          )}
         </View>
 
         <View style={styles.container}>
@@ -188,14 +203,19 @@ function CreateStory() {
           <View
             style={[
               styles.container,
-              { marginTop: 10, marginBottom: 40, width: "100%" },
+              {
+                marginTop: 1,
+                marginBottom: 1,
+                width: "50%",
+                flexDirection: "row",
+              },
             ]}
           >
             <KeepContentButton />
             <FailContentButton />
           </View>
         )}
-        <ModalWrapper showModal={showModal} setShowModal={setShowModal}>
+        <ModalWrapper showModal={showSaveModal} setShowModal={setShowSaveModal}>
           <TextInputWithLabel
             parentInput={title}
             setParentInput={setTitle}
@@ -208,7 +228,6 @@ function CreateStory() {
           </View>
         </ModalWrapper>
       </ScrollView>
-      <Balance amount={myBalance.getBalance()} />
     </LinearGradient>
   );
 }
