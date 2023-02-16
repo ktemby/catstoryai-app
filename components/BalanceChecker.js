@@ -3,7 +3,6 @@ import styles from "../views/Styles";
 import { Text, View } from "react-native";
 import { AppContext } from "../store/context";
 import { PressableHighlight } from "../components/HighlightButton";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Coin from "../components/Coin";
 
 let BalanceChecker = (props) => {

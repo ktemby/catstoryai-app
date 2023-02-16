@@ -1,9 +1,11 @@
+import React from "react";
 import { View, Text } from "react-native";
-import styles, { getColorScheme } from "../views/Styles";
+import styles from "../views/Styles";
 import Coin from "../components/Coin";
+import { AppContext } from "../store/context";
 
 let Balance = (props) => {
-  const themeColorStyle = getColorScheme();
+  const { themeColorStyle } = React.useContext(AppContext);
 
   return (
     <View style={styles.balanceBar.container}>
