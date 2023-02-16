@@ -25,13 +25,6 @@ export const MyDarkTheme = {
   highlight: "#616161",
 };
 
-export const getColorScheme = () => {
-  const colorScheme = useColorScheme();
-  let themeColorStyle = colorScheme === "dark" ? MyDarkTheme : MyLightTheme;
-  //const themeColorStyle = styles.themeColorStyle[colorScheme];
-  return themeColorStyle;
-};
-
 const styles = StyleSheet.create({
   balanceBar: {
     container: {

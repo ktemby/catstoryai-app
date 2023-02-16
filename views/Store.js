@@ -7,7 +7,6 @@ import Coin from "../components/Coin";
 import Balance from "../components/Balance";
 import { PressableHighlight } from "../components/HighlightButton";
 import { AppContext } from "../store/context";
-import BalanceModel from "../models/BalanceModel";
 
 let initialPackage = [
   {
@@ -53,7 +52,7 @@ const handlePurchase = async (props) => {
       console.log(props.package);
 
       let amount = props.package.product.description.match(/\d/g).join("");
-      props.bModel.updateBalance(1 * amount);
+      props.balanceModel.updateBalance(1 * amount);
     }
   } catch (e) {
     console.log("Error:", e);
@@ -64,14 +63,15 @@ const handlePurchase = async (props) => {
 const StoreList = (props) => {
   const { themeColorStyle } = useContext(AppContext);
 
-  let mBalance = props.balanceModel;
-
   var renderPackage = (myPackage) => {
     return (
       <View style={[styles.container, { margin: 10 }]}>
         <PressableHighlight
           onPress={() =>
-            handlePurchase({ package: myPackage.item, bModel: mBalance })
+            handlePurchase({
+              package: myPackage.item,
+              balanceModel: balanceModel,
+            })
           }
           style={styles.storeItem.container}
         >
@@ -105,11 +105,9 @@ const StoreList = (props) => {
   );
 };
 
-let Store = ({ navigation }) => {
+let Store = () => {
   let [packages, setPackages] = useState(initialPackage);
-  const { themeColorStyle } = useContext(AppContext);
-
-  let myBalance = new BalanceModel();
+  const { themeColorStyle, balanceModel, balance } = useContext(AppContext);
 
   useEffect(() => {
     getIAPData(setPackages);
@@ -117,8 +115,8 @@ let Store = ({ navigation }) => {
 
   return (
     <SafeAreaView style={[styles.safeAreaHeader, themeColorStyle]}>
-      <StoreList packages={packages} balanceModel={myBalance} />
-      <Balance amount={myBalance.getBalance()} />
+      <StoreList packages={packages} balanceModel={balanceModel} />
+      <Balance amount={balance} />
     </SafeAreaView>
   );
 };

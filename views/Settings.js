@@ -1,24 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-import {
-  View,
-  Switch,
-  Text,
-  ScrollView,
-  FlatList,
-  RefreshControl,
-} from "react-native";
+import { View, Switch, Text, FlatList, RefreshControl } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "./Styles";
 import initialSettingObject from "../assets/settings.json";
 import LoadJson, { saveUpdate } from "../models/PhoneStorage";
 import { AppContext } from "../store/context";
-import { MyDarkTheme, MyLightTheme } from "../views/Styles";
-
-//settingsObject = Settings.getSetting
 
 let Settings = () => {
   const { themeColorStyle, setThemeColorStyle, setDarkThemeOverride } =
-    useContext(AppContext);
+    useContext(AppContext); // setThemeColoarStyle and setDTO are used in json callback
 
   let [settingsObject, setSettingsObject] = useState();
   let [refreshing, setRefreshing] = useState(true);
@@ -54,7 +44,7 @@ let Settings = () => {
         if (item.id === id) {
           item.isEnabled = value;
           eval(item.callback);
-          //Function(item.callback);
+          //Function(item.callback); // would be nice to not use eval, but safe here since it's our local json
         }
         return item;
       })

@@ -1,12 +1,11 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Text, FlatList, View, Image } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import styles from "./Styles";
+import styles from "../views/Styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Balance from "../components/Balance";
 import { PressableHighlight } from "../components/HighlightButton";
 import { AppContext } from "../store/context";
-import BalanceModel from "../models/BalanceModel";
 
 const imageString = "../assets/copernicus_and_margot.jpeg";
 
@@ -56,9 +55,7 @@ let footerSection = () => {
 };
 
 let AboutScreen = ({ navigation }) => {
-  const { themeColorStyle } = useContext(AppContext);
-
-  let balanceModel = new BalanceModel();
+  const { themeColorStyle, balance } = useContext(AppContext);
 
   const renderListItem = ({ item }) => (
     <PressableHighlight
@@ -100,7 +97,7 @@ let AboutScreen = ({ navigation }) => {
           ListFooterComponent={footerSection}
         />
       </SafeAreaView>
-      <Balance amount={balanceModel.getBalance()} style={{ top: "20%" }} />
+      <Balance amount={balance} style={{ top: "20%" }} />
     </LinearGradient>
   );
 };
