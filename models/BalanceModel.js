@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import initialUserData from "../assets/dataUsers.json";
-import LoadJson, { updateUserData } from "./PhoneStorage";
+import LoadJson, { updateData } from "./PhoneStorage";
 
 export function BalanceModel() {
   let [userDataObject, setUserDataObject] = useState(initialUserData);
@@ -28,11 +28,11 @@ export function BalanceModel() {
 
   this.updateBalance = async (change) => {
     let updatedValue = this.getBalance() + change;
-    await updateUserData({
+    await updateData({
       changeKey: "coins",
       value: updatedValue,
-      setUserDataObject: setUserDataObject,
-      userDataObject: userDataObject,
+      setDataObject: setUserDataObject,
+      dataObject: userDataObject,
       jsonName: this.jsonName,
     });
   };
