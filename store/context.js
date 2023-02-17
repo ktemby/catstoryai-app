@@ -31,6 +31,10 @@ const AppContextProvider = ({ children }) => {
   let balanceModel = new BalanceModel();
   const [balance, setBalance] = useState(balanceModel.getBalance());
 
+  useEffect(() => {
+    setBalance(balanceModel.getBalance());
+  }, [balanceModel]);
+
   let context = {
     darkThemeOverride,
     setDarkThemeOverride,
@@ -40,10 +44,6 @@ const AppContextProvider = ({ children }) => {
     setBalance,
     balanceModel,
   };
-
-  useEffect(() => {
-    setBalance(balanceModel.getBalance());
-  }, [balanceModel]);
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
 };
