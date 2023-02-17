@@ -11,11 +11,7 @@ import CachedImage from "../components/CachedImage";
 import { AppContext } from "../store/context";
 import { PressableHighlight } from "../components/HighlightButton";
 
-const renderCatCard = ({ item }) => {
-  //const { themeColorStyle } = useContext(AppContext);
-  console.log("here be cataloons!");
-  themeColorStyle = { color: "#FFF", backgroundColor: "#212121" };
-
+const renderCatCard = ({ item }, themeColorStyle) => {
   this.catText = () => {
     return [
       "A ",
@@ -107,7 +103,7 @@ let CatCreation = ({ navigation }) => {
     >
       <FlatList
         data={catModel.getDataObject()}
-        renderItem={renderCatCard}
+        renderItem={(item) => renderCatCard(item, themeColorStyle)}
         style={{ padding: 10, width: "100%" }}
       />
     </SafeAreaView>
