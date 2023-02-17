@@ -1,70 +1,101 @@
-import React, { useContext } from "react";
-import { Text, View, ScrollView } from "react-native";
+import { useContext } from "react";
+import { Text, View, ScrollView, FlatList } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import styles from "../views/Styles";
-import Cat, { copernicusValues, margotValues } from "../models/Cat";
+import CatModel from "../models/CatModel";
 import CachedImage from "../components/CachedImage";
 import { AppContext } from "../store/context";
+import { PressableHighlight } from "../components/HighlightButton";
 
-function renderCatCard(thisCat) {
-  const { themeColorStyle } = useContext(AppContext);
+const renderCatCard = ({ item }) => {
+  //const { themeColorStyle } = useContext(AppContext);
+  console.log("here be cataloons!");
+  themeColorStyle = { color: "#FFF", backgroundColor: "#212121" };
+
+  this.catText = () => {
+    return [
+      "A ",
+      item.color,
+      " ",
+      item.breed,
+      " ",
+      item.breedMix.length > 1 ? item.breedMix.concat(" mix ") : "",
+      "named ",
+      item.name,
+      ", who has a ",
+      item.personality,
+      " personality, ",
+      item.feature,
+      ", and loves to ",
+      item.superpower,
+      ".",
+    ].join("");
+  };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        marginTop: 20,
-        marginBottom: 20,
-        width: "80%",
-        alignItems: "center",
-      }}
-    >
-      <LinearGradient {...styles.gradientProps}>
-        <View
-          style={[
-            themeColorStyle,
-            { flex: 1, margin: 1, alignItems: "center" },
-          ]}
-        >
-          <Text style={[styles.Heading, themeColorStyle, { marginBottom: 5 }]}>
-            {thisCat.state.name}
-          </Text>
-          <Text
-            style={[styles.SubHeading, themeColorStyle, { marginBottom: 20 }]}
-          >
-            {thisCat.state.title}
-          </Text>
+    <View style={{ margin: 20 }}>
+      <LinearGradient {...styles.gradientProps} style={{ width: "100%" }}>
+        <View style={{ margin: 1 }}>
+          <PressableHighlight style={[{ alignItems: "center" }]}>
+            <Text
+              style={[
+                styles.Heading,
+                { color: themeColorStyle.color, marginBottom: 5 },
+              ]}
+            >
+              {item.name}
+            </Text>
+            <Text
+              style={[
+                styles.SubHeading,
+                { color: themeColorStyle.color, marginBottom: 20 },
+              ]}
+            >
+              {item.title}
+            </Text>
 
-          <CachedImage
-            source={{ uri: thisCat.state.image }}
-            style={[
-              styles.ImageStyle,
-              { borderRadius: 10, width: "80%", flex: 1, margin: 10 },
-            ]}
-          ></CachedImage>
+            <CachedImage
+              source={{ uri: item.image }}
+              style={[
+                styles.ImageStyle,
+                {
+                  borderRadius: 10,
+                  width: "75%",
+                  //margin: 10,
+                  //alignItems: "center",
+                },
+              ]}
+            />
 
-          <Text style={[styles.body, themeColorStyle, { textAlign: "center" }]}>
-            {thisCat.catText()}
-          </Text>
+            <Text
+              style={[
+                styles.body,
+                {
+                  color: themeColorStyle.color,
+                  textAlign: "center",
+                  marginTop: 10,
+                  width: "85%",
+                },
+              ]}
+            >
+              {catText()}
+            </Text>
+          </PressableHighlight>
         </View>
       </LinearGradient>
     </View>
   );
-}
+};
 
-let margot = new Cat();
-margot.state = margotValues;
-
-let copernicus = new Cat();
-copernicus.state = copernicusValues;
-
-function CatCreation({ navigation }) {
+let CatCreation = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { themeColorStyle } = useContext(AppContext);
+
+  let catModel = new CatModel();
 
   return (
     <SafeAreaView
@@ -74,15 +105,14 @@ function CatCreation({ navigation }) {
         { paddingBottom: -insets.bottom },
       ]}
     >
-      <ScrollView>
-        <View style={{ flex: 1, alignItems: "center" }}>
-          {renderCatCard(copernicus)}
-          {renderCatCard(margot)}
-        </View>
-      </ScrollView>
+      <FlatList
+        data={catModel.getDataObject()}
+        renderItem={renderCatCard}
+        style={{ padding: 10, width: "100%" }}
+      />
     </SafeAreaView>
   );
-}
+};
 
 export default CatCreation;
 
