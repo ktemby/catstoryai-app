@@ -10,12 +10,13 @@ import { AppContext } from "../store/context";
 const imageString = "../assets/copernicus_and_margot.jpeg";
 
 const accountList = [
-  {
+  /*{
     title: "BalanceTester",
     navigation: "BalanceTester",
   },
+  */
   {
-    title: "My Cats",
+    title: "Cats",
     navigation: "CatCreation",
   },
   {

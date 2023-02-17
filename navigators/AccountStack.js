@@ -25,7 +25,7 @@ function AccountStack() {
         name="CatCreation"
         component={CatCreation}
         options={{
-          title: "My Cats",
+          title: "Cats",
           headerTransparent: true,
           headerTintColor: themeColorStyle.color,
         }}
