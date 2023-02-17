@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import * as FileSystem from "expo-file-system";
 
 export let getPath = (jsonName) => {
@@ -6,10 +5,9 @@ export let getPath = (jsonName) => {
   return jsonStoragePath;
 };
 
+// Overwrite the old json with current changes to storage
 export let saveUpdate = async (props) => {
   let jsonStoragePath = getPath(props.jsonName);
-
-  // Overwrite the old json with current changes to storage
   await FileSystem.writeAsStringAsync(
     jsonStoragePath,
     JSON.stringify(props.jsonObject)
@@ -17,11 +15,17 @@ export let saveUpdate = async (props) => {
   console.log(`saved ${props.jsonName}`);
 };
 
-export let updateUserData = async (props) => {
-  await props.setUserDataObject(
-    props.userDataObject.map((item) => {
+export let resetData = async (jsonName, factoryJsonObject) => {
+  saveUpdate({ jsonName: jsonName, jsonObject: factoryJsonObject });
+};
+
+// Update object when it is being used as a state variable
+export let updateData = async (props) => {
+  await props.setDataObject(
+    props.dataObject.map((item) => {
       for (var key in item) {
         if (key === props.changeKey) {
+          console.log(`updating ${key} to ${props.value}`);
           item[key] = props.value;
           return item;
         }
@@ -30,71 +34,61 @@ export let updateUserData = async (props) => {
   );
   await saveUpdate({
     jsonName: props.jsonName,
-    jsonObject: props.userDataObject,
+    jsonObject: props.dataObject,
   });
 };
 
-// We need a way to cleverly retrieve the saved 'isEnabed' values, but also update the underlying model as needed.
-export let updateModel = async (jsonName, factoryJsonObject) => {
-  let jsonStoragePath = getPath(jsonName);
-
-  // first load the current values in storage
-  let jsonCurrentObject = JSON.parse(
-    await FileSystem.readAsStringAsync(jsonStoragePath)
-  );
-  let newObject = factoryJsonObject;
-
-  // update factory setting object with current stored values
-  const updateFactoryValues = (currentKey, currentValue) => {
-    newObject.map((item) => {
+// directly modify object with current stored values
+const updateByKey = (props) => {
+  filterKey = props.filterKey;
+  props.modifyObject.map((item) => {
+    if (item[filterKey] === props.item[filterKey]) {
       for (var key in item) {
-        if (key === currentKey) {
-          //console.log(`matched key: ${key}`);
-          item[key] = currentValue;
+        if (key === props.changeKey) {
+          item[key] = props.value;
         }
       }
-    });
-  };
-
-  await jsonCurrentObject.map((item) => {
-    // pull all the current values into the factory value.
-    for (var key in item) {
-      updateFactoryValues(key, item[key]);
     }
   });
-
-  saveUpdate({ jsonName: jsonName, jsonObject: newObject });
 };
 
-// We need a way to cleverly retrieve the saved 'isEnabed' values, but also update the underlying model as needed.
-export let updateSettingsModel = async (jsonName, factoryJsonObject) => {
-  let jsonStoragePath = getPath(jsonName);
-
-  // first load the current values in storage
-  let jsonCurrentObject = JSON.parse(
-    await FileSystem.readAsStringAsync(jsonStoragePath)
-  );
+export let updateModel = async (jsonName, factoryJsonObject) => {
+  let jsonCurrentObject = await getJsonObject(jsonName);
   let newObject = factoryJsonObject;
 
-  // update factory setting object with current stored values
-  const updateFactoryValues = (id, value) => {
-    if (value === null) {
-      console.log("skipping null value");
-      return;
-    }
-    newObject.map((item) => {
-      if (item.id === id) {
-        item.isEnabled = value;
+  // TODO: this whole section needs cleanup
+  // - will wait until other data saving use cases are clearer before refactor
+  if (jsonName === "settings.json") {
+    // Settings Only: Retrieve the saved values, but also update the underlying model as needed.
+    await jsonCurrentObject.map((item) => {
+      // pull all the current values into the factory value.
+      let key = "isEnabled";
+      let filterKey = "id";
+      updateByKey({
+        modifyObject: newObject,
+        changeKey: key,
+        filterKey: filterKey,
+        value: item[key],
+        item: item,
+      });
+    });
+  } else if (jsonName === "dataUsers.json") {
+    await jsonCurrentObject.map((item) => {
+      //console.log("putting current values into the factory reference object");
+      for (var key in item) {
+        console.log(`updating ${key} with ${item[key]}`);
+        updateByKey({
+          modifyObject: newObject,
+          changeKey: key,
+          value: item[key],
+          item: item,
+        });
       }
     });
-  };
+  } else {
+    console.log(`updating ${jsonName} currently unsupported`);
+  }
 
-  await jsonCurrentObject.map((item) => {
-    // pull all the current values into the factory value.
-    updateFactoryValues(item.id, item.isEnabled);
-  });
-
-  // This would completely nuke the previous preferences.
   saveUpdate({ jsonName: jsonName, jsonObject: newObject });
 };
 
@@ -102,33 +96,30 @@ export let initializeStorage = async (jsonName, factoryJsonObject) => {
   let jsonStoragePath = getPath(jsonName);
   const pathCheck = await FileSystem.getInfoAsync(jsonStoragePath);
 
-  // if the library doesn't exist, initialize it from the factory data
-  console.log("initializing the storage");
   if (!pathCheck.exists) {
+    console.log(`Library doesn't exist, Initializing storage of ${jsonName}`);
     await FileSystem.writeAsStringAsync(
       jsonStoragePath,
       JSON.stringify(factoryJsonObject)
     );
-    console.log(`Initialized storage of ${jsonName}`);
   } else {
-    // ensure the model is up to date
-    console.log("model exists, updating model");
-    if (jsonName === "settings.json") {
-      updateSettingsModel(jsonName, factoryJsonObject);
-    } else {
-      updateModel(jsonName, factoryJsonObject);
-    }
+    console.log(`${jsonName} model exists, updating model`);
+    await updateModel(jsonName, factoryJsonObject);
   }
   return jsonStoragePath;
 };
 
-let LoadJson = async (jsonName, factoryJsonObject) => {
-  let jsonStoragePath = await initializeStorage(jsonName, factoryJsonObject);
-  // Then we load it into memory
+let getJsonObject = async (jsonName) => {
+  let jsonStoragePath = getPath(jsonName);
   let jsonObject = JSON.parse(
     await FileSystem.readAsStringAsync(jsonStoragePath)
   );
   return jsonObject;
+};
+
+let LoadJson = async (jsonName, factoryJsonObject) => {
+  await initializeStorage(jsonName, factoryJsonObject);
+  return await getJsonObject(jsonName);
 };
 
 export default LoadJson;
