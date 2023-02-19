@@ -40,14 +40,20 @@ export function CatModel() {
   //  });
   //};
 
-  this.getValue = async (getKey) => {
+  this.getNames = () => {
+    return this.getValue("name");
+  };
+
+  this.getValue = (getKey) => {
+    let matches = [];
     catDataObject.map((item) => {
       for (var key in item) {
         if (key === getKey) {
-          return item[key];
+          matches.push(item[key]);
         }
       }
     });
+    return matches;
   };
 
   this.show = () => {
