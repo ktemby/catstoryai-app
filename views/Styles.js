@@ -1,5 +1,5 @@
 import { Platform } from "react-native";
-import { StyleSheet, useColorScheme } from "react-native";
+import { StyleSheet } from "react-native";
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
 
 export const MyLightTheme = {
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     lineHeight: 35,
     margin: 35,
-    //width: '80%'
   },
   SubHeading: {
     fontSize: 14,
@@ -139,9 +138,7 @@ const styles = StyleSheet.create({
   imageDetail: {
     width: "100%",
     flex: 1,
-    //width: 400,
     height: 400,
-    //marginBottom: 20,
   },
   image: {
     width: "100%",
@@ -170,8 +167,6 @@ const styles = StyleSheet.create({
   },
   inputWrapper: {
     width: "100%",
-    //margin: 20,
-    //marginBottom: 10,
     padding: 20,
     paddingTop: 40,
     paddingBottom: 40,
