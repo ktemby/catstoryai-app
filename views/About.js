@@ -6,6 +6,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Balance from "../components/Balance";
 import { PressableHighlight } from "../components/HighlightButton";
 import { AppContext } from "../store/context";
+import TitleSection from "../components/TitleSection";
+import CatModel from "../models/CatModel";
 
 const imageString = "../assets/copernicus_and_margot.jpeg";
 
@@ -15,6 +17,10 @@ const accountList = [
     navigation: "BalanceTester",
   },
   */
+  {
+    title: "Cat Tester",
+    navigation: "CatTester",
+  },
   {
     title: "Cats",
     navigation: "CatCreation",
@@ -30,10 +36,10 @@ const accountList = [
 ];
 
 let headerSection = () => {
+  let catModel = new CatModel();
   return (
     <View style={{ flex: 1, alignItems: "center", paddingTop: 40 }}>
-      <Text style={styles.SubHeading}>The Adventures of</Text>
-      <Text style={styles.HeadingAlt}>Copernicus and Margot</Text>
+      <TitleSection catModel={catModel} />
       <Image style={styles.ImageStyle} source={require(imageString)}></Image>
       <Text style={{ color: "white", padding: 10 }}>
         Curated AI stories and Art

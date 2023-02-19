@@ -4,6 +4,7 @@ import AboutScreen from "../views/About";
 import CatCreation from "../views/CatCreation";
 import Settings from "../views/Settings";
 import BalanceTester from "../views/BalanceTester";
+import Account from "../views/Account";
 import Store from "../views/Store";
 import { AppContext } from "../store/context";
 
@@ -16,6 +17,16 @@ function AccountStack() {
     <Stack.Navigator>
       <Stack.Screen
         name="Account"
+        component={Account}
+        options={{
+          headerShown: false,
+          title: "Cat Tester",
+          headerTransparent: true,
+          headerTintColor: themeColorStyle.color,
+        }}
+      />
+      <Stack.Screen
+        name="About"
         component={AboutScreen}
         options={{
           headerShown: false,
