@@ -1,15 +1,9 @@
 import * as FileSystem from "expo-file-system";
 
-export let getPath = (jsonName) => {
-  const jsonStoragePath = `${FileSystem.documentDirectory}${jsonName}`;
-  return jsonStoragePath;
-};
-
 // Overwrite the old json with current changes to storage
 export let saveUpdate = async (props) => {
-  let jsonStoragePath = getPath(props.jsonName);
   await FileSystem.writeAsStringAsync(
-    jsonStoragePath,
+    getPath(props.jsonName),
     JSON.stringify(props.jsonObject)
   );
   console.log(`saved ${props.jsonName}`);
@@ -52,7 +46,7 @@ const updateByKey = (props) => {
   });
 };
 
-export let updateModel = async (jsonName, factoryJsonObject) => {
+let updateModel = async (jsonName, factoryJsonObject) => {
   let jsonCurrentObject = await getJsonObject(jsonName);
   let newObject = factoryJsonObject;
 
@@ -61,7 +55,6 @@ export let updateModel = async (jsonName, factoryJsonObject) => {
   if (jsonName === "settings.json") {
     // Settings Only: Retrieve the saved values, but also update the underlying model as needed.
     await jsonCurrentObject.map((item) => {
-      // pull all the current values into the factory value.
       let key = "isEnabled";
       let filterKey = "id";
       updateByKey({
@@ -76,7 +69,7 @@ export let updateModel = async (jsonName, factoryJsonObject) => {
     await jsonCurrentObject.map((item) => {
       //console.log("putting current values into the factory reference object");
       for (var key in item) {
-        console.log(`updating ${key} with ${item[key]}`);
+        //console.log(`updating ${key} with ${item[key]}`);
         updateByKey({
           modifyObject: newObject,
           changeKey: key,
@@ -87,17 +80,17 @@ export let updateModel = async (jsonName, factoryJsonObject) => {
     });
   } else {
     console.log(`updating ${jsonName} currently unsupported`);
+    return; // If we remove this, we will overwrite to factory each time
   }
-
   saveUpdate({ jsonName: jsonName, jsonObject: newObject });
 };
 
-export let initializeStorage = async (jsonName, factoryJsonObject) => {
+let initializeStorage = async (jsonName, factoryJsonObject) => {
   let jsonStoragePath = getPath(jsonName);
   const pathCheck = await FileSystem.getInfoAsync(jsonStoragePath);
 
   if (!pathCheck.exists) {
-    console.log(`Library doesn't exist, Initializing storage of ${jsonName}`);
+    console.log(`Data doesn't exist, Initializing storage of ${jsonName}`);
     await FileSystem.writeAsStringAsync(
       jsonStoragePath,
       JSON.stringify(factoryJsonObject)
@@ -110,11 +103,11 @@ export let initializeStorage = async (jsonName, factoryJsonObject) => {
 };
 
 let getJsonObject = async (jsonName) => {
-  let jsonStoragePath = getPath(jsonName);
-  let jsonObject = JSON.parse(
-    await FileSystem.readAsStringAsync(jsonStoragePath)
-  );
-  return jsonObject;
+  return JSON.parse(await FileSystem.readAsStringAsync(getPath(jsonName)));
+};
+
+export let getPath = (jsonName) => {
+  return `${FileSystem.documentDirectory}${jsonName}`;
 };
 
 let LoadJson = async (jsonName, factoryJsonObject) => {
