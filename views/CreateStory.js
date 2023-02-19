@@ -14,6 +14,7 @@ import { saveStoryToLibrary } from "../models/LibraryStorage";
 import HighlightButton from "../components/HighlightButton";
 import BalanceChecker from "../components/BalanceChecker";
 import { AppContext } from "../store/context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 let cat = new Cat();
 cat.state = copernicusValues;
@@ -110,7 +111,7 @@ function CreateStory({ navigation }) {
       <HighlightButton
         title="Save"
         onPress={() => {
-          saveToLibrary(newStory);
+          saveStoryToLibrary(newStory);
           setShowSaveModal(false);
           let alertString = !!newStory.name ? ` "${newStory.name}"` : "";
           alert(`Saved${alertString}!`);
@@ -151,80 +152,82 @@ function CreateStory({ navigation }) {
     cdn: false,
   };
 
-  let saveToLibrary = () => {
-    saveStoryToLibrary(newStory);
-  };
-
   return (
     <LinearGradient {...styles.gradientProps}>
-      <ScrollView>
-        <View style={[styles.container, { paddingBottom: 10, paddingTop: 20 }]}>
-          <View style={[styles.container, { height: 40 }]}></View>
-          <TextInputWithLabel
-            parentInput={storyInput}
-            setParentInput={setStoryInput}
-            label={"Tell me a story about..."}
-            placeholder={"Tell me a story about ".concat(
-              cat.catText().concat(".")
-            )}
-          />
+      <SafeAreaView style={[styles.safeAreaFull, { paddingTop: 0 }]}>
+        <ScrollView style={{ width: "100%" }}>
+          <View
+            style={[styles.container, { paddingBottom: 10, width: "100%" }]}
+          >
+            <TextInputWithLabel
+              parentInput={storyInput}
+              setParentInput={setStoryInput}
+              label="Tell me a story about..."
+              placeholder={"Tell me a story about ".concat(
+                cat.catText().concat(".")
+              )}
+            />
 
-          {showLowBalance ? (
-            <View style={[styles.container, { width: "100%" }]}>
-              <BalanceChecker
-                balanceModel={balanceModel}
-                navigation={navigation}
-              />
-            </View>
-          ) : (
-            <View style={[styles.container, { marginTop: 10 }]}>
-              {chatGPTInteraction}
-              <CreateImagePurchaseButton />
+            {showLowBalance ? (
+              <View style={[styles.container, { width: "100%" }]}>
+                <BalanceChecker
+                  balanceModel={balanceModel}
+                  navigation={navigation}
+                />
+              </View>
+            ) : (
+              <View style={[styles.container, { marginTop: 10 }]}>
+                {chatGPTInteraction}
+                <CreateImagePurchaseButton />
+              </View>
+            )}
+          </View>
+
+          <View style={styles.container}>
+            {fetchedState === "loading" ? LoadingSpinner() : ""}
+          </View>
+
+          <View style={{ marginTop: 0 }}>
+            <StoryViewer
+              name={title}
+              imageUrl={imageData.data[0].url}
+              story={output}
+            />
+          </View>
+
+          {(!!output || !!imageData.data[0].url) && (
+            <View
+              style={[
+                styles.container,
+                {
+                  marginTop: 1,
+                  marginBottom: 1,
+                  width: "50%",
+                  flexDirection: "row",
+                },
+              ]}
+            >
+              <KeepContentButton />
+              <FailContentButton />
             </View>
           )}
-        </View>
-
-        <View style={styles.container}>
-          {fetchedState === "loading" ? LoadingSpinner() : ""}
-        </View>
-
-        <View style={{ marginTop: 0 }}>
-          <StoryViewer
-            name={title}
-            imageUrl={imageData.data[0].url}
-            story={output}
-          />
-        </View>
-
-        {(!!output || !!imageData.data[0].url) && (
-          <View
-            style={[
-              styles.container,
-              {
-                marginTop: 1,
-                marginBottom: 1,
-                width: "50%",
-                flexDirection: "row",
-              },
-            ]}
+          <ModalWrapper
+            showModal={showSaveModal}
+            setShowModal={setShowSaveModal}
           >
-            <KeepContentButton />
-            <FailContentButton />
-          </View>
-        )}
-        <ModalWrapper showModal={showSaveModal} setShowModal={setShowSaveModal}>
-          <TextInputWithLabel
-            parentInput={title}
-            setParentInput={setTitle}
-            label={"What will you name the Story?"}
-            placeholder={placeholder.name}
-          />
-          <View style={{ flexDirection: "row" }}>
-            <CancelButton />
-            <SaveButton />
-          </View>
-        </ModalWrapper>
-      </ScrollView>
+            <TextInputWithLabel
+              parentInput={title}
+              setParentInput={setTitle}
+              label={"What will you name the Story?"}
+              placeholder={placeholder.name}
+            />
+            <View style={{ flexDirection: "row" }}>
+              <CancelButton />
+              <SaveButton />
+            </View>
+          </ModalWrapper>
+        </ScrollView>
+      </SafeAreaView>
     </LinearGradient>
   );
 }
