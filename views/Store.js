@@ -70,7 +70,7 @@ const StoreList = (props) => {
           onPress={() =>
             handlePurchase({
               package: myPackage.item,
-              balanceModel: balanceModel,
+              balanceModel: props.balanceModel,
             })
           }
           style={styles.storeItem.container}
