@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import LoadJson, { updateData, resetData } from "./PhoneStorage";
+import LoadJson, {
+  updateData,
+  resetData,
+  updateByKey,
+  saveUpdate,
+} from "../models/PhoneStorage";
 import initialCatData from "../assets/dataCats.json";
 
 export function CatModel() {
@@ -8,7 +13,7 @@ export function CatModel() {
 
   this.jsonName = "dataCats.json";
 
-  //resetData(this.jsonName, initialCatData);
+  //this.resetData = async () => resetData(this.jsonName, initialCatData);
 
   useEffect(() => {
     this.getData();
@@ -18,6 +23,20 @@ export function CatModel() {
     return catDataObject;
   };
 
+  this.setData = (props) => {
+    console.log(
+      `updated unique: ${props.filterKey}, key: ${props.changeKey} value: ${props.value}`
+    );
+    updateByKey({
+      dataObject: catDataObject,
+      filterKey: props.filterKey,
+      item: props.item,
+      changeKey: props.changeKey,
+      value: props.value,
+      jsonName: this.jsonName,
+    });
+  };
+
   this.getRefreshing = () => {
     return refreshing;
   };
@@ -25,23 +44,20 @@ export function CatModel() {
   this.getData = async () => {
     const jsonObject = await LoadJson(this.jsonName, initialCatData);
     setCatDataObject(jsonObject);
-    console.log(catDataObject);
     setRefreshing(false);
   };
 
-  //this.updateName = async (change) => {
-  // let updatedValue = "Copernicat";
-  //  await updateData({
-  //    changeKey: "name",
-  //    value: updatedValue,
-  //    setDataObject: setCatDataObject,
-  //    dataObject: catDataObject,
-  //    jsonName: this.jsonName,
-  //  });
-  //};
-
   this.getNames = () => {
     return this.getValue("name");
+  };
+
+  this.getCat = (guid) => {
+    catDataObject.map((item) => {
+      if (item.guid === guid) {
+        console.log(JSON.stringify(item));
+        return item;
+      }
+    });
   };
 
   this.getValue = (getKey) => {
