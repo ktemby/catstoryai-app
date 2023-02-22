@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import styles from "../views/Styles";
 
 let TitleSection = (props) => {
-  let names = props.catModel.getNames();
+  let names = props.names;
 
   nameString = "";
   names.length == 0
