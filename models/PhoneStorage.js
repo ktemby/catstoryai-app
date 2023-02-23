@@ -14,32 +14,46 @@ export let resetData = async (jsonName, factoryJsonObject) => {
 };
 
 // Update object when it is being used as a state variable
-export let updateData = async (props) => {
-  await props.setDataObject(
+export let updateData = (props) => {
+  filterKey = props.filterKey;
+  props.setDataObject(
     props.dataObject.map((item) => {
-      for (var key in item) {
-        if (key === props.changeKey) {
-          console.log(`updating ${key} to ${props.value}`);
-          item[key] = props.value;
-          return item;
+      if (item[filterKey] === props.item[filterKey]) {
+        for (var key in item) {
+          if (key === props.changeKey) {
+            // console.log(
+            //   `updating ${key} to ${props.value}, only for ${filterKey}`
+            // );
+            item[key] = props.value;
+            return item;
+          }
         }
       }
     })
   );
-  await saveUpdate({
+  saveUpdate({
     jsonName: props.jsonName,
     jsonObject: props.dataObject,
   });
 };
 
 // directly modify object with current stored values
-const updateByKey = (props) => {
+export const updateByKey = async (props) => {
   filterKey = props.filterKey;
-  props.modifyObject.map((item) => {
+  props.dataObject.map((item) => {
     if (item[filterKey] === props.item[filterKey]) {
       for (var key in item) {
         if (key === props.changeKey) {
+          // console.log(
+          //   `updating ${key} to ${props.value}, only for ${filterKey}`
+          // );
           item[key] = props.value;
+
+          saveUpdate({
+            jsonName: props.jsonName,
+            jsonObject: props.dataObject,
+          });
+          return;
         }
       }
     }
@@ -58,11 +72,12 @@ let updateModel = async (jsonName, factoryJsonObject) => {
       let key = "isEnabled";
       let filterKey = "id";
       updateByKey({
-        modifyObject: newObject,
+        dataObject: newObject,
         changeKey: key,
         filterKey: filterKey,
         value: item[key],
         item: item,
+        jsonName: jsonName,
       });
     });
   } else if (jsonName === "dataUsers.json") {
@@ -71,15 +86,36 @@ let updateModel = async (jsonName, factoryJsonObject) => {
       for (var key in item) {
         //console.log(`updating ${key} with ${item[key]}`);
         updateByKey({
-          modifyObject: newObject,
+          dataObject: newObject,
           changeKey: key,
           value: item[key],
           item: item,
+          jsonName: jsonName,
         });
       }
     });
-  } else {
-    console.log(`updating ${jsonName} currently unsupported`);
+  }
+  // else if (jsonName === "dataCats.json") {
+  //   await jsonCurrentObject.map((item) => {
+  //     //console.log("putting current values into the factory reference object");
+  //     let filterKey = "guid"; // only update unique elements
+  //     for (var key in item) {
+  //       console.log(
+  //         `updating ${key} with ${item[key]}, only for matching ${filterKey}: which is ${item[filterKey]}`
+  //       );
+  //       updateByKey({
+  //         dataObject: newObject,
+  //         changeKey: key,
+  //         value: item[key],
+  //         item: item,
+  //         jsonName: jsonName,
+  //         filterKey: filterKey,
+  //       });
+  //     }
+  //   });
+  // }
+  else {
+    console.log(`updating ${jsonName} to factory currently unsupported`);
     return; // If we remove this, we will overwrite to factory each time
   }
   saveUpdate({ jsonName: jsonName, jsonObject: newObject });
