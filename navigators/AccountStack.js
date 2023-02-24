@@ -5,8 +5,10 @@ import CatCreation from "../views/CatCreation";
 import Settings from "../views/Settings";
 import BalanceTester from "../views/BalanceTester";
 import Account from "../views/Account";
+import CatDetails from "../views/CatDetails";
 import Store from "../views/Store";
 import { AppContext } from "../store/context";
+import CatEdit from "../views/CatEdit";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +24,28 @@ function AccountStack() {
           headerShown: false,
           title: "Cat Tester",
           headerTransparent: true,
+          headerTintColor: themeColorStyle.color,
+        }}
+      />
+      <Stack.Screen
+        name="Cat Details"
+        component={CatDetails}
+        options={{
+          headerShown: false,
+          headerBackTitleVisible: false,
+          title: "",
+          headerTransparent: true,
+          headerTintColor: themeColorStyle.color,
+        }}
+      />
+      <Stack.Screen
+        name="Cat Editor"
+        component={CatEdit}
+        options={{
+          title: "",
+          //headerShown: false,
+          headerTransparent: true,
+          //headerBackTitleVisible: false,
           headerTintColor: themeColorStyle.color,
         }}
       />
