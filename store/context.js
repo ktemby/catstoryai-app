@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { MyDarkTheme, MyLightTheme } from "../views/Styles";
 import BalanceModel from "../models/BalanceModel";
+import CatModel from "../models/CatModel";
 
 const AppContext = createContext();
 
@@ -35,6 +36,14 @@ const AppContextProvider = ({ children }) => {
     setBalance(balanceModel.getBalance());
   }, [balanceModel]);
 
+  let catModel = new CatModel();
+
+  const [catData, setCatData] = useState(catModel.getDataObject());
+
+  useEffect(() => {
+    setCatData(catModel.getDataObject());
+  }, [catModel]);
+
   let context = {
     darkThemeOverride,
     setDarkThemeOverride,
@@ -43,6 +52,9 @@ const AppContextProvider = ({ children }) => {
     balance,
     setBalance,
     balanceModel,
+    catModel,
+    catData,
+    setCatData,
   };
 
   return <AppContext.Provider value={context}>{children}</AppContext.Provider>;
