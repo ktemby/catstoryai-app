@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
@@ -49,12 +49,18 @@ let CreateCatFooter = () => {
   );
 };
 
-const renderMiniCard = ({ item }) => {
+const renderMiniCard = ({ item }, navigation) => {
+  //let cat = item;
+  //console.log(`rendering: ${JSON.stringify(item)}`);
+  //console.log(cat.image);
   return (
     <View style={{ margin: 10 }}>
       <LinearGradient {...styles.gradientProps} style={{ borderRadius: 15 }}>
         <View style={{ margin: 1 }}>
-          <PressableHighlight style={[{ width: 150, borderRadius: 15 }]}>
+          <PressableHighlight
+            style={[{ width: 150, borderRadius: 15 }]}
+            onPress={() => navigation.navigate("Cat Details", { item })}
+          >
             <CachedImageBackground
               source={{ uri: item.image }}
               style={[
@@ -66,7 +72,7 @@ const renderMiniCard = ({ item }) => {
                   alignItems: "center",
                 },
               ]}
-            ></CachedImageBackground>
+            />
           </PressableHighlight>
         </View>
       </LinearGradient>
@@ -74,15 +80,20 @@ const renderMiniCard = ({ item }) => {
   );
 };
 
-let CatCarousel = ({ navigation }) => {
-  let catModel = new CatModel();
+let CatCarousel = (navigation) => {
+  const { catModel, catData, setCatData } = useContext(AppContext);
+
+  useEffect(() => {
+    setCatData(catModel.getDataObject());
+  }, [catModel]);
+
   return (
     <View>
-      <TitleSection catModel={catModel} style={{ paddingTop: 40 }} />
+      <TitleSection names={catModel.getNames()} style={{ paddingTop: 40 }} />
       <View>
         <FlatList
-          data={catModel.getDataObject()}
-          renderItem={renderMiniCard}
+          data={catData}
+          renderItem={(item) => renderMiniCard(item, navigation)}
           style={{ padding: 10, width: "100%" }}
           horizontal={true}
           ListFooterComponent={CreateCatFooter}
@@ -136,7 +147,7 @@ let AccountScreen = ({ navigation }) => {
       <FlatList
         data={accountMenuList}
         renderItem={renderNavListItem}
-        ListHeaderComponent={CatCarousel}
+        ListHeaderComponent={() => CatCarousel(navigation)}
         ListFooterComponent={footerSection}
       />
     </View>
