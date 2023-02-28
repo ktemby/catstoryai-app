@@ -7,7 +7,6 @@ import { PressableHighlight } from "../components/HighlightButton";
 import CachedImage from "../components/CachedImage";
 //import TextInputWithLabel from "../components/TextInputWithLabel";
 import { updateByKey } from "../models/PhoneStorage";
-import CatModel from "../models/CatModel";
 
 const TextInputWithLabel = (props) => {
   const { themeColorStyle } = useContext(AppContext);
@@ -66,6 +65,7 @@ function EditCat({ item }, catItem, catModel) {
             changeKey: item.item,
             value: text,
           });
+          catItem[item.item] = text;
           catModel.getData();
         }}
       />
