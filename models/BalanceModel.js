@@ -31,6 +31,7 @@ export function BalanceModel() {
     await updateData({
       changeKey: "coins",
       value: updatedValue,
+      filterKey: "guid",
       setDataObject: setUserDataObject,
       dataObject: userDataObject,
       jsonName: this.jsonName,
