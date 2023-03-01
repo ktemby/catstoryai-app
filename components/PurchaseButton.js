@@ -17,12 +17,7 @@ let PurchaseButton = (props) => {
               {props.title}
             </Text>
 
-            <View
-              style={{
-                width: "10%",
-                alignItems: "flex-end",
-              }}
-            >
+            <View style={{ width: "10%", alignItems: "flex-end" }}>
               {!!props.icon && <Coin size={20} />}
             </View>
 
