@@ -15,7 +15,7 @@ export let resetData = async (jsonName, factoryJsonObject) => {
 
 // Update object when it is being used as a state variable
 export let updateData = (props) => {
-  filterKey = props.filterKey;
+  let filterKey = props.filterKey;
   props.setDataObject(
     props.dataObject.map((item) => {
       if (item[filterKey] === props.item[filterKey]) {
