@@ -25,7 +25,7 @@ const placeholder = {
 };
 
 let imagePrep =
-  "Cat, oil painting, highly detailed, global illumination, fantasy, trending on artstation, ";
+  "Cat, oil painting, highly detailed, global illumination, fantasy, trending on artstation,  ";
 let storyPrep =
   //  "The following is a conversation with a sophisticated large language model AI assistant. The AI is helpful, creative, clever and tells great stories.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
   "The following is a conversation with a sophisticated large language model AI. The AI is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
@@ -160,8 +160,8 @@ function CreateStory({ navigation }) {
             style={[styles.container, { paddingBottom: 10, width: "100%" }]}
           >
             <TextInputWithLabel
-              parentInput={storyInput}
-              setParentInput={setStoryInput}
+              value={storyInput}
+              onChangeText={(text) => setStoryInput(text)}
               label="Tell me a story about..."
               placeholder={"Tell me a story about ".concat(
                 cat.catText().concat(".")
@@ -216,8 +216,8 @@ function CreateStory({ navigation }) {
             setShowModal={setShowSaveModal}
           >
             <TextInputWithLabel
-              parentInput={title}
-              setParentInput={setTitle}
+              value={title}
+              onChangeText={(text) => setTitle(text)}
               label={"What will you name the Story?"}
               placeholder={placeholder.name}
             />

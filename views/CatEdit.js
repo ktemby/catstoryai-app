@@ -1,54 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { AppContext } from "../store/context";
-import { View, Text, FlatList, TextInput } from "react-native";
+import { View, FlatList } from "react-native";
 import { PressableHighlight } from "../components/HighlightButton";
 import CachedImage from "../components/CachedImage";
-//import TextInputWithLabel from "../components/TextInputWithLabel";
-import { updateByKey } from "../models/PhoneStorage";
-
-const TextInputWithLabel = (props) => {
-  const { themeColorStyle } = useContext(AppContext);
-
-  return (
-    <View
-      style={[
-        {
-          width: "100%",
-          padding: 0,
-          paddingTop: 10,
-          paddingLeft: "8%",
-          alignItems: "flex-start",
-        },
-        themeColorStyle,
-      ]}
-    >
-      <View style={[themeColorStyle, { width: "100%" }]}>
-        <Text style={[{ fontWeight: "bold" }, themeColorStyle]}>
-          {props.label}
-        </Text>
-        <TextInput
-          autoCapitalize={props.autoCapitalize}
-          placeholder={props.placeholder}
-          placeholderTextColor="#9E9E9E"
-          onChangeText={props.onChangeText}
-          value={props.value}
-          style={[
-            {
-              fontSize: 18,
-              paddingBottom: 10,
-              paddingTop: 12,
-            },
-            themeColorStyle,
-          ]}
-          multiline={false}
-          autoFocus={true}
-        />
-      </View>
-    </View>
-  );
-};
+import TextInputWithLabel from "../components/TextInputWithLabel";
 
 function EditCat({ item }, catItem, catModel) {
   return (
@@ -58,6 +15,7 @@ function EditCat({ item }, catItem, catModel) {
         placeholder={catItem[item.item]}
         autoCapitalize={item.capitalize}
         autoCorrect={item.autoCorrect}
+        multiline={false}
         onChangeText={(text) => {
           catModel.setData({
             filterKey: "guid",
@@ -67,6 +25,13 @@ function EditCat({ item }, catItem, catModel) {
           });
           catItem[item.item] = text;
           catModel.getData();
+        }}
+        frameStyle={{
+          width: "100%",
+          paddingTop: 12,
+          paddingBottom: 10,
+          paddingLeft: "8%",
+          alignItems: "flex-start",
         }}
       />
     </View>
@@ -97,20 +62,9 @@ function CatEdit({ route }) {
           renderItem={(item) => EditCat(item, catItem, catModel)}
           style={{ paddingTop: 60 }}
         />
-
         <CachedImage
           source={{ uri: catItem.image }}
-          style={[
-            {
-              position: "absolute",
-              right: 0,
-              top: 0,
-              width: 150,
-              height: 150,
-              borderRadius: 150,
-              margin: 20,
-            },
-          ]}
+          style={styles.profileThumb}
         />
       </View>
     </SafeAreaView>

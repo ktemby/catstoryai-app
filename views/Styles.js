@@ -182,6 +182,21 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#424242AA",
   },
+  modalStyle: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  profileThumb: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    width: 150,
+    height: 150,
+    borderRadius: 150,
+    margin: 20,
+  },
 });
 
 export default styles;
