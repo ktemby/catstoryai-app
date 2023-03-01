@@ -9,14 +9,7 @@ let ModalWrapper = (props) => {
           style={{ flex: 1 }}
           onPress={() => props.setShowModal(false)}
         >
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "rgba(0,0,0,0.5)",
-            }}
-          >
+          <View style={styles.modalStyle}>
             <Pressable style={{ width: "100%" }}>
               <View style={{ alignItems: "center" }}>{props.children}</View>
             </Pressable>
