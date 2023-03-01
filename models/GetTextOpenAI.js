@@ -10,7 +10,6 @@ import HighlightButton from "../components/HighlightButton";
 const GetTextOpenAI = (props) => {
   let modThreshold = 0.0002;
   let postPrep = "\n\nAI: ";
-
   let input = props.input;
   let output = props.output;
   let setOutput = props.setOutput;
@@ -108,7 +107,7 @@ const GetTextOpenAI = (props) => {
     // Moderation check on story Data
     console.log("Getting Story Output Moderation Score");
     const outputModData = await getModerationData(output);
-    let outputModCheckFlag = await CheckModeration(outputModData, modThreshold);
+    let outputModCheckFlag = CheckModeration(outputModData, modThreshold);
     setOutputModeration(outputModCheckFlag);
   };
 
@@ -119,7 +118,7 @@ const GetTextOpenAI = (props) => {
     // Initial input check
     console.log("Getting Input Moderation Score");
     const modData = await getModerationData(input);
-    let modCheckFlag = await CheckModeration(modData, modThreshold);
+    let modCheckFlag = CheckModeration(modData, modThreshold);
     setInputModeration(modCheckFlag);
   };
 

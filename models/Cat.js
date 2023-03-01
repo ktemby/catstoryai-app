@@ -81,21 +81,6 @@ export function Cat() {
       ".",
     ].join("");
   };
-
-  /*
-  this.show = () => {
-    return (
-      <View>
-        <Text style={styles.Heading}>{this.state.name}</Text>
-        <Image
-          source={{ uri: this.state.image }}
-          style={[styles.ImageStyle, { marginLeft: 20 }]}
-        ></Image>
-        <Text style={this.props.style}>{this.catText()}</Text>
-      </View>
-    );
-  };
-  */
 }
 
 export default Cat;
