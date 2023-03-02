@@ -9,7 +9,8 @@
     "superpower": "cuddle and purr",
     "image": "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
     "title": "The Renassiance Cat",
-    "guid": 2
+    "guid": "17ad9181-c674-4a79-b29e-bb6b1f3b2259",
+    "isFeatured": true
   },
   {
     "name": "Margot",
@@ -21,6 +22,7 @@
     "superpower": "hunt spiders",
     "image": "https://raw.githubusercontent.com/ktemby/catstoryai-app/main/ml/models/MargotModel/Margot_Face.jpeg",
     "title": "The Huntress",
-    "guid": 3
+    "guid": "5985bd1c-ef6e-4133-8d79-6b54cbaebc2c3",
+    "isFeatured": true
   }
 ]
