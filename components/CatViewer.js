@@ -6,10 +6,9 @@ import CachedImage from "../components/CachedImage";
 
 let CatViewer = ({ item }) => {
   const { themeColorStyle } = useContext(AppContext);
-
   let prepend = "";
   const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
-  !!item.cdn ? (prepend = myCDN) : "";
+  item.cdn === undefined ? "" : (prepend = myCDN);
 
   this.catText = () => {
     return [
