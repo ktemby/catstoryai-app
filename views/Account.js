@@ -1,11 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, Text, FlatList } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { PressableHighlight } from "../components/HighlightButton";
 import { AppContext } from "../store/context";
 import { LinearGradient } from "expo-linear-gradient";
-import CatModel from "../models/CatModel";
 import CachedImageBackground from "../components/CachedImageBackground";
 import TitleSection from "../components/TitleSection";
 import Balance from "../components/Balance";
@@ -25,12 +24,19 @@ let CatCard = (props) => {
   );
 };
 
-let CreateCatFooter = () => {
+let CreateCatFooter = (navigation) => {
+  const { catModel } = useContext(AppContext);
+
   return (
     <View style={{ margin: 10, marginRight: 30 }}>
       <LinearGradient {...styles.gradientProps} style={{ borderRadius: 15 }}>
         <View style={{ margin: 1 }}>
           <PressableHighlight
+            onPress={() => {
+              let item = catModel.createCat();
+              console.log(`newcat : ${item}`);
+              navigation.navigate("Cat Details", { item });
+            }}
             style={[
               {
                 alignItems: "center",
@@ -50,9 +56,6 @@ let CreateCatFooter = () => {
 };
 
 const renderMiniCard = ({ item }, navigation) => {
-  //let cat = item;
-  //console.log(`rendering: ${JSON.stringify(item)}`);
-  //console.log(cat.image);
   return (
     <View style={{ margin: 10 }}>
       <LinearGradient {...styles.gradientProps} style={{ borderRadius: 15 }}>
@@ -83,10 +86,6 @@ const renderMiniCard = ({ item }, navigation) => {
 let CatCarousel = (navigation) => {
   const { catModel, catData, setCatData } = useContext(AppContext);
 
-  useEffect(() => {
-    setCatData(catModel.getDataObject());
-  }, [catModel]);
-
   return (
     <View>
       <TitleSection names={catModel.getNames()} style={{ paddingTop: 40 }} />
@@ -96,10 +95,11 @@ let CatCarousel = (navigation) => {
           renderItem={(item) => renderMiniCard(item, navigation)}
           style={{ padding: 10, width: "100%" }}
           horizontal={true}
-          ListFooterComponent={CreateCatFooter}
+          ListFooterComponent={() => CreateCatFooter(navigation)}
           snapToAlignment="start"
           decelerationRate={"fast"}
           snapToInterval={160}
+          extraData={catModel}
         />
         <Text
           style={{
