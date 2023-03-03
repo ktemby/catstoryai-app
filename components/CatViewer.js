@@ -5,30 +5,10 @@ import { View, Text } from "react-native";
 import CachedImage from "../components/CachedImage";
 
 let CatViewer = ({ item }) => {
-  const { themeColorStyle } = useContext(AppContext);
+  const { themeColorStyle, catModel } = useContext(AppContext);
   let prepend = "";
   const myCDN = "https://d2sphvb6m6942c.cloudfront.net/";
   item.cdn === undefined ? "" : (prepend = myCDN);
-
-  this.catText = () => {
-    return [
-      "A ",
-      item.color,
-      " ",
-      item.breed,
-      " ",
-      item.breedMix.length > 1 ? item.breedMix.concat(" mix ") : "",
-      "named ",
-      item.name,
-      ", who has a ",
-      item.personality,
-      " personality, ",
-      item.feature,
-      ", and loves to ",
-      item.superpower,
-      ".",
-    ].join("");
-  };
 
   return (
     <View style={{ alignItems: "center" }}>
@@ -62,7 +42,7 @@ let CatViewer = ({ item }) => {
           },
         ]}
       >
-        {catText()}
+        {catModel.catText(item)}
       </Text>
     </View>
   );
