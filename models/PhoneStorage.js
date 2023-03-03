@@ -38,7 +38,7 @@ export let updateData = (props) => {
 };
 
 // directly modify object with current stored values
-export const updateByKey = async (props) => {
+export const updateByKey = (props) => {
   filterKey = props.filterKey;
   props.dataObject.map((item) => {
     if (item[filterKey] === props.item[filterKey]) {
@@ -94,28 +94,30 @@ let updateModel = async (jsonName, factoryJsonObject) => {
         });
       }
     });
-  }
-  // else if (jsonName === "dataCats.json") {
-  //   await jsonCurrentObject.map((item) => {
-  //     //console.log("putting current values into the factory reference object");
-  //     let filterKey = "guid"; // only update unique elements
-  //     for (var key in item) {
-  //       console.log(
-  //         `updating ${key} with ${item[key]}, only for matching ${filterKey}: which is ${item[filterKey]}`
-  //       );
-  //       updateByKey({
-  //         dataObject: newObject,
-  //         changeKey: key,
-  //         value: item[key],
-  //         item: item,
-  //         jsonName: jsonName,
-  //         filterKey: filterKey,
-  //       });
-  //     }
-  //   });
-  // }
-  else {
-    console.log(`updating ${jsonName} to factory currently unsupported`);
+    // } else if (jsonName === "dataCats.json") {
+    //   // console.log("current");
+    //   // console.log(JSON.stringify(jsonCurrentObject));
+    //   // console.log("new");
+    //   // console.log(JSON.stringify(newObject));
+    //   await jsonCurrentObject.map((item) => {
+    //     //console.log("putting current values into the factory reference object");
+    //     let filterKey = "guid"; // only update unique elements
+    //     for (var key in item) {
+    //       console.log(
+    //         `updating ${key} with ${item[key]}, only for matching ${filterKey}: which is ${item[filterKey]}`
+    //       );
+    //       updateByKey({
+    //         dataObject: newObject,
+    //         changeKey: key,
+    //         value: item[key],
+    //         item: item,
+    //         jsonName: jsonName,
+    //         filterKey: filterKey,
+    //       });
+    //     }
+    //   });
+  } else {
+    //console.log(`updating ${jsonName} to factory currently unsupported`);
     return; // If we remove this, we will overwrite to factory each time
   }
   saveUpdate({ jsonName: jsonName, jsonObject: newObject });
