@@ -15,7 +15,7 @@ export function CatModel() {
 
   this.jsonName = "dataCats.json";
 
-  //this.resetData = async () => resetData(this.jsonName, initialCatData);
+  this.resetData = async () => resetData(this.jsonName, initialCatData);
 
   useEffect(() => {
     this.getData();
@@ -118,52 +118,41 @@ export function CatModel() {
     saveUpdate({ jsonName: this.jsonName, jsonObject: catDataObject });
   };
 
-  this.catText = () => {
+  this.catText = (item) => {
     return [
       "A ",
-      this.state.color,
+      item.color,
       " ",
-      this.state.breed,
+      item.breed,
       " ",
-      this.state.breedMix.length > 1 ? this.state.breedMix.concat(" mix ") : "",
+      item.breedMix.length > 1 ? item.breedMix.concat(" mix ") : "",
       "named ",
-      this.state.name,
+      item.name,
       ", who has a ",
-      this.state.personality,
+      item.personality,
       " personality, ",
-      this.state.feature,
+      item.feature,
       ", and loves to ",
-      this.state.superpower,
+      item.superpower,
       ".",
     ].join("");
+  };
+
+  this.getStoryText = () => {
+    let featuredOnly = true;
+    let storyText = [];
+    catDataObject.map((item) => {
+      if (featuredOnly && item["isFeatured"] === true) {
+        let addText = this.catText(item);
+        storyText.length === 0
+          ? (storyText = addText)
+          : (storyText = storyText
+              .slice(0, -1)
+              .concat(", and their friend, a", addText.slice(1)));
+      }
+    });
+    return storyText;
   };
 }
 
 export default CatModel;
-
-export let copernicusValues = {
-  name: "Copernicus",
-  color: "brown",
-  breed: "Tabby",
-  breedMix: "",
-  //breedMix : "Egyptian Mao",
-  feature: "soft fur",
-  personality: "loving",
-  superpower: "cuddle and purr",
-  image:
-    "https://d2sphvb6m6942c.cloudfront.net/Copernicus%20Wonders%20at%20the%20Stars.png",
-  title: "The Renassiance Cat",
-};
-
-export let margotValues = {
-  name: "Margot",
-  color: "white",
-  breed: "Lynx Point Siamese",
-  breedMix: "Tabby",
-  feature: "gorgeous blue eyes",
-  personality: "playful",
-  superpower: "hunt and make friends",
-  image:
-    "https://raw.githubusercontent.com/ktemby/catstoryai-app/main/ml/models/MargotModel/Margot_Face.jpeg",
-  title: "The Huntress",
-};
