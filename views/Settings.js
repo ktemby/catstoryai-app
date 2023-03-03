@@ -9,28 +9,14 @@ import { AppContext } from "../store/context";
 let Settings = () => {
   const { themeColorStyle, setThemeColorStyle, setDarkThemeOverride } =
     useContext(AppContext); // setThemeColoarStyle and setDTO are used in json callback
-
   let [settingsObject, setSettingsObject] = useState();
   let [refreshing, setRefreshing] = useState(true);
   const [selectedId, setSelectedId] = useState();
-
   let jsonName = "settings.json";
 
   useEffect(() => {
     getData();
   }, []);
-
-  const getSetting = (key) => {
-    try {
-      settingsObject.map((item) => {
-        if (item.key === key) {
-          return item.value;
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const getData = async () => {
     const jsonObject = await LoadJson(jsonName, initialSettingObject);
@@ -51,26 +37,14 @@ let Settings = () => {
     );
   };
 
-  let headerSection = () => {
-    return (
-      <View style={{ flex: 1, height: 1, backgroundColor: "#000" }}></View>
-    );
-  };
+  let headerSection = () => (
+    <View style={{ flex: 1, height: 1, backgroundColor: "#000" }} />
+  );
 
   const renderSetting = ({ item }) => {
     return (
       item.isShown && (
-        <View
-          style={[
-            {
-              flex: 1,
-              flexDirection: "row",
-              padding: 40,
-              borderBottomWidth: 1,
-            },
-            themeColorStyle,
-          ]}
-        >
+        <View style={[styles.listItemContainer, themeColorStyle]}>
           <View style={{ width: "90%", justifyContent: "center" }}>
             <Text style={[styles.buttonTextStyle, themeColorStyle]}>
               {item.title}
@@ -116,23 +90,3 @@ let Settings = () => {
 };
 
 export default Settings;
-
-/* Accessing local images
-const [image, setImage] = useState(null);
-
- const pickImage = async () => {
-   // No permissions request is necessary for launching the image library
-   let result = await ImagePicker.launchImageLibraryAsync({
-     mediaTypes: ImagePicker.MediaTypeOptions.All,
-     allowsEditing: true,
-     aspect: [4, 3],
-     quality: 1,
-   });
-
-   console.log(result);
-
-   if (!result.cancelled) {
-     setImage(result.uri);
-   }
- };
-*/

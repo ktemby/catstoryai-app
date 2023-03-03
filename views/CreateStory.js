@@ -5,7 +5,6 @@ import styles from "../views/Styles";
 import { getImagesOAI } from "../models/GetImageOpenAI";
 import LoadingSpinner from "../components/LoadingSpinner";
 import TextInputWithLabel from "../components/TextInputWithLabel";
-import Cat, { copernicusValues } from "../models/Cat";
 import GetTextOpenAI from "../models/GetTextOpenAI";
 import StoryViewer from "../components/StoryViewer";
 import ModalWrapper from "../components/ModalWrapper";
@@ -15,9 +14,6 @@ import HighlightButton from "../components/HighlightButton";
 import BalanceChecker from "../components/BalanceChecker";
 import { AppContext } from "../store/context";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-let cat = new Cat();
-cat.state = copernicusValues;
 
 const placeholder = {
   name: "A Cat Adventure",
@@ -34,10 +30,10 @@ let imageNull = { created: 1673128176, data: [{ url: null }] };
 // The assistant is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures, and very friendly.
 
 function CreateStory({ navigation }) {
-  const { balanceModel } = useContext(AppContext);
+  const { balanceModel, catModel } = useContext(AppContext);
   const [title, setTitle] = React.useState(null);
   const [showSaveModal, setShowSaveModal] = React.useState(false);
-  const [storyInput, setStoryInput] = React.useState(cat.catText());
+  const [storyInput, setStoryInput] = React.useState(catModel.getStoryText);
   const [output, setOutput] = useState(null);
   const [fetchedState, setFetchedState] = useState(null);
   const [imageData, setImageData] = useState(imageNull);
@@ -49,13 +45,11 @@ function CreateStory({ navigation }) {
     setShowLowBalance(balanceModel.isBalanceLow());
   }, [imageData, fetchedState, balanceModel]);
 
-  let showOutput = false;
-
   let chatGPTInteraction = new GetTextOpenAI({
     input: storyPrep.concat(storyInput),
     output: output,
     setOutput: setOutput,
-    showOutput: showOutput,
+    showOutput: false,
     balanceModel: balanceModel,
   });
 
@@ -164,7 +158,7 @@ function CreateStory({ navigation }) {
               onChangeText={(text) => setStoryInput(text)}
               label="Tell me a story about..."
               placeholder={"Tell me a story about ".concat(
-                cat.catText().concat(".")
+                catModel.getStoryText()
               )}
             />
 
