@@ -1,8 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { AppContext } from "../store/context";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { PressableHighlight } from "../components/HighlightButton";
 import CatViewer from "../components/CatViewer";
 import { ScrollView } from "react-native-gesture-handler";

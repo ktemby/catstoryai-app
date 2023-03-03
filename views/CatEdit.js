@@ -6,6 +6,7 @@ import { View, FlatList } from "react-native";
 import { PressableHighlight } from "../components/HighlightButton";
 import CachedImage from "../components/CachedImage";
 import TextInputWithLabel from "../components/TextInputWithLabel";
+import { DeleteButton, FavoriteButton } from "../components/StoryViewerButtons";
 
 function EditCat({ item }, catItem, catModel) {
   return (
@@ -38,6 +39,26 @@ function EditCat({ item }, catItem, catModel) {
   );
 }
 
+EditCatFooter = (item) => {
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around",
+          paddingBottom: 100,
+          paddingTop: 20,
+        },
+      ]}
+    >
+      <FavoriteButton item={item} style={{ padding: 40 }} />
+      <DeleteButton item={item} style={{ padding: 40 }} />
+    </View>
+  );
+};
+
 function CatEdit({ route }) {
   const { item } = route.params;
   const catItem = item;
@@ -61,6 +82,7 @@ function CatEdit({ route }) {
           data={editList}
           renderItem={(item) => EditCat(item, catItem, catModel)}
           style={{ paddingTop: 60 }}
+          ListFooterComponent={() => EditCatFooter(catItem)}
         />
         <CachedImage
           source={{ uri: catItem.image }}
