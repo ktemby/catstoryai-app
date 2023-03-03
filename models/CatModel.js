@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import "react-native-get-random-values";
+import { v4 as uuidv4 } from "uuid";
 import LoadJson, {
   updateData,
   resetData,
@@ -85,16 +87,35 @@ export function CatModel() {
     );
   };
 
-  this.state = {
-    name: "Adoracat",
-    color: "brown",
-    breed: "Tabby",
-    breedMix: "",
-    feature: "soft fur",
-    personality: "playful",
-    superpower: "go zoomies",
-    title: "The New Cat on the Block",
-    image: "https://via.placeholder.com/256x256.png?text=Get+Portrait+First",
+  this.getGuid = () => {
+    return uuidv4();
+  };
+
+  this.createCat = () => {
+    let cat = {
+      name: "Adoracat",
+      color: "brown",
+      breed: "Tabby",
+      breedMix: "",
+      feature: "soft fur",
+      personality: "playful",
+      superpower: "go zoomies",
+      image: "https://via.placeholder.com/256x256.png?text=Get+Portrait+First",
+      title: "The New Cat on the Block",
+      guid: this.getGuid(),
+    };
+
+    let newID = catDataObject.length;
+    catDataObject[newID] = cat;
+    console.log(catDataObject);
+    //console.log(this.getDataObject().length);
+    //setCatDataObject(this.getDataObject().push(cat));
+    this.saveUpdate();
+    return cat;
+  };
+
+  this.saveUpdate = () => {
+    saveUpdate({ jsonName: this.jsonName, jsonObject: catDataObject });
   };
 
   this.catText = () => {
