@@ -1,12 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { AppContext } from "../store/context";
-import { View, FlatList } from "react-native";
+import { View, FlatList, Pressable } from "react-native";
 import { PressableHighlight } from "../components/HighlightButton";
 import CachedImage from "../components/CachedImage";
 import TextInputWithLabel from "../components/TextInputWithLabel";
 import { DeleteButton, FavoriteButton } from "../components/StoryViewerButtons";
+import * as ImagePicker from "expo-image-picker";
 
 function EditCat({ item }, catItem, catModel) {
   return (
@@ -75,6 +76,34 @@ function CatEdit({ route }) {
     { feature: "Title", item: "title" },
   ];
 
+  const [image, setSelectedImage] = useState(null);
+
+  const pickImageAsync = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      //console.log(result);
+      let imgResult = result.assets[0].uri;
+      console.log(imgResult);
+      setSelectedImage(imgResult);
+      catItem.image = image;
+      catModel.setData({
+        filterKey: "guid",
+        item: catItem,
+        changeKey: "image",
+        value: imgResult,
+      });
+      catItem["image"] = imgResult;
+      catModel.getData();
+      console.log(catModel.getDataObject());
+    } else {
+      alert("You did not select any image.");
+    }
+  };
+
   return (
     <SafeAreaView style={[styles.safeAreaFull, themeColorStyle]}>
       <View>
@@ -84,33 +113,15 @@ function CatEdit({ route }) {
           style={{ paddingTop: 60 }}
           ListFooterComponent={() => EditCatFooter(catItem)}
         />
-        <CachedImage
-          source={{ uri: catItem.image }}
-          style={styles.profileThumb}
-        />
+        <Pressable onPress={() => pickImageAsync()} style={styles.profileThumb}>
+          <CachedImage
+            source={{ uri: catItem.image }}
+            style={styles.profileThumb}
+          />
+        </Pressable>
       </View>
     </SafeAreaView>
   );
 }
 
 export default CatEdit;
-
-/* Accessing local images
-const [image, setImage] = useState(null);
-
- const pickImage = async () => {
-   // No permissions request is necessary for launching the image library
-   let result = await ImagePicker.launchImageLibraryAsync({
-     mediaTypes: ImagePicker.MediaTypeOptions.All,
-     allowsEditing: true,
-     aspect: [4, 3],
-     quality: 1,
-   });
-
-   console.log(result);
-
-   if (!result.cancelled) {
-     setImage(result.uri);
-   }
- };
-*/
