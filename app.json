@@ -12,15 +12,26 @@
       "resizeMode": "contain",
       "backgroundColor": "#15b2CD"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you set cat profile images."
+        }
+      ]
+    ],
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.keltronix.catstoryai"
+      "bundleIdentifier": "com.keltronix.catstoryai",
+      "infoPlist": {
+        "NSCameraUsageDescription": "The app accesses your photos to let you set cat profile images.",
+        "NSPhotoLibraryAddUsageDescription": "The app lets you save images generated.",
+        "NSPhotoLibraryUsageDescription": "The app accesses your photos to let you set cat profile images."
+      }
     },
     "android": {
       "adaptiveIcon": {
