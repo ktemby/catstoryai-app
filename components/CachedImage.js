@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Image } from "react-native";
 import shorthash from "shorthash";
 import * as FileSystem from "expo-file-system";
@@ -29,16 +29,21 @@ const CachedImage = (props) => {
         return;
       }
 
-      // otherwise we download the image, then return the local reference to it.
-      const newImage = await FileSystem.downloadAsync(source.uri, path);
-      //console.log(`cached new image to filesystem ${JSON.stringify(newImage)}`)
-      setUri(newImage.uri);
+      // Check if we're caching a local asset.
+      if (source.uri.slice(0, 8) === "file:///") {
+        setUri(source.uri);
+      } else {
+        // otherwise we download the image, then return the local reference to it.
+        const newImage = await FileSystem.downloadAsync(source.uri, path);
+        //console.log(`cached new image to filesystem ${JSON.stringify(newImage)}`)
+        setUri(newImage.uri);
+      }
     } catch (err) {
       console.log(err);
     }
   };
 
   return <Image style={style} source={{ uri: uri }} />;
-}
+};
 
 export default CachedImage;
