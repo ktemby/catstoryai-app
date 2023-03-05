@@ -26,7 +26,7 @@ const TextInputWithLabel = (props) => {
             themeColorStyle,
           ]}
           multiline={props.multiline === undefined ? true : props.multiline}
-          autoFocus={true}
+          autoFocus={props.multiline === undefined ? true : props.multiline}
         />
       </View>
     </View>

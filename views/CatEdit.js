@@ -18,6 +18,7 @@ function EditCat({ item }, catItem, catModel) {
         autoCapitalize={item.capitalize}
         autoCorrect={item.autoCorrect}
         multiline={false}
+        autoFocus={false}
         onChangeText={(text) => {
           catModel.setData({
             filterKey: "guid",
