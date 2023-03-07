@@ -29,7 +29,10 @@ let CatViewer = ({ item }) => {
         {item.title}
       </Text>
 
-      <CachedImage source={{ uri: item.image }} style={styles.ImageStyle} />
+      <CachedImage
+        source={{ uri: item.image }}
+        style={[styles.ImageStyle, { borderWidth: 0.2 }]}
+      />
 
       <Text
         style={[

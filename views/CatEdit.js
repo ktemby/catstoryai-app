@@ -114,7 +114,13 @@ function CatEdit({ route }) {
           style={{ paddingTop: 60 }}
           ListFooterComponent={() => EditCatFooter(catItem)}
         />
-        <Pressable onPress={() => pickImageAsync()} style={styles.profileThumb}>
+        <Pressable
+          onPress={() => pickImageAsync()}
+          style={[
+            styles.profileThumb,
+            { margin: 20, backgroundColor: "#9E9E9E" },
+          ]}
+        >
           <CachedImage
             source={{ uri: catItem.image }}
             style={styles.profileThumb}
