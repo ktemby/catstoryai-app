@@ -6,7 +6,7 @@ import styles from "../views/Styles";
 // Todo, refactor these and set up proper callbacks if needed.
 
 export let FavoriteButton = (props) => {
-  let [fav, setFav] = useState(false);
+  let [fav, setFav] = useState(props.item.isFeatured);
   let [backColor, setColor] = useState(null);
 
   return (
@@ -15,8 +15,8 @@ export let FavoriteButton = (props) => {
         onPressIn={() => setColor("#424242")}
         onPressOut={() => setColor(null)}
         onPress={() => {
+          props.onPress();
           setFav(!fav);
-          props.onPress;
         }}
         style={[props.style, { backgroundColor: backColor }]}
       >
@@ -45,8 +45,8 @@ export let DeleteButton = (props) => {
           setColor(null), setBinColor("#616161");
         }}
         onPress={() => {
-          alert(`Delete ${props.item.name}?`);
-          props.onPress;
+          //alert(`Delete ${props.item.name}?`);
+          props.onPress();
         }}
       >
         <MaterialCommunityIcons name="delete" color={binColor} size={50} />

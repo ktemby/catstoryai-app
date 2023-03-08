@@ -41,7 +41,7 @@ function EditCat({ item }, catItem, catModel) {
   );
 }
 
-EditCatFooter = (item) => {
+EditCatFooter = (catItem, catModel) => {
   return (
     <View
       style={[
@@ -55,8 +55,26 @@ EditCatFooter = (item) => {
         },
       ]}
     >
-      <FavoriteButton item={item} style={{ padding: 40 }} />
-      <DeleteButton item={item} style={{ padding: 40 }} />
+      <FavoriteButton
+        item={catItem}
+        style={{ padding: 40 }}
+        onPress={() => {
+          console.log(catItem.isFeatured);
+          catModel.setData({
+            filterKey: "guid",
+            item: catItem,
+            changeKey: "isFeatured",
+            value: !catItem.isFeatured,
+          });
+          catItem["isFeatured"] = !catItem.isFeatured;
+          catModel.getData();
+        }}
+      />
+      <DeleteButton
+        item={catItem}
+        style={{ padding: 40 }}
+        onPress={() => alert(`Delete ${catItem.name}?`)}
+      />
     </View>
   );
 };
@@ -112,7 +130,7 @@ function CatEdit({ route }) {
           data={editList}
           renderItem={(item) => EditCat(item, catItem, catModel)}
           style={{ paddingTop: 60 }}
-          ListFooterComponent={() => EditCatFooter(catItem)}
+          ListFooterComponent={() => EditCatFooter(catItem, catModel)}
         />
         <Pressable
           onPress={() => pickImageAsync()}
