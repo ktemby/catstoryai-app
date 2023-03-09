@@ -6,6 +6,7 @@ import LoadJson, {
   resetData,
   updateByKey,
   saveUpdate,
+  removeItemByGuid,
 } from "../models/PhoneStorage";
 import initialCatData from "../assets/dataCats.json";
 
@@ -16,6 +17,7 @@ export function CatModel() {
   this.jsonName = "dataCats.json";
 
   this.resetData = async () => resetData(this.jsonName, initialCatData);
+  //this.resetData(); // Quick nuke to get back to factory.
 
   useEffect(() => {
     this.getData();
@@ -23,6 +25,15 @@ export function CatModel() {
 
   this.getDataObject = () => {
     return catDataObject;
+  };
+
+  this.removeCat = (props) => {
+    console.log(`removing cat with guid ${props.guid}`);
+    removeItemByGuid({
+      dataObject: catDataObject,
+      guid: props.guid,
+      jsonName: this.jsonName,
+    });
   };
 
   this.setData = (props) => {
