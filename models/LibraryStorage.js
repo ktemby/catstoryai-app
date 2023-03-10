@@ -16,7 +16,7 @@ export let getLibraryMaxID = (library) => {
 export let removeId = async (library, id) => {
   library.forEach((item, index) => {
     if (item.id && item.id === id) {
-      data.splice(index, 1);
+      library.splice(index, 1);
       return true;
     }
   });
