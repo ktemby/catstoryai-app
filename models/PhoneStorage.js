@@ -13,6 +13,19 @@ export let resetData = async (jsonName, factoryJsonObject) => {
   saveUpdate({ jsonName: jsonName, jsonObject: factoryJsonObject });
 };
 
+export let removeItemByGuid = async (props) => {
+  props.dataObject.forEach((item, index) => {
+    if (item.guid && item.guid === props.guid) {
+      props.dataObject.splice(index, 1);
+      return true;
+    }
+  });
+  saveUpdate({
+    jsonName: props.jsonName,
+    jsonObject: props.dataObject,
+  });
+};
+
 // Update object when it is being used as a state variable
 export let updateData = (props) => {
   let filterKey = props.filterKey;
