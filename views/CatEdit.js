@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { AppContext } from "../store/context";
-import { View, FlatList, Pressable } from "react-native";
+import { View, FlatList, Pressable, Alert } from "react-native";
 import CachedImage from "../components/CachedImage";
 import TextInputWithLabel from "../components/TextInputWithLabel";
 import { DeleteButton, FavoriteButton } from "../components/StoryViewerButtons";
@@ -38,9 +38,26 @@ EditCatFooter = (catItem, catModel, navigation) => {
         item={catItem}
         style={{ padding: 40 }}
         onPress={() => {
-          navigation.navigate("Account");
-          catModel.removeCat(catItem);
-          catModel.getData();
+          Alert.alert(
+            `Delete ${catItem.name}?`,
+            `This will permanently delete ${catItem.name} from the app`,
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+              },
+              {
+                text: "OK",
+                onPress: () => {
+                  navigation.navigate("Account");
+                  catModel.removeCat(catItem);
+                  catModel.getData();
+                  console.log("OK Pressed");
+                },
+              },
+            ]
+          );
         }}
       />
     </View>
