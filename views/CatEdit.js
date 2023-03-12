@@ -3,11 +3,49 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { AppContext } from "../store/context";
 import { View, FlatList, Pressable } from "react-native";
-import { PressableHighlight } from "../components/HighlightButton";
 import CachedImage from "../components/CachedImage";
 import TextInputWithLabel from "../components/TextInputWithLabel";
 import { DeleteButton, FavoriteButton } from "../components/StoryViewerButtons";
 import * as ImagePicker from "expo-image-picker";
+
+EditCatFooter = (catItem, catModel, navigation) => {
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around",
+          paddingBottom: 100,
+          paddingTop: 20,
+        },
+      ]}
+    >
+      <FavoriteButton
+        item={catItem}
+        style={{ padding: 40 }}
+        onPress={() => {
+          catModel.setData({
+            filterKey: "guid",
+            item: catItem,
+            changeKey: "isFeatured",
+            value: !catItem.isFeatured,
+          });
+        }}
+      />
+      <DeleteButton
+        item={catItem}
+        style={{ padding: 40 }}
+        onPress={() => {
+          navigation.navigate("Account");
+          catModel.removeCat(catItem);
+          catModel.getData();
+        }}
+      />
+    </View>
+  );
+};
 
 function EditCat({ item }, catItem, catModel) {
   return (
@@ -41,45 +79,7 @@ function EditCat({ item }, catItem, catModel) {
   );
 }
 
-EditCatFooter = (catItem, catModel) => {
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around",
-          paddingBottom: 100,
-          paddingTop: 20,
-        },
-      ]}
-    >
-      <FavoriteButton
-        item={catItem}
-        style={{ padding: 40 }}
-        onPress={() => {
-          console.log(catItem.isFeatured);
-          catModel.setData({
-            filterKey: "guid",
-            item: catItem,
-            changeKey: "isFeatured",
-            value: !catItem.isFeatured,
-          });
-          catItem["isFeatured"] = !catItem.isFeatured;
-          catModel.getData();
-        }}
-      />
-      <DeleteButton
-        item={catItem}
-        style={{ padding: 40 }}
-        onPress={() => alert(`Delete ${catItem.name}?`)}
-      />
-    </View>
-  );
-};
-
-function CatEdit({ route }) {
+function CatEdit({ route, navigation }) {
   const { item } = route.params;
   const catItem = item;
   const { themeColorStyle, catModel } = useContext(AppContext);
@@ -104,7 +104,6 @@ function CatEdit({ route }) {
     });
 
     if (!result.canceled) {
-      //console.log(result);
       let imgResult = result.assets[0].uri;
       console.log(imgResult);
       setSelectedImage(imgResult);
@@ -117,9 +116,9 @@ function CatEdit({ route }) {
       });
       catItem["image"] = imgResult;
       catModel.getData();
-      console.log(catModel.getDataObject());
+      //console.log(catModel.getDataObject());
     } else {
-      alert("You did not select any image.");
+      //alert("You did not select any image.");
     }
   };
 
@@ -130,7 +129,9 @@ function CatEdit({ route }) {
           data={editList}
           renderItem={(item) => EditCat(item, catItem, catModel)}
           style={{ paddingTop: 60 }}
-          ListFooterComponent={() => EditCatFooter(catItem, catModel)}
+          ListFooterComponent={() =>
+            EditCatFooter(catItem, catModel, navigation)
+          }
         />
         <Pressable
           onPress={() => pickImageAsync()}
