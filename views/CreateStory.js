@@ -24,20 +24,21 @@ let imagePrep =
   "Cat, oil painting, highly detailed, global illumination, fantasy, trending on artstation,  ";
 let storyPrep =
   //  "The following is a conversation with a sophisticated large language model AI assistant. The AI is helpful, creative, clever and tells great stories.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
-  "The following is a conversation with a sophisticated large language model AI. The AI is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
+  //"The following is a conversation with a sophisticated large language model AI. The AI is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures and very friendly.\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: Tell me a fun childrens story around 500 words long featuring ";
+  "You are creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures and very friendly. Tell me a fun childrens story around 500 words long featuring ";
 let imageNull = { created: 1673128176, data: [{ url: null }] };
 
 // The assistant is helpful, creative, clever, knowledgeable about myths, legends, jokes, folk tales and storytelling from all cultures, and very friendly.
 
 function CreateStory({ navigation }) {
   const { balanceModel, catModel } = useContext(AppContext);
-  const [title, setTitle] = React.useState(null);
-  const [showSaveModal, setShowSaveModal] = React.useState(false);
-  const [storyInput, setStoryInput] = React.useState(catModel.getStoryText);
+  const [title, setTitle] = useState(null);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [storyInput, setStoryInput] = useState(catModel.getStoryText);
   const [output, setOutput] = useState(null);
   const [fetchedState, setFetchedState] = useState(null);
   const [imageData, setImageData] = useState(imageNull);
-  const [showLowBalance, setShowLowBalance] = React.useState(
+  const [showLowBalance, setShowLowBalance] = useState(
     balanceModel.isBalanceLow()
   );
 
@@ -60,7 +61,8 @@ function CreateStory({ navigation }) {
           setFetchedState("loading");
           setImageData(imageNull);
           getImagesOAI({
-            imagePrompt: imagePrep.concat(storyInput),
+            imagePrompt: imagePrep.concat(output),
+            //imagePrompt: imagePrep.concat(storyInput),
             setFetchedState: setFetchedState,
             setImageData: setImageData,
             balanceModel: balanceModel,
@@ -157,9 +159,7 @@ function CreateStory({ navigation }) {
               value={storyInput}
               onChangeText={(text) => setStoryInput(text)}
               label="Tell me a story about..."
-              placeholder={"Tell me a story about ".concat(
-                catModel.getStoryText()
-              )}
+              placeholder={"Tell me a story about ".concat(storyInput)}
             />
 
             {showLowBalance ? (
