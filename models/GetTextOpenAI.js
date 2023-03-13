@@ -74,27 +74,30 @@ const GetTextOpenAI = (props) => {
   const getStoryData = async () => {
     console.log(`Creating Story. Story input: ${input}`);
     try {
-      const response = await fetch("https://api.openai.com/v1/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer ".concat(OPENAI_API_KEY),
-        },
-        body: JSON.stringify({
-          model: "text-davinci-003",
-          prompt: input.concat(postPrep),
-          temperature: 0.9,
-          top_p: 1,
-          max_tokens: 700,
-          stop: ["Human:"],
-          presence_penalty: 0.6, //1.0
-          frequency_penalty: 0.6, //1.0
-          logit_bias: bias_words,
-        }),
-      });
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer ".concat(OPENAI_API_KEY),
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: input.concat(postPrep) }],
+            temperature: 0.9,
+            top_p: 1,
+            max_tokens: 700,
+            stop: ["Human:"],
+            presence_penalty: 0.6, //1.0
+            frequency_penalty: 0.6, //1.0
+            logit_bias: bias_words,
+          }),
+        }
+      );
       const data = await response.json();
       console.log(data);
-      setOutput(data.choices[0].text);
+      setOutput(data.choices[0].message.content);
       balanceModel.updateBalance(-9);
     } catch (err) {
       console.log(err);

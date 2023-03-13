@@ -61,7 +61,10 @@ function CreateStory({ navigation }) {
           setFetchedState("loading");
           setImageData(imageNull);
           getImagesOAI({
-            imagePrompt: imagePrep.concat(output),
+            imagePrompt:
+              output === null
+                ? imagePrep.concat(storyInput)
+                : imagePrep.concat(output),
             //imagePrompt: imagePrep.concat(storyInput),
             setFetchedState: setFetchedState,
             setImageData: setImageData,
