@@ -53,6 +53,8 @@ export let updateData = (props) => {
 // directly modify object with current stored values
 export const updateByKey = (props) => {
   filterKey = props.filterKey;
+  //console.log(`props.filterKey: ${props.filterKey}`);
+  //console.log(`props.item[filterKey]: ${props.item[filterKey]}`);
   props.dataObject.map((item) => {
     if (item[filterKey] === props.item[filterKey]) {
       for (var key in item) {
@@ -102,6 +104,7 @@ let updateModel = async (jsonName, factoryJsonObject) => {
           dataObject: newObject,
           changeKey: key,
           value: item[key],
+          filterKey: "guid",
           item: item,
           jsonName: jsonName,
         });

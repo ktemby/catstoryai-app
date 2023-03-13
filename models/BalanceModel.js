@@ -28,10 +28,11 @@ export function BalanceModel() {
 
   this.updateBalance = async (change) => {
     let updatedValue = this.getBalance() + change;
-    await updateData({
+    updateData({
       changeKey: "coins",
       value: updatedValue,
       filterKey: "guid",
+      item: userDataObject[0],
       setDataObject: setUserDataObject,
       dataObject: userDataObject,
       jsonName: this.jsonName,
