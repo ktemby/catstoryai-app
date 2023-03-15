@@ -5,64 +5,7 @@ import { AppContext } from "../store/context";
 import { View, FlatList, Pressable, Alert } from "react-native";
 import CachedImage from "../components/CachedImage";
 import TextInputWithLabel from "../components/TextInputWithLabel";
-import { DeleteButton, FavoriteButton } from "../components/StoryViewerButtons";
 import * as ImagePicker from "expo-image-picker";
-
-EditCatFooter = (catItem, catModel, navigation) => {
-  return (
-    <View
-      style={[
-        styles.container,
-        {
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-around",
-          paddingBottom: 100,
-          paddingTop: 20,
-        },
-      ]}
-    >
-      <FavoriteButton
-        item={catItem}
-        style={{ padding: 40 }}
-        onPress={() => {
-          catModel.setData({
-            filterKey: "guid",
-            item: catItem,
-            changeKey: "isFeatured",
-            value: !catItem.isFeatured,
-          });
-        }}
-      />
-      <DeleteButton
-        item={catItem}
-        style={{ padding: 40 }}
-        onPress={() => {
-          Alert.alert(
-            `Delete ${catItem.name}?`,
-            `This will permanently delete ${catItem.name} from the app`,
-            [
-              {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel",
-              },
-              {
-                text: "OK",
-                onPress: () => {
-                  navigation.navigate("Account");
-                  catModel.removeCat(catItem);
-                  catModel.getData();
-                  console.log("OK Pressed");
-                },
-              },
-            ]
-          );
-        }}
-      />
-    </View>
-  );
-};
 
 function EditCat({ item }, catItem, catModel) {
   return (
@@ -146,9 +89,6 @@ function CatEdit({ route, navigation }) {
           data={editList}
           renderItem={(item) => EditCat(item, catItem, catModel)}
           style={{ paddingTop: 60 }}
-          ListFooterComponent={() =>
-            EditCatFooter(catItem, catModel, navigation)
-          }
         />
         <Pressable
           onPress={() => pickImageAsync()}

@@ -2,10 +2,11 @@ import { useContext } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { AppContext } from "../store/context";
-import { Text } from "react-native";
+import { Text, View, Alert } from "react-native";
 import { PressableHighlight } from "../components/HighlightButton";
 import CatViewer from "../components/CatViewer";
 import { ScrollView } from "react-native-gesture-handler";
+import { DeleteButton, FavoriteButton } from "../components/StoryViewerButtons";
 
 let EditButton = (props) => {
   return (
@@ -30,9 +31,65 @@ let EditButton = (props) => {
   );
 };
 
+EditCatFooter = (props) => {
+  return (
+    <View
+      style={[
+        styles.container,
+        {
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around",
+          paddingBottom: 100,
+          paddingTop: 20,
+        },
+      ]}
+    >
+      <FavoriteButton
+        item={props.catItem}
+        style={{ padding: 40 }}
+        onPress={() => {
+          props.catModel.setData({
+            filterKey: "guid",
+            item: props.catItem,
+            changeKey: "isFeatured",
+            value: !props.catItem.isFeatured,
+          });
+        }}
+      />
+      <DeleteButton
+        item={props.catItem}
+        style={{ padding: 40 }}
+        onPress={() => {
+          Alert.alert(
+            `Delete ${props.catItem.name}?`,
+            `This will permanently delete ${props.catItem.name} from the app`,
+            [
+              {
+                text: "Cancel",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+              },
+              {
+                text: "OK",
+                onPress: () => {
+                  props.navigation.navigate("Account");
+                  props.catModel.removeCat(props.catItem);
+                  props.catModel.getData();
+                  console.log("OK Pressed");
+                },
+              },
+            ]
+          );
+        }}
+      />
+    </View>
+  );
+};
+
 function CatDetails({ route, navigation }) {
   const { item } = route.params;
-  const { themeColorStyle } = useContext(AppContext);
+  const { themeColorStyle, catModel } = useContext(AppContext);
 
   return (
     <SafeAreaView style={[styles.safeAreaFull, themeColorStyle]}>
@@ -41,6 +98,11 @@ function CatDetails({ route, navigation }) {
         <EditButton
           onPress={() => navigation.navigate("Cat Editor", { item })}
           color={themeColorStyle.color}
+        />
+        <EditCatFooter
+          catItem={item}
+          catModel={catModel}
+          navigation={navigation}
         />
       </ScrollView>
     </SafeAreaView>
