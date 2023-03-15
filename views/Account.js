@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { View, Text, FlatList } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, FlatList, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styles from "../views/Styles";
 import { PressableHighlight } from "../components/HighlightButton";
@@ -31,7 +31,7 @@ let CreateCatFooter = (navigation) => {
     <View style={{ margin: 10, marginRight: 30 }}>
       <LinearGradient {...styles.gradientProps} style={{ borderRadius: 15 }}>
         <View style={{ margin: 1 }}>
-          <PressableHighlight
+          <Pressable
             onPress={() => {
               let item = catModel.createCat();
               console.log(`newcat : ${item}`);
@@ -44,25 +44,35 @@ let CreateCatFooter = (navigation) => {
                 width: 150,
                 height: 250,
                 borderRadius: 15,
+                backgroundColor: "#212121",
               },
             ]}
           >
             <Text style={[{ color: "#FFF", fontSize: 50 }]}>+</Text>
-          </PressableHighlight>
+          </Pressable>
         </View>
       </LinearGradient>
     </View>
   );
 };
 
-const renderMiniCard = ({ item }, navigation) => {
+const renderMiniCard = ({ item }, navigation, catModel) => {
   return (
     <View style={{ margin: 10 }}>
       <LinearGradient {...styles.gradientProps} style={{ borderRadius: 15 }}>
         <View style={{ margin: 1 }}>
-          <PressableHighlight
+          <Pressable
             style={[{ width: 150, borderRadius: 15 }]}
             onPress={() => navigation.navigate("Cat Details", { item })}
+            onLongPress={() => {
+              console.log(`setting ${item.name} to fav ${!item.isFeatured}`);
+              catModel.setData({
+                filterKey: "guid",
+                item: item,
+                changeKey: "isFeatured",
+                value: !item.isFeatured,
+              });
+            }}
           >
             <CachedImageBackground
               source={{ uri: item.image }}
@@ -76,7 +86,7 @@ const renderMiniCard = ({ item }, navigation) => {
                 },
               ]}
             />
-          </PressableHighlight>
+          </Pressable>
         </View>
       </LinearGradient>
     </View>
@@ -92,7 +102,7 @@ let CatCarousel = (navigation) => {
       <View>
         <FlatList
           data={catData}
-          renderItem={(item) => renderMiniCard(item, navigation)}
+          renderItem={(item) => renderMiniCard(item, navigation, catModel)}
           style={{ padding: 10, width: "100%" }}
           horizontal={true}
           ListFooterComponent={() => CreateCatFooter(navigation)}
