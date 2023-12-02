@@ -26,10 +26,11 @@ export function BalanceModel() {
     setRefreshing(false);
   };
 
-  this.updateBalance = async (value) => {
+  this.updateBalance = async (change) => {
+    let updatedValue = this.getBalance() + change;
     await updateUserData({
       changeKey: "coins",
-      value: value,
+      value: updatedValue,
       setUserDataObject: setUserDataObject,
       userDataObject: userDataObject,
       jsonName: this.jsonName,

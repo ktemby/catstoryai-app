@@ -22,7 +22,7 @@ export let updateUserData = async (props) => {
     props.userDataObject.map((item) => {
       for (var key in item) {
         if (key === props.changeKey) {
-          item[key] += props.value;
+          item[key] = props.value;
           return item;
         }
       }
